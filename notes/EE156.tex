@@ -1,0 +1,636 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Template latex file for a common article class for class notes
+% and write ups. Additional Configuration and styling options are 
+% commented out. ex. Table of Contents and Title page
+% 
+% Author: Amy Bui
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{subcaption}
+%% \cbcolor{red} \cbstart ... \cbend
+\usepackage[color, leftbars]{changebar}
+% \usepackage{mathrsfs}
+
+% Important Configurations
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Reduce margin
+%
+% \addtolength{\oddsidemargin}{-.85in}
+% \addtolength{\evensidemargin}{-.85in}
+% \addtolength{\textwidth}{1in}
+
+% \addtolength{\topmargin}{-.85in}
+% \addtolength{\textheight}{1in}
+
+% Page format commands:
+% Override normal article margins,
+% making the margins smaller
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math Symbols
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath,amsthm}
+\usepackage{amscd,amsxtra,latexsym}
+% \usepackage{epsfig}
+
+
+% add floor and ceiling symbol. Usage: \ceil*{}, \floor*{}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% multiset \langle ... \rangle
+\def\multiset#1#2{\ensuremath{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code Sample Styling
+
+% use \lstinline! xxx ! or \begin{lstlisting} ... \end{lstlisting}
+\usepackage{listings}
+
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.97} % shade of grey
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% \begin{lstlisting}[...] ... \end{lstlisting}
+\lstset{frame=none,
+    language=C++,
+    aboveskip=3mm,
+    belowskip=3mm,
+    stepnumber=1, % set to 0 if you don't like line nums
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=left,
+    numberstyle=\color{black},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    backgroundcolor=\color{light-gray},
+    breaklines=true,
+    breakatwhitespace=false,
+    tabsize=2
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+%% https://tex.stackexchange.com/questions/401750/quick-and-short-command-for-coloring-one-word
+\newcommand\shorthandon{\catcode`@=\active \catcode`^=\active \catcode`*=\active }
+\newcommand\shorthandoff{\catcode`@=12 \catcode`^=7 \catcode`*=12 }
+\shorthandon
+\def@#1@{\textcolor{red}{#1}}%
+\def^#1^{\textcolor{blue}{#1}}%
+\def*#1{\string#1}
+\shorthandoff
+%% useage: \textcolor{red}{text here}
+% \shorthandon
+% This is a @test@ of the ^emergency^ bro*@dcast system.
+% \shorthandoff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Commands below change page margins (this much space at the titlepage, etc)
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+% Section header Styling
+% The commands below change the bold text where it says "Section" into "Question"
+% \usepackage{titlesec}
+% \titleformat{\section}
+% {\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+% I added this command below to chance "subsections numbers" to be "Question [subsection number]" -AB 1/31/2021
+% \titleformat{\subsection}
+% {\normalfont\bfseries}{\thesubsection:}{1em}{}
+
+% Page head Styling
+% Name and subject of the class
+\def\subjnum{EE 156}          % Class Number
+\def\subjname{Advance Topics in Computer Architecture}       % Class Name
+
+% Name of the student, university name and which semester
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+%Command for the title of the document (Homework 0)
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+    {\large\bf #1}
+\end{center}} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Misc
+% \usepackage{graphicx} % graphics
+\usepackage{enumitem} % listing style (bullet lists)
+
+% below helps with trying to get figures in a row
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+% hyperlink styling
+% use \href{} and \url{}, and colors table of contents links
+% use \href{} and \url{}
+% \label{sec:name}
+% \hyperref[label]{text}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={CS111 Notes}
+}
+\urlstyle{same}
+
+% A command for primes (')
+% \newcommand{\p}%
+%     {\ensuremath{^{\prime}}}
+
+% % a command for double primes ('')
+% \newcommand{\pp}%
+%     {\ensuremath{^{\prime \prime}}}
+
+% % A command for the Kleene star
+% \newcommand{\str}%
+%     {\ensuremath{^{\star}}}
+
+% % a command for the double star
+% \newcommand{\sstr}%
+%     {\ensuremath{^{\star\star}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Options for title page, use \maketitle in document
+% \author{Amy Bui}
+% \title{COMP160 - Algorithms: Class Notes and Practice}
+
+\begin{document}
+%% create title page
+% \title{(g)ROOT \\ Language Reference Manual}
+% \author{Samuel Russo \quad Amy Bui \quad Eliza Encherman \\ Zachary Goldstein \quad Nickolas Gravel}
+% \date{\today}
+% \maketitle
+
+\doheading{2}{title}{Notes}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Table of Contents
+    \setcounter{tocdepth}{2}
+    \tableofcontents
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Introduction}
+    \label{sec:intro}
+
+        \subsection*{Readings}
+        \label{subsec:introreadings}
+            \begin{itemize}
+                \item Chapter 1, 2, 5, Appendix B
+            \end{itemize}
+        
+        \subsection*{Priorities of Computer Architecture Designs}
+            \begin{itemize}
+                \item Performance 
+                \item Cost/Price
+                \item Energy and Pwer 
+                \item Functional requirements
+                \item Dependability
+                \item Trends of technology and computer-use (market)
+                \item Computer Architecture is now more than just the instruction set design. 
+            \end{itemize}
+
+        \subsection*{Classes of Computers}
+            \begin{itemize}
+                \item Internet of Things (IoT)/Embedded Computers
+                \item Personal Mobile Devices (PMD)
+                \item Desktops
+                \item Servers
+                \item Warehouse-Scale Computers (WSC) / Clusters
+            \end{itemize}
+
+        \subsection*{Classes of Parallelism and Parallel Architecture}
+            Two kinds of parallelism in applications:
+            \begin{enumerate}
+                \item \textbf{Data-level parallelism} (DLP): many data items can be operated on at the same time. 
+                \item \textbf{Task-level parallelism} (TLP): tasks of work are created that can operate independently and largely in parallel.
+            \end{enumerate}
+
+            How computer hardware exploits parallelism:
+            \begin{enumerate}
+                \item \emph{Instruction-level parallelism} (ILP): exploits DLP using speculative execution and pipelining. 
+                \item \emph{Vector architectures, graphic processor units (GPUs) and multimedia instruction sets}: exploits DLP by applying a single instruction to a collection of data in parallel. 
+                \item \emph{Thread-level parallelism}: exploits DLP or TLP in tightly coupled hardware models that allow interaction between parallel threads. 
+                \item \emph{Request-level parallelism} (RLP): exploits parallelism between largely decoupled tasks specifiec by programmer or OS.
+            \end{enumerate}
+
+            Four class categories of parallel computers:
+            \begin{enumerate}
+                \item \textbf{Single instruction stream, single data stream} (SISD): uniprocessors, can exploit ILP (ex. superscalars and speculative execution).
+                \item \textbf{Single instruction stream, multiple data streams} (SIMD): one instruction executed by multiple processors using different data streams. Exploits DLP (apply same operations to multiple items of data in parallel, each processor has its own memory but there is a single instruction memory and control processor). Ex. vector architectures, instruction sets with multimedia extensions, and GPUs. 
+                \item \textbf{Multiple instruction streams, single data stream} (MISD): theres no commercial multiprocessor that fits this. 
+                \item \textbf{Multiple instruction streas, multiple data streams} (MIMD): each processor fetches its own instruction and operates on its own data. Exploits TLP. More general and flexibl but more expensive than SIMD (i.e. MIMD DLP exploits have more costly overhead than DLP exploits in SIMD).
+            \end{enumerate}
+            Many parallel computers are hybrids of SISD, SIMD, and MIMD.
+
+        \subsection*{7 Dimensions of Instruction Set Architecture (ISA)}
+            \begin{enumerate}
+                \item \emph{Class of ISA}: almost all of today's ISAs are general-purpose register architectures. Two popular ones are register-memory ISAs and load-store ISAs. All ISAs since 1985 are load-store. 
+                \item \emph{Memory Addressing}: byte addressing to access memory operands. Objects don't have to be aligned but alignment tends to make accessing faster. 
+                \item \emph{Addressing Modes}: how to specify address of a memory object. Ex. Register, Immediate, Displacement (ex. PC-ralative address). 
+                \item \emph{Types and Sizes of Operands}
+                \item \emph{Operations}: op categores are generally: data transfer, arithmetic logical, control, and floating point.
+                \item \emph{Control-flow Instructions}: support for conditional branches, unconditional jumps, procedure calls, and returns. Notes, depending on ISA: Branching may involve testing value in register or looking at a flag set as side effect of arithmetic/logical operation, and return address may be placed in a register or it may be placed on a stack.
+                \item \emph{Encoding an ISA}: fixed length (ex. ARMv8 and RISC-V) vs. variable length (ex. 80x86 and other ARMv8 and RISC-V extensions) encoding of an ISA. Programs compiled for variable length ISA can take up less space. This can be impacted by number of registers and number of addressing modes in the ISA. 
+            \end{enumerate}
+
+        \subsection**ection{RISC-V Benefits}
+            \begin{itemize}
+                \item Large set of registers 
+                \item Easy-to-pipeline instructions 
+                \item Lean set of operations 
+                \item open-source
+                \item Adopted by many large companies
+            \end{itemize}
+
+        \subsection*{Implementation of Computer}
+            \begin{enumerate}
+                \item \textbf{Organizaion/Microarchitecture}: computer design (memory system, memory interconnect, internal processor/CPU design (this is where arithmetic, logic, branching, and data transfer are implemented)). Example: two processors with the same ISA can differ in their microarchitecture such as such as in their pipeline and cache design. 
+                    \begin{itemize}
+                        \item In multiprocessor microprocessor terms, core means processor, and multicore means multiprocessor microprocessor. Since most chips are multicores, the term CPU is fading. 
+                    \end{itemize}
+                \item \textbf{Hardware}: the specifics of the computer, like the detailed logic of the design and the packaging technology of the computer. Two computers with the same ISAs and organization may differ in the hardware, such as having different clock rates or different memory systems. 
+    
+            \end{enumerate}
+
+            The term \emph{architecture} refers to ISA, microarchitecture, and hardware. 
+
+        \subsection*{Technology Trends}
+            Potential 5 rapid changes in implementation technology that affects computer design:
+            \begin{enumerate}
+                \item \textbf{Integrated Circuit Logic Technology}: transistors
+                \item \textbf{Semiconductor DRAM}: main memory
+                \item \textbf{Semiconductor Flash}: nonvolatile memory, electrically erasable programmable read-only memory.
+                \item \textbf{Magnetic Disk technology}: disk and disk density
+                \item \textbf{Network technology}: network performance depends on performance of switches and transmission system.
+            \end{enumerate}
+
+            Performance Trends:
+            \begin{itemize}
+                \item \textbf{Bandwidth/Throughput}: total work done in given time. 
+                \item \textbf{Latency/Response Time}: time between start and completion of an event.
+            \end{itemize}
+            Bandwidth usually grows by at least square of the improvement in latency. 
+
+        Scaling of Transistor Performance and Wires
+            \begin{itemize}
+                \item \textit{feature size} is minimum size of transistor or wire in the x or y dimension. 
+                \item density of transistors on an area of silicon increases quadratically as feature size decreases linearly. 
+                \item transistor performance in complex because shrinking transistor size requires reducing operating voltage to maintain correct operation and reliability of transistors. 
+                \item Wires in an integrated ciruit do not generally improve performance as feature size decrease (resistance and capacitance worsen when feature size shrink (wires shorten), and they are affected by many other factors. Power dissipation limit). Wire delays scale poorly. 
+                % \item 
+            \end{itemize}
+        
+        \subsection*{Power and Energy Trends in Integrated Circuits}
+            Energy is the biggest challenge across all computer types for computer designers. 
+            \begin{itemize}
+                \item Power must be brought in and distributed around the chip.
+                \item Power is dissipated as heat must be removed. 
+            \end{itemize}
+
+            Performance, Power, Energy (System Designs)
+            \begin{enumerate}
+                \item Max power required by processor (upper limit). Drawing more power than what the power-supply system can provide can lead to voltage drop, which causes device malfunction. Slowing down processor to regulate voltage decreases performance. 
+                
+                \item Sustained power consumption / thermal design power (TDP) is the cooling requirements. Device failure and permanent damage can result from exceeding the maximum junction temperature of the processor. As thermal temp approaches junction temp limit, circuitry can lower clock rate to reduce power. If this fails, the chip powers down. 
+                
+                \item Energy and energy efficiency: power is energy per unit time (1 W = 1 J/s). Energy is better than power as a metric because energy is the work and time of a task. Compare energy consuption of two processors for a given task to measure efficiency. Power is useful for measuing constraints on power. 
+            \end{enumerate}
+
+            Energy and Power in $\mu$processors 
+            \begin{itemize}
+                \item For a fixed task, slowing clock rate reduces power but not energy 
+                \item Dynamic power and energy can be reduced by lowering voltage
+                \item Power consumption and energy grew when transistor density grew, because the transistor switching and frequency with which they changed dominated the decrease in capacitive load and voltage.
+                \item clock frequency growth have slowed since we can't reduce voltage or increase power per chip. 
+                \item Distributing power, removing heat, and preventing hot spots are challenges. Before, it was the area of silicon, now it is the energy.
+                \item Addressing energy efficiency despite flattened clock rates and constant supply voltages:
+                    \begin{enumerate}
+                        \item turn off clocks of idle or inactive modules. 
+                        \item Dynamic voltage-frequency scaling (DVFS): offer lower clock frequencies and voltages to operate and use lower power and energy during periods of low activity. 
+                        \item design for the typical/common case. 
+                        \item overclocking: let chip decide when it is safe to run at higher clock rates. temporary overclocks and let safety mechanisms handle heating.
+                    \end{enumerate}
+                \item static power is also an issue now because leakage current flows even when a transistor is off. 
+                \item Measurements of task/jooule or performance/watt are important and affects approaches to parallelism.
+            \end{itemize}
+
+            Energy Limits and Computer Architecture 
+            \begin{itemize}
+                \item New design principles focus on energy per task.
+                \item Domain-specific processors can save energy. While they have a limited set of tasks, they do them faster and more energy efficiently than general-purpose processors.
+                \item We may see a trend in chips with hybrid general-purpose cores and these specialty cores.
+            \end{itemize}
+
+        \subsection*{Cost Trends}
+            The goal is to generally use technology improvements to lower cost and increase performance. 
+            \begin{itemize}
+                \item Things like time (lifetime of a product in existence), volume (number and availability of units), and commodity (market competition) lowers cost, either as they increase or over time. 
+                \item Integrated circuits factor greatly into a computer's cost. 
+                \item 
+            \end{itemize}
+
+        \subsection*{Dependability}
+            \begin{itemize}
+                \item With how small feature sizes are now, we are facing increasing challenges in the reliabilty of the integrated circuits to not fail. 
+                \item Redundancy usualy copes with failure, either with time or resources.
+            \end{itemize}
+
+        \subsection*{Quantify Performance}
+
+            Equations:
+
+            \begin{tabular}{ll}
+                \hline 
+                \hline 
+                & \\ 
+                Performance of process X: & $\text{Performance}_X = \frac{1}{\text{Execution time}_X}$  \\
+                & \\ 
+                \hline 
+                & \\ 
+                ``X is $n$ times as fast as Y'': & $\frac{\text{Performance}_X}{\text{Performance}_Y} = \frac{\text{Execution time}_Y}{\text{Execution time}_X} = n$ \\ 
+                & \\ 
+                \hline 
+                & \\ 
+                CPU time for program (s) & = \# CPU clock cycles $\times$ clock cycle time \\ 
+                & = \# CPU clock cycles $/$ clock rate \\ 
+                & \\ 
+                \hline 
+                & \\ 
+                \# CPU clock cycles for program (cycles) & = \# Instructions $\times$ CPI \\ 
+                & \\ 
+                \hline 
+                & \\ 
+                Performance Equation: & CPU time (s) = \#Instr. $\times$ CPI $\times$ clock cycle time \\ 
+                & \\ 
+                & CPU time (s) = \#Instr. $\times$ CPI $\times \frac{1}{\text{clock rate}}$  \\
+                % & CPU time (s) = $\frac{\text{\#Instr.} \times \text{CPI}}{\text{clock rate}}$ \\ 
+                & \\ 
+                \hline 
+                & \\ 
+                Power & $P = C\times V^2 \times F $ \\ 
+                Relative Power: & $\frac{P_{\text{new}}}{P_{\text{old}}}$\\
+                & \\ 
+                \hline 
+                & \\ 
+                Speedup & = $\frac{\text{Exec time}_{\text{no enhancement}}}{\text{Exec time}_{\text{w/enhancement}}}$ \\ 
+                & \\ 
+                Overall speedup & $1 / \Big( (1 - \text{Fraction}_{\text{enhanced}}) + \frac{\text{Fraction}_{\text{enhanced}}}{\text{Speedup}_{\text{enhanced}}} \Big) $ \\
+                & \\ 
+                $\text{Exec time}_{\text{new}}$ & $= \text{Exec time}_{\text{old}} \times \text{Overall speedup}$ \\ 
+                & \\
+                \hline 
+                \hline 
+            \end{tabular}
+
+            \begin{itemize}
+                \item benchmarking simple programs and trying to correlate results to those of real applications is a pitfall. This is not a good way to benchmark processor performance. i.e. running kernal, toy programs, or synthetic benchmarks. Although synthetic benchmark is still used widely in embedded processors, despite its unreliability. 
+                \item Benchmark suites are used (SPEC)
+                \item Reporting Performance Requirements:   
+                    \begin{itemize}
+                        \item Reproducibility 
+                        \item extensive description of computer and compiler flags 
+                        \item publication of both baseline and optimized results 
+                        \item HW, SW, and baseline tuning parameter descriptions
+                        \item actual performance time 
+                        \item benchmarking audit and cost information 
+                        \item 
+                    \end{itemize}
+                \item 
+            \end{itemize}
+
+        \subsection*{Quantitative Principles of Computer Design and Analysis}
+            \begin{enumerate}
+                \item \textbf{Parallelism} 
+                \item \textbf{Locality} 
+                \item \textbf{Common Case} 
+                \item \textbf{Amdahl's Law} expresses the law of diminishing returns. i.e. keep on adding improvements to the same fraction of the computation will yield diminishing incremental improvements in speedup; if an enhancement is only used for a fraction of a task, then you can't speedup the task by more than the reciprical of 1 minus that fraction.
+                    $$ \text{Speedup} = \frac{\text{Performance}_\text{enhancement}}{\text{Performance}_\text{no enhancement}} $$
+
+                    $$ \text{Speedup} = \frac{\text{Exec Time}_\text{no enhancement}}{\text{Exec Time}_\text{enhancement}} $$
+
+                    $$ \text{Exec Time}_\text{new} = \text{Exec Time}_\text{old} \times \Big( (1 - \text{Fraction}_\text{enhanced}) + \frac{\text{Fraction}_\text{enhanced}}{\text{Speedup}_\text{enhanced}} \Big) $$
+
+                    $$ \text{Speedup}_\text{overall} = \frac{\text{Exec Time}_\text{old}}{\text{Exec Time}_\text{new}} = \frac{1}{(1 - \text{Fraction}_\text{enhanced}) + \frac{\text{Fraction}_\text{enhanced}}{\text{Speedup}_\text{enhanced}}} $$
+
+                \item \textbf{Processor Performance Equation}:
+                    $$ \text{CPU time} = \text{CPU clock cycles} \times \text{Clock cycle time} $$
+
+                    $$ \text{CPU time} = \frac{\text{CPU clock cycles}}{\text{Clock rate}} $$ 
+
+                    $$ \text{CPI} = \frac{\text{CPU clock cycles}}{\text{instruction count (IC)}} $$
+
+                    $$ \text{CPU time} = \text{IC} \times \text{CPI} \times \text{Clock cycle time} $$
+
+                    $$ \text{CPU clock cycles} = \sum_{i = 1}^n \text{IC}_i \times \text{CPI}_i $$
+
+                    $$ \text{CPU time} = \Big( \sum_{i = 1}^n \text{IC}_i \times \text{CPI}_i \Big) \times \text{Clock cycle time} $$
+
+                    $$ \text{CPI}_\text{overall} = \frac{\sum_{i = 1}^n \text{IC}_i \times \text{CPI}_i}{\text{IC}} = \sum_{i = 1}^n \frac{\text{IC}_i}{\text{IC}} \times \text{CPI}_i $$
+
+                    \begin{itemize}
+                        \item Clock cycle time depends on hardware technology and organization 
+                        \item CPI depends on organization and instruction set architecture 
+                        \item IC depends on instruction set architecture and compiler technology. 
+                    \end{itemize}
+
+
+                    The three parameters are interdependent, so you can't simply change one and hope to simply improve CPU time, but many performance improvement techniques to one component can have small and predictable impacts on the other two. 
+
+                    \begin{itemize}
+                        \item Energy Efficient techniques (dynamic voltage frequency scaling, overclocking, etc) can vary clock speed as programs are being measured, making performance equations hard to use. 
+                        \item Performance and energy generally correlate, so lowering exec time can also save energy.
+                    \end{itemize}
+            
+            \end{enumerate}
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Memory Hierarchy}
+    \label{sec:memory}
+
+        \subsection*{Readings}
+            \begin{itemize}
+                \item Chapter 2, 5, Appendix B
+            \end{itemize}
+
+        \subsection*{Caches}
+
+
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Microarchitecture and the Pipeline}
+    \label{sec:microarch}
+
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Security from the Hardware/Systems Perspective}
+    \label{sec:security}
+
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Multicore and Heterogeneous Systems}
+    \label{sec:multicore}
+
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Power and Energy}
+    \label{sec:power}
+
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Section}
+    \label{sec:section}
+
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Appendix}
+    \label{appendix}
+
+            % \begin{center}
+            %     \begin{figure}[h]
+            %         \begin{tabular}{cc}
+            %             \begin{subfigure}{0.5\textwidth}
+            %                 \centering
+            %                 \includegraphics[width=0.7\textwidth]{images/memparts.png}
+            %                 \caption{from DIS 2.1}
+            %                 % \label{fig:convexhull1}
+            %             \end{subfigure} & 
+            %             \begin{subfigure}{0.5\textwidth}
+            %                 \centering
+            %                 \includegraphics[width=1\textwidth]{images/memoryLayoutC.jpg}
+            %                 \caption{from G4G}
+            %                 % \label{fig:convexhull1}
+            %             \end{subfigure}
+            %         \end{tabular}
+            %     \end{figure}
+            % \end{center}
+            % \pagebreak
+
+        % \cbcolor{red}
+        % \textsc{isConvex($P$)}:
+        % \cbstart
+        %     \begin{enumerate}[label=\arabic*.]
+        %         \item $A \leftarrow p_1$; $B \leftarrow p_2$; $C \leftarrow p_3$ \hspace{1cm} $\Theta(1)$
+        %     \end{enumerate}
+        % \cbend
+
+
+        % \subsection{Base} %%%%%%%%%%%%%%%%%%%
+        % \label{app:base}
+        %     Binary:
+        %     \begin{center}
+        %         \begin{tabular}{|l|l|l|c|l|l|}
+        %             \hline 
+        %             \hline 
+        %             Unsigned & Binary & Hex & & Signed & Binary \\
+        %             \hline 
+        %             0  & 0000 & 0 && -8 & 1000 \\
+        %             1  & 0001 & 1 && -7 & 1001 \\
+        %             2  & 0010 & 2 && -6 & 1010 \\
+        %             3  & 0011 & 3 && -5 & 1011 \\
+        %             4  & 0100 & 4 && -4 & 1100 \\
+        %             5  & 0101 & 5 && -3 & 1101 \\
+        %             6  & 0110 & 6 && -2 & 1110 \\
+        %             7  & 0111 & 7 && -1 & 1111 \\
+        %             8  & 1000 & 8 && 0 & 0000 \\
+        %             9  & 1001 & 9 && 1 & 0001 \\
+        %             10 & 1010 & A && 2 & 0010 \\
+        %             11 & 1011 & B && 3 & 0011 \\
+        %             12 & 1100 & C && 4 & 0100 \\
+        %             13 & 1101 & D && 5 & 0101 \\
+        %             14 & 1110 & E && 6 & 0110 \\
+        %             15 & 1111 & F && 7 & 0111 \\
+        %             \hline 
+        %             \hline 
+        %         \end{tabular}
+        %     \end{center}
+
+            % Powers of 2:
+            % \begin{center}
+            %     \begin{tabular}{ll|c|ll|c|ll}
+            %         \hline 
+            %         \hline 
+            %         N & $2^N$ && N & $2^N$ && N & $2^N$ \\ 
+            %         \hline
+            %         0 & 1 && 6 & 64     && 11 & 2048\\ 
+            %         2 & 4 && 7 & 128    && 12 & 4096\\ 
+            %         3 & 8 && 8 & 256    &&  & \\ 
+            %         4 & 16 && 9 & 512   &&  & \\ 
+            %         5 & 32 && 10 & 1024 &&  & \\ 
+            %         \hline 
+            %         \hline 
+            %     \end{tabular}
+            % \end{center}
+
+            % \begin{figure}[h]
+            %     \centering
+            %     \includegraphics[width=0.7\textwidth]{images/TwosComplement.png}
+            %     \caption*{Two's Complement}
+            %     % \label{fig:twocomp}
+            % \end{figure}
+
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \pagebreak
+    \begin{thebibliography}{1}
+        \bibitem[1]{ceqa}John L. Hennessy and David A. Patterson. 2017. Computer Architecture, Sixth Edition: A Quantitative Approach (6th. ed.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA.
+    \end{thebibliography}
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\end{document}

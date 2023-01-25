@@ -1,17 +1,10 @@
-% -*- LaTeX -*- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Template for scribing COMP163 - Computational Geometry 
-%
-% Spring, 2004
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%**start of header
-
 \documentclass [12pt]{article}
 \usepackage{epsfig}
 \usepackage{enumitem}
 \usepackage{amsmath}
 % \usepackage[color, leftbars]{changebar}
+
+% \usepackage{fontawesome} 
 
 % \usepackage{caption}
 % \usepackage{subcaption}
@@ -45,15 +38,13 @@
 }
 \urlstyle{same}
 
-%\doheading{2}{title}{Last Revised: January, 2004}
-%\htitle{title}
 
 \def\subjnum{EE 156}
 \def\subjname{Adv. Comp. Arch.}
 
 \def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
   \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
-    \hbox to\textwidth{{\bf} Tufts University, Sprin 2023 \hfil#3\strut}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
     \hrule}}
 
 \newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
@@ -64,20 +55,117 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\doheading{2}{title}{HW 1} 
-% \htitle{Homework 1}
+\doheading{2}{title}{Lecture Review} 
+\htitle{Hennessey and Patterson (2017 Turing Laureates) Lecture}
 % \bigskip 
 % \bigskip 
 %%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+% \url{https://www.acm.org/hennessy-patterson-turing-lecture}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Section}
-    \label{sec:one}
+    % \section{Section}
+    % \label{sec:one}
     
-    \href{https://www.acm.org/hennessy-patterson-turing-lecture}{Hennessey and Patterson Turing Lecture 2018}
-        
+    % \href{https://www.acm.org/hennessy-patterson-turing-lecture}{Hennessey and Patterson, 2017 Turing Laureates}
+
+    \section{Summary} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:summary}
+        John Hennessy and David Patterson are the recipients of the 2017 Turing Award for their work on RISC (reduced instruction set computer), which is 99\% of more than 16 billion microprocessors produced today. In this lecture, besides the highlights of their careers and how they came to work together, they detail key events in microprocessor evolution, incluidng the development, success, and proliferation of RISC-V, place the audience in where we are in the modern technological landscape with historical context, and set the stage for emerging problems and areas of interest for how the field may move forward as we are slowing down in Moore's Law and the Dennard Scaling. Examples include focusing on domain specific architecture and programming languages, reframing how security is approached with the rise in microarchitecture attacks and timing attacks, and collaboration with other specialties (compilers, operating systems, software, etc) to push development in parallel. They are great proponents for leaning in more to open source architectures and resources for what really moves innovation upwards and forwards.
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item Both of their enthusiasm  made their speech engaging and easy to understand for people who have little experience with hardware but remains relevant to those who do work with or at the intersection of hardware.
+            \item They way they layed context and arguments in support of DSA/DSLs and open-source resources made their stance convincing.
+        \end{itemize}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item Introducing RISC lacked more of the explanations of the oppositional points they encountered when Hennessy and Patterson first pushed for the RISC architecture.
+            \item Organization-wise, the lecture was a little all-over-the-place.
+        \end{itemize}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+    % \section{Rating: \faStar \faStar \faStar \faStar \faStarHalfO } 
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
     \pagebreak
-    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+        \emph{Traditional Review: I address strengths/weaknesses here} \\
+
+        Given that this is a joint award lecture, I assume time did not permit the recipients to cover the topics they wanted touch on in a way they are used to. The lecture itself covered a wide array of topics that I understood they were trying to connect together. It started very linear, with the historical context and building to potential future opportunities of research and innovation, and moved on to their award topic with where RISC-V fits in the world today, and ended with the use of the Agile methodology. The transition of topics towards the end were abrupt and made it seem overall disorganized, but not something unexpected for an award lecture with limited time. Some context I felt was missing was, in Part I, Patterson discussed briefly how their ideas for simpler architectures came after seeing that the architectures back then were following the trends  of minicomputers and mainframes at the time by making more complex ISAs, which they predicted would increasingly require repairs in the microcode; for a more complete picture, I would have liked an explanation of the oppositional points they encountered when Hennessy and Patterson first pushed for the RISC architecture because Patterson said it was often the two of them debating for RISC against other architectures. Their lecture was otherwise engaging and easy to understand (likely given their decades of experience giving these talks and debates), especially for someone not familiar with the hardware side of things. Keeping the discussion at a high level and tying in problems and/or data relating to software, OS, and compilers was helpful for me to follow along in this lecture that otherwise could have leaned heavily into the technical details of the hardware right away. Another thing I thought they did well was laying the foundation and arguments for what they thought would be the future of processor technology. Namely, I liked the way they presented the context, problems, and evidence that showed the growing interest for security, DSA/DSLs, and open source architectures. For example, showing which specific companies  that use RISC-V really tied the academic work with the industry applications, making it seem less abstract and showing where the real world was trending towards. Finally, I think this is a great intro lecture for EE156 to engage the students, given the diverse make-up of the class.
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % % \url{https://www.acm.org/hennessy-patterson-turing-lecture}
+
+    % \begin{itemize}
+    %     \item Security 
+    %     \item Open Architecture 
+    %     \item Agile Hardware Methodology
+    %     \item End of Dennard's Scalling and Moore's Law
+    %     \item Domain specific architectures (increase factors by 10s, 40s)
+    %     \item Origin of RISC
+    % \end{itemize}
+
+    % Notes:
+    % \begin{itemize}
+    %     \item Today, 99\% of more than 16 billion of microprocessors are RISC processors. 
+    %     \item Microprocessor Evolution and Competition - Hennessy and Patterson details key major events leading up to their careers and contributions to modern technology, and they both seet the stage well for describing emerging problems and areas of interest for the trajectory of technology. 
+    %     \item If microprocessor development was going to follow the trend of building more complicated ISAs to match minicomputers and mainframes, then microprocessor people were going to run into problems with the microcode that they'd have to repair.
+    %     \item CISC to RISC:
+    %         \begin{itemize}
+    %             \item ISA very simple (enabled hardware pipeline)
+    %             \item SRAM became cache of user-visible instructions (rather than ISA interpreter)
+    %             \item Implrovements in register architectures integrated
+    %             \item ``Iron Law'' shows RISC is faster than CISC 
+    %             \item RISC = Reduced Instruction Set Computer. Simple is better
+    %             \item Itanium was supposed to replace RISC, but failed. EPIC is Intel's VLIW (Itanium), a new architecture meant to exploit ILP.
+    %         \end{itemize}
+    %     \item RISC, not CISC, not VLIW (for general purpose). RISC going strong 35+ years later. 
+    %     \item Dennard Scaling and Moore's Law: number of transistors double every two years (Moore) and as the scale of transistors goes down, their power density stays constant (Dennard), means performance increases. Moore's law and Dennard Scaling ending as performance is slowing even as more transistors are added to chips, as thermal runaway and current leakage pose a great energy cost. 
+    %     \item State of Security: security was put on the backburner for architecture people, because it was assumed it was the responsibility of the OS people.
+    %     \item Opportunities for growth in software and hardware (doain specific architecture)
+    %     \item Hennessy makes a good argument for DSA: speed-ups from pythong to C to C with parallel loops (SW can't do this well), C with mem optimization, and then take advantage of domain specific hardware improves over 60, 000 x.
+    %     \item DSA achieves greater efficiency by tailoring the architecture to the characteristics of the domain. This requires more domain specific knowledge over genereal purpose architecture. These techniques ARE faster, more effective because they take make more effective use of parallelism (more efficient SIMD thats usually not as effecient over general MIMD, VLIW (more effective when it works) vs speculative out of order), more effective of memory bandwidth (understood mem access pattern), eliminate unneeded accuracy, and using domain specific programming languages that give more higher levels of efficiency
+    %     \item Domain specific languages:
+    %         \begin{itemize}
+    %             \item C or python is too broad to map to hardware, 
+    %             \item DSAs require targeting of high level operations to the architecture. 
+    %             \item DSLs specify these operations (matrix, vector, or sparse matric operations). Examples: OpenGL, TensorFlow, P4
+    %             \item if DSL programs retain architecure-independence, interesting compiler challenges exist. Because we wans the languages to remain independent from architecture. 
+    %         \end{itemize}
+    %     \item Research opportunities 
+    %         \begin{itemize}
+    %             \item make python run like C with compiler and HW 
+    %             \item portable domain specific applications. 
+    %             \item Ex. Machine Learning revolution (computationally intensive and apps are growing. Googles TPU tries to make the computations less expensive for the applications they are running.)
+    %             \item 
+    %         \end{itemize}
+    %     \item aiming for performance per watt
+    %     \item bring together people in other areas to collaborate: architecture, applications, compilers, etc.
+    %     \item We have open source compilers and operating systems, We need open source ISAs. 
+    %         \begin{itemize}
+    %             \item RISC-V is the fifth Berkley RISC project. They typically modified it for the Berkley class semester to semester (because x86 and ARM were not allowed to be used).
+    %             \item People outside Berkley couldn't keep up, and they found RISC was being used by others outside. So RISC-V was slated to be open-source. a clean slate design, no mistakes from its predecessors, learned from the past.
+    %             \item Modular, supports specialization, community designed, and the RISC-V foundation extends ISA for technical reasons as opposed to private corporations extending it for marketing reasons.  
+    %         \end{itemize}
+    %     \item  Using Agile methodology but in hardware development. 
+    % \end{itemize}
+        
+    % \pagebreak
+    % % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
