@@ -1,0 +1,141 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{High Performance Cache Replacement Using Re-Reference Interval Prediction (RRIP), 2010:} The authors are proposing high-performance (static and dynamic) re-reference interval prediction (RRIP) cache replacement policies. The problem they identified with popular policies at the time of this paper was that none gave enough efficient cache performance across all memory access patterns. Policies that always predict near-immediate RRI (i.e. likely to be referenced again soon) limits cache performance for mixed access patterns (i.e. blocks in the working set are re-referenced sooner (near-immediate RRI) and later (distant RRI have poor temporal locality)); meanwhile, always predicting distant RRI degrades cache performance for access patterns that have mostly near-immediate RRI. In particular, their goal was to design a replacement policy that could preserve the active and frequently referenced working set in the cache, which LRU can't do, while also not contributing significant hardware overhead and could be integrated with the existing LRU cache structures. Their SRRIP uses the concept of re-reference prediction values (RRVP) to introduce long RRI  to make better predictions (using two more bits per block) that are statically determined on cache hits and misses (reminiscent of how some OS scheduling policies determine priority between running processes); and their DRRIP uses set dueling in reserved cache sets to estimate between two policies (SRRIP or Bimodal RRIP) is suited for a particular application. 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item In their study, they picked a broad range of memory-intensive and non-memory intensive workloads on single- and multi-cores. Diversity in the workloads strongly supports their findings that their proposed policies are suited across more memory access patterns in different applications than LRU. 
+            
+            % \item These policies have wiki entries
+            
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item They looked at comparing their proposed policy against a recency-based one (LRU) and compared the SRRIP and DRRIP results against those for NRU, and much of the discussion revolved around comparisons against NRU. If they were available at the time of this paper, I would have liked more of a discussion of SRRIP/DRRIP against more policies, such as other recency-based replacement policies, frequency-based policies like LFU, queue-based policy, Belady-based policies, etc. Section 6.8 does it too briefly, and the paper made it seem like NRU was the only policy comparison they did before section 6.8 mentions a few others.
+            
+            % \item they picked NRU as a reference because it can illustrate the problem for mixed access patterns, and because chain-based LRU replacement was impractical to build in hardware for highly associative caches. I would have liked for them to have other policies (If they were available at the time of this paper) to compare their SRRIP and DRRIP against,  
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+     
+
+
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+    Overall, they made the approach to their study easy to understand, the analysis and discussions were clear, the experiments replicable, and their introduction and background information for pros and cons found in replacement policies at that time and of what needed to be addressed were detailed and straightforward, setting up a lot of the necessary context for what their SRRIP/DRRIP hoped to tackle, i.e. designing cache replacement policies that required little overhead, could easily be integrated with the existing LRU cache structures in the processors at the time, and more efficiently utilize the cache across or more kinds of memory access patterns across different applications. Much of the analysis and discussion of their results seemed to compare their results and differences in hardware overhead and design changes against typical NRU implementations. For much of the paper, I had thought they only did their study on SRRIP and DRRIP and used NRU as a baseline for comparison, until section 6.8. 6.8 briefly went over a comparison of their SRRIP and DRRIP against a few other policies, using LRU as a baseline. They had some variety of policies in their study (recency-based, frequency-based, queue-based) which strongly supports their findings that SRRIP and DRRIP performed better than those policies available at the time. However, a discussion of the differences in performance was very brief and quickly concluded their favorable findings without delving more into what could have led to the differences in performance and the tradeoffs found within the policies that they compared. For this analysis section, they relied too heavily on the data they presented in just Table 3 and Figure 10, when, even with those two, more of a discussion could have been expanded. I would have liked to have seen more performance analysis of their policies against the other policies with their results in Figures 5-9, as those seemed to focus primarily on just the results of SRRIP. This paper was otherwise interesting to read, especially coming from the perspective of a student where LRU (at a high level) was primarily taught as an example of a good cache replacement policy. I came away from this paper with a better understanding of the kinds of limitations LRU has (ex. unable to distinguish or update re-reference interval predictions between scan and non-scan re-references), what other replacement strategies there are or were being explored, and a solid understanding of how their proposed policies and approach to prediction worked. As an aside, it was interesting to see that SRRIP/DRRIP had an entry on the \href{https://en.wikipedia.org/wiki/Cache_replacement_policies}{wiki} page for cache replacement policies, and if they are available to include, I think this reading could be accompanied by an example of an architecture that uses SRRIP/DRRIP. 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item They are proposing a high performance RRIP (static and dynamic), a high performance practical scan-resistant (static) and thrash-resistant (dynamic is both) cache replacement policy that doesn't require significant hardware overhead or changes to the existing cache structure. The goal is little overhead (2-bits per cache block) and easy integration with the existing LRU cache structures in the processors at the time. They also are tackling the issues in inefficient utilization of the cache from cache access patterns that filter temporal locality like LRU. 
+    %             \begin{itemize}
+    %                 \item Address: applications that perform badly under LRU are usually have a working-set larger than the cache or have frequent bursts of references to non-temporal data (called scans).
+    %                 \item We want a policy that performs well across all access patterns. 
+    %             \end{itemize}
+    %         \item RRIP in replacement policies, like LRU, tries to predict the re-reference interval of a cache block, whereas in LRU, a near-immediate re-reference interval is always predicted on a cache hit. They try to get this practical cache replacement policy clost to optimal replacement, which requires omniscience of knowing the re-reference (reuse) pattern of each cache block and replacing the block that has distant re-reference. Practical policies make decisions based on predictions, though. They try to balance decisions between recency and frequency, which appears important in a replacement policy design. RRIP makes updates to predictions based on re-reference of a block. 
+    %         \item The issue is that with things like LRU, it is bad in applications that uses a lot of scan, i.e. references to blocks with poor temporal locality, aka they are re-referenced so far (distant) in the future, that they could get replaced in the time before it is re-referenced (this happens with scans and/or when the apps working set is larger than what the cache can hold, or when a burst of non-temporal data replaces the active working set from the cache); it even performs poorly when there is mized access patterns that have references with both near-immediate and distant re-reference intervals. So LRU also affects performance if the near-immediate prediction of a block is wrong. Always prediciting near-immediate limits cache performance for mixed access patterns, whicl always predicting distant degrades cache performance for access patterns that have mostly near-immediate RRI.
+    %         \item Problem with NRU (approximation of LRU taht uses 1 nru-bit): doesn't preserve blocks with distant re-reference, because like LRU it can't distinguish between near-immediate and distant RRI blocks. We want to preserve the active working set in cache (optimal would preserve the frequently reference working set in the cache, LRU can't do this); we want a policy that can identify the non-scan/near-immediate blocks in mixed access patterns and preserves them. NRU limits cache performance for mixed access patterns.
+    %             \begin{itemize}
+    %                 \item SRRIP: policy based on RRIP, givens external info on RRI for every missing cache block. Using more bits thant NRU to store RRPV (prediction value) to make the prediction a scale between near-immediate (0) to distant (11..11), i.e. intermediate RRI. 
+    %                 \item RRIP wants to prevent blocks with distant RRI (scans) from polluting cache. 
+    %                 \item SRRIP always predicts long RRI, i.e. not distant but skewed towards distant. Allows RRIP more time to lear and improve the prediction. This is learning a blocks RRI, but updating RRPVs on misses and cache is full (increment). 
+    %                 \item SRRIP-Hit Priority: we update RRPVs on hits as well, which dynamically improves accuracy of prediction of RRI of block. Predict a block that hits is near-immediate (0). This is bad when RR only happens once for a block but not again, so this is incorrect near-immediate prediction.  
+    %                 \item SRRIP-Frequency Priority: also updates RRPVs on hits to improve prediction, but doesn't update prediction to near-immediate, but closer to near-immediate, ie. its RRI is shorter than it was previously (decrementing). 
+    %                 \item ``Static'' because the predictions RRIP makes are statically determined on cache hits and misses. 
+    %                 \item Can use 2-bits. 
+    %                 \item doesn't hold up well when RRPVs of scan and non-scan blocks meet at same values. Increasing RRPV length can help this, but can make inefficient cache utilization when blocks get their last hit and end up with 0 (near-immediate) prediction, ie. dead block should be distant. 
+    %                 \item Can adapt to changes in apps working set size, which LRU can't and degrades performance. 
+    %             \end{itemize}
+    %         \item Dynamic RRIP (DRRIP): addresses SRRIP inefficient cache utilization when the RRI of all blocks is laregr thant vailable cache, which leads to thrashing and no cache hits. Bimodal RRIP trys to replace a mix of long and distant RRI blocks to try and preserve some of working set in cache, but degrades cache performance with non-thrashing access patterns. DRRIP uses SEt Dueling to decided which of SRRIP (scan-resistant) or BRRIP (thrash-resistant) is the best suited replacement policy for an app. SD esitmates misses for any given polyci (with a dedicated few cache sets to follow each policy) and using a single policy selection counter to determine winning policy. The winning policy is used for the remaining cache sets. 
+    %         \item \textbf{ANALYSIS OF RESLTS}:
+    %             \begin{itemize}
+    %                 \item 
+    %             \end{itemize}
+    %     \end{itemize}
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{paper}Aamer Jaleel, Kevin B. Theobald, Simon C. Steely, Jr., and Joel Emer. 2010. High performance cache replacement using re-reference interval prediction (RRIP). In Proceedings of the 37th annual international symposium on Computer architecture (ISCA '10). ACM, New York, NY, USA, 60-71. DOI: \url{https://doi.org/10.1145/1815961.1815971} 
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

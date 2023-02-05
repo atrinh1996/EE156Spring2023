@@ -1,0 +1,145 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{The Architectural Implications of Facebook's DNN-based Personalized Recommendation} (for the 2020 IEEE International Symposium on High-Performance Computer Architecture): The authors of this paper give an in-depth description and characterization of performance metrics of production-level recommendation systems using FB's open sourced DLRM benchmarks. The rationale for this is that publiclaly available deep neural network (DNN) based recommandation benchmarks do not represent those actually used on production-scale recommendation systems in data centers. The problem, therefore, is this gap between currently available benchmarks and realistic production scale benchmarks, despite these deep learning recommendation systems being used so widely and incresingly in industry. Using their performance analysis of 3 major recommendation models (RMC1, RMC2, RMC3) and using FB's open source suite of synthetic models, the authors aim to provide realistic production benchmarks; this information would ideally motivate future optimization and innovation for recommendation system designs by providing more insight into the computing requirements, storage capacity, and memory access patterns of real production-scale recommendation systems, which these models show have differing efficiency challenges than other traditional models. 
+        
+        % Their results reveal that DNN based recommendation models pose different efficiency challenges than traditional convolutional and recurrent neural networks (CNN and RNN).
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item The context the authors added in the intro/background and mentioning familiar use cases on what function a recommendation model serves or what a feature accomplishes (ex. curating news feed/video rec/social media posts, data sources from clicks to demographic information, etc.) helped frame a lot of the purpose of their experiments and the purpose of the performance metric analyses that they decided to do. This relation between some low level mechanism to a broader use case in layman's term demonstrates significance of what they are studying and makes it more understandable to someone not familiar with recommendation systems or ones at server-level. 
+
+            \item Most of the figures and tables the authors included to explain the differences between the 3 recommendation models they examined and the differences in varying performance areas were simple and clear, and seemed appropriate for the given audience (in a IEEE Symposium).
+            
+
+            % \item Their ``takeaway-messages'' were helpful in highlighting the bigger picture of their performance analysis. Example, explaining the difference in perfomrmanc of the 3 rec models, followed up by why and how that difference in the metric came about and how thse impact where people look for optimization solutions in the rec models. 
+            % \item A lot of the the optimizations they implied were repetitive. They were concluded from different performance analysis, but it could have been done more succintly. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item The way they presented their observations in two sections, under ``Understanding XYZ Model(s)'', as several ``takeaways'' seemed like a disorganized way to discuss their results, but I understood the intention to discuss particular metrics distinctly and apply what the specific ``implication'' of their observations were.
+            \item The authors did not include performance data of the 3 models they looked at using non-representative benchmarks, in order to compare against the DLRM benchmarks. 
+            % \item I would have liked a contexualization of statements they made, for example, why was it significant that the three recommendation models they examined (RMC1, RMC2, RMC3) took up about 65\% of inference cycles in FB's data centers? What does it mean for the embedding tables to handle sparse features and the FC layers to handle dense features?
+            % \item I wish they'd explained the differences between EMC1, RMC2, and RMC3 is a more succint, high-level way. Most of the differences are scattered around when the mention different quantitative features. 
+            % \item  fig 10 only shows rmc1
+            % \item SEC VII was too short. they explain an ex config and the potential experiments, but arent including their exp or numbers
+            % \item Confused about Sec VII. Experimental set up says they use the open source benchmark, so it was FB's DLRM. VII explain an ex config and the potential experiments. VII would be more fitting as the section following background. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+    While I am not particularly familiar with recommendation systems, much less how they scale to the size of data centers, this paper does a fairly good job of framing their observations and suggestions for optimizations in lay terms, while also keeping their discussion at a level appropriate for the given audience (at a IEEE Symposium). For example, their examination of embedding tables, effects of co-locating, the differences in performance behaviors of the 3 models, etc. remained technical and used data they observed, but was often linked with their interpretted implications and/or explanation of cause and effect, which were succinct and clear. That being said, how they presented their results could have been more organized. The authors used brief ``takeaway-messages'' to introduce difference metric discussions by highlighting a key observation or problem, and often finished them with suggested solutions. This happens several times under two section headings, ``Understanding XYZ Model(s)'', but I think several ``takeaways'' could have been better presented as a traditional Results/Discussion section (which I'm unsure is the norm in computer architecture papers the same way chemistry or biology papers expect). Another way the authors could improve on their paper would be the inclusion of the same experiment they did here but using the publicly available benchmarks they said were not representative of production use case. They briefly describe and cite other sources of how they differ from the benchmarks that was used, but a comparison of the DLRM against something like the MLPerf-NCF on the 3 recommendation models they chose to examine would have made their point (that ones like the MLPerf aren't good benchmarks for scaled systems) better. The topic of the paper is interesting and extremely relevant, as plenty of other areas of research closely focus on the designs and systems in data centers, specifically (ex. networking research in DCs); the services and work done in industry data centers is prevalent. Since these services are likely to continue to grow (and therefore their resource demands increase, as well), it is important to examine and address the unique challenges, resource requirements, and direction of growth for computers of these scale; the authors make a compelling point that there should be more reliable representative resources available that help build these solutions. 
+    
+    % Another point I though the paper could have touched on more was the metrics they reported and data they displayed; while not overly confusing, and, for the most part, the figures supported their conclusions, since the authors are analyzing production-scale metrics on multiple models and multiple processors, I felt there could have been more metrics they could have looked at or reported on besides throughputs and latencies in a handful of use case/scenarios. Although, the introduction of the paper did not explicitly say this was even meant to be an in-dept performance analysis of industry recommendation systems, and I did not really expect such. The paper still accomplishes it's goal in presenting analyses of models based on benchmarks that more closely align with real world application of these systems. \\
+
+    
+    
+    
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item key words: Recommendation systems (and these types of workloads), personalized recommendation, deep neural networks, content ranking, Interference latency, batch and co-location of inferencee jobs, diversity accross recommendation models. 
+    %         \item purpose: Examine production scale deep neural networks (DNN) for personalized recommendation, relative performance metrics (evaluation); highlight and analyze the basis of future system designs and optimizations.  
+    %         \item Purpose: Motivate broader system and architecture optimization for at-scale recommendation (i.e. flag interest in a different area of research with real-world scaled applications) by giving in-depth description and chaaracterization of productiom scale RMs, and give insight for future system designs. Understanding the compute requirements, storage capacity, memory access pattern can enable optimization nad innovation for at-scale rec sys. 
+    %         \item Intro:
+    %             \begin{itemize}
+    %                 \item web-based application grows globally, the computing and storage demands grow too
+    %                 \item personalized recommendation (like the deep learning based rec sys) is an important service and has a significant impact on revenue; rec models make up a majority of an AI interence cycle 
+    %                 \item The 3 major recommendation model classes, RMC1, RMC2, and RMC3, have distinct architecture performance characteristics nd hw resource requirements. 
+    %                 \item production level rec models (as opposed to the ones represented by publicly availabe benchmarks), have different needs and aren't represented by public recommendation systems
+    %                 \item the author presents a public production-scale personalized rec models, but quantitative studies of performance characteristics of running recommendation models in production-environments. 
+    %                 \item 
+    %             \end{itemize}
+    %         \item Background
+    %     \end{itemize}
+    
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{paper}U. Gupta et al., "\href{https://research.fb.com/publications/the-architectural-implications-of-facebooks-dnn-based-personalized-recommendation/}{The Architectural Implications of Facebook's DNN-Based Personalized Recommendation}" 2020 IEEE International Symposium on High Performance Computer Architecture (HPCA), San Diego, CA, USA, 2020, pp. 488-501, doi: 10.1109/HPCA47549.2020.00047.
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

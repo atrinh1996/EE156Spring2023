@@ -1,0 +1,97 @@
+
+RECORD-TRACE] Using the Pin frontend (sift/recorder)
+Traceback (most recent call last):
+  File "/h/abui02/sniper-container/sniper-7.3/tools/viz/viz.py", line 142, in <module>
+    if '2' in levels: level2.createJSONData(defaultinterval, defaultnum_intervals, interval, num_intervals, resultsdir, outputdir, title, use_mcpat, verbose = verbose)
+  File "/h/abui02/sniper-container/sniper-7.3/tools/viz/level2.py", line 497, in createJSONData
+    collectCPIStackDataFIC(verbose = verbose, requested_cores_list = requested_cores_list)
+  File "/h/abui02/sniper-container/sniper-7.3/tools/viz/level2.py", line 122, in collectCPIStackDataFIC
+    cores_list = requested_cores_list,
+  File "/h/abui02/sniper-container/sniper-7.3/tools/cpistack.py", line 21, in cpistack_compute
+    cpidata = cpistack_data.CpiData(jobid = jobid, resultsdir = resultsdir, config = config, stats = stats, data = data, partial = partial)
+  File "/h/abui02/sniper-container/sniper-7.3/tools/cpistack_data.py", line 12, in __init__
+    self.parse()
+  File "/h/abui02/sniper-container/sniper-7.3/tools/cpistack_data.py", line 97, in parse
+    BaseBest = instrs[core] / float(sniper_config.get_config(self.config, 'perf_model/core/interval_timer/dispatch_width', core))
+  File "/h/abui02/sniper-container/sniper-7.3/tools/sniper_config.py", line 50, in get_config
+    is_hetero = (type(config[key]) == collections.defaultdict)
+KeyError: 'perf_model/core/interval_timer/dispatch_width'
+
+
+
+
+[SPLASH] Benchmarks to run: fft_O2
+
+[SPLASH] [========== Running benchmark fft ==========]
+[SPLASH] Setting up run directory: /tmp/tmpvu8Plb
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 4 -m 'localhost' -d '/h/abui02/sniper-container/lab0/output/fft_O2/lab0L2-1MB' -c /h/abui02/sniper-container/sniper-7.3/config/base.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab0/lab0.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab0/L1/lab0L1.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab0/L2/lab0L2-1MB.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab0  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/kernels/fft/FFT-O2 -m18 -p4':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /h/abui02/sniper-container/lab0/output/fft_O2/lab0L2-1MB/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+
+FFT with Blocking Transpose
+   262144 Complex Doubles
+   4 Processors
+   65536 Cache lines
+   16 Byte line size
+   4096 Bytes per page
+
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[TRACE:2] -- DONE --
+[TRACE:3] -- DONE --
+[TRACE:1] -- DONE --
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 918.36 seconds
+[SNIPER] Simulated 126.5M instructions, 269.6M cycles, 0.47 IPC
+[SNIPER] Simulation speed 137.7 KIPS (2.2 KIPS / target core - 464618.5ns/instr)
+[SNIPER] Sampling: executed 11.73% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+
+                 PROCESS STATISTICS
+            Computation      Transpose     Transpose
+ Proc          Time            Time        Fraction
+    0             31613           1586       0.05017
+
+                 TIMING INFORMATION
+Start time                        :      -1844407449
+Initialization finish time        :      -1844170385
+Overall finish time               :      -1844138772
+Total time with initialization    :           268677
+Total time without initialization :            31613
+Overall transpose time            :             1586
+Overall transpose fraction        :          0.05017
+
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+Traceback (most recent call last):
+  File "/h/abui02/sniper-container/sniper-7.3/tools/viz/viz.py", line 142, in <module>
+    if '2' in levels: level2.createJSONData(defaultinterval, defaultnum_intervals, interval, num_intervals, resultsdir, outputdir, title, use_mcpat, verbose = verbose)
+  File "/h/abui02/sniper-container/sniper-7.3/tools/viz/level2.py", line 497, in createJSONData
+    collectCPIStackDataFIC(verbose = verbose, requested_cores_list = requested_cores_list)
+  File "/h/abui02/sniper-container/sniper-7.3/tools/viz/level2.py", line 122, in collectCPIStackDataFIC
+    cores_list = requested_cores_list,
+  File "/h/abui02/sniper-container/sniper-7.3/tools/cpistack.py", line 21, in cpistack_compute
+    cpidata = cpistack_data.CpiData(jobid = jobid, resultsdir = resultsdir, config = config, stats = stats, data = data, partial = partial)
+  File "/h/abui02/sniper-container/sniper-7.3/tools/cpistack_data.py", line 12, in __init__
+    self.parse()
+  File "/h/abui02/sniper-container/sniper-7.3/tools/cpistack_data.py", line 97, in parse
+    BaseBest = instrs[core] / float(sniper_config.get_config(self.config, 'perf_model/core/interval_timer/dispatch_width', core))
+  File "/h/abui02/sniper-container/sniper-7.3/tools/sniper_config.py", line 50, in get_config
+    is_hetero = (type(config[key]) == collections.defaultdict)
+KeyError: 'perf_model/core/interval_timer/dispatch_width'
+[SNIPER] End
+[SNIPER] Elapsed time: 993.55 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.
+

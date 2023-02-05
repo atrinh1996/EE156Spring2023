@@ -1,0 +1,141 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{Chasing Carbon (2021, IEEE HPCA)}: In this paper, the authors highlight the trend that carbon emissions from computing (both from data centers and consumer devices) has shifted from hardware use and operational energy cnsumption (opex) to hardware manufacturing and facility infastructure (capex). They characterize and quantify the overall environmental impact of opex and capex related activities, showing the capex activities dominate carbon output, and is likely to remain dominating it even if those kinds of emissions are reduced. Their findings demonstrate the need for redesigning systems to be both more efficient and environmentally sustainable; as computing needs are only likely to increase in the future, we need more novel approaches in order to reduce technology's overall carbon footprint.
+
+        
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item The Greenhouse Gas (GHG) Protocol in the context of data centers, mobile devices, and how it applies to hardware manufacturing industry was well described and included plenty of clear examples of which scopes different parts of a hardware's life-cycle fit.
+            \item Visualization of the breakdown of each kind of hardware life-cycle carbon emission were simple and relevant, and helped clarified their discussions on variation in carbon footprints of different platforms and scales. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item There could have been more explanations on how carbon footprinting is addressed across computing stacks touched on in Section VI; this section was brief, broadly touching on areas that their research could help support drive more sustainable work, and did not cite as many sources or data in a way they had done in Section II - V (although it could be that there was a lack of sources to cite for these discussions).
+            % \item It's not clear, but did they only look at emissions report from Apple, and no other companies?
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+    With the growing active push for a greener world, across all domains, it makes sense to generate more interest in more sustainable hardware manufacturing and manufacturing practices, which starts with a more sustainability-conscious approach to systems and hardware design. The authors here take a data-driven approach to paint a detailed picture of the current state of the environmental impact of the tech industry. Amongst their findings, they showed that, even though switching to renewable engery and decades of focus on energy efficiency generally decreased the operational carbon output, a rising percentage of the hardware life-cycle carbon emissions still comes from manufacturing. It is jarring seeing the breakdown of different companies' emissions across many familiar products and in their warehouses; for example, battery-powered devices, against other sources of their emissions, manufacturing accounted for almost 75\% of their carbon emissions, and manufacturing stills account for a substantial 40\% of emissions of for always connected devices. This demonstrates an opprtune route to address environemntal impacts in tech is to target the emissions seen from infastructure and manufacturing, even if it seems they will always remain the majority holder of overall carbon emissions in hardware life-cycle. I believe the authors' quantitiative approach is a good way to not only motivate innovation with reducing carbon footprint in mind, but estabilsh a base to support even environment related industry protocol and legislation, because historically, if a sustainable approach was not seen as profittable to a corporation, it is not pursued. I think this paper will inspire more interest in system designs with reduced carbon footprint, if not change the way how poeple teach it in engineering classes and practice it in industry; without making sacrifices to the demand for increased performance, the future of the field may see a more balanced approach between energy efficiency, performance, and environemntal impact. 
+
+
+    % Notes:
+    %     \begin{itemize}
+    %         \item Greenhouse Gas Protocol quantifies environmental impact of industry partners, and studies the carbon footprint of mobile and data-center hardware.
+    %         \item Publicaly availale sustainability reports shows primary source of carbon emissions (CE) is harware manufacturing, rather than system operation.
+    %         \item Renewable Energy: capex-related activities and hardware manufacturing will continue to domination carbon output, despite growing use of renewable energy. 
+    %     \end{itemize}
+
+    %     Notes
+    %     \begin{itemize}
+    %         \item Reducing Energy consumption alone fails to reduct carbon emissions.
+    %         \item Greenhouse Gas emission (GHG)
+    %         \item Results of organization-level emission analysis using the GHG Protocol method; these can be used across the technology supply chain to develop carbom emission models for computer systems (data centers and mobile platforms).
+    %         \item 3 Scopes of GHG Protocol
+    %     \end{itemize}
+
+
+    % \begin{itemize}
+    %     \item It is jarring seeing the breakdown of different companies' emissions across many familiar products and in their warehouses; in particular battery-powered devices, against other sources of their emissions, manufacturing accounted for almost 3/4 of their carbon emissions, and manufacturing stills account for a substabtial 40\% of emissions of for always connected devices. 
+    %     \item Despite efforts in switching over to renewable energy, which itself only helped decreased the operational carbon output, and had little impact on manufacturing emissions. But this is good because ``that is all thats left''. Renewable energy needs to be used in chip manufacturing to reduce the emissions from hardware manufacturing.
+    %     \item Industries self-report, so the emissions data is a lower-bound. 
+    %     \item Hardware-manufacturing footprint increases with increased hardware capability.
+    %     \item As energy efficiency improves and hardware capability increases, a rising percent of hardware life-cycle emissions come from manufacturing.
+    %     \item With the growing trend for a greener world, it makes sense to generate more interest in greener hardware manufacturing, and a data-driven approach is a good way, both because the evidence an help drive innovation, and because the data could be used to support environment related legislation, because historically, if a sustainable approach was not seen as profittable to a corporation, it is not pursued. Profits and user experience could stand to take some concessions in favor of sustainable technology; and as the research grows and innovation happens, performance and carbon footprint can find their balance. 
+    %     \item Even optimistically, it is likely that even if we reduce emissions from manufacturing, the emissions from manufacturing will still represent a larger part of the hardware life cycle carbon footprint.
+    % \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item 
+    %     \end{itemize}
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{officehours}
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -1,0 +1,44 @@
+benchmark name,input size,L2 size,core0 IPC,Peak Dynamic Power of processor,Peak Dynamic of L2
+fft_O2,small,1024,1.33,101.55,0.06054
+fft_O2,small,4096,1.3,101.162,0.0869907
+fft_O2,small,512,1.34,101.595,0.0458512
+ocean.cont,small,1024,0.82,95.0874,0.267494
+ocean.cont,small,4096,0.84,96.4746,0.403569
+ocean.cont,small,512,0.75,91.3648,0.184325
+radix,small,1024,0.45,71.0703,0.0260047
+radix,small,4096,0.45,71.1103,0.0387652
+radix,small,512,0.45,71.057,0.0196485
+,,,,,
+,,,,,
+benchmark name,L2 size,core0 IPC,,,
+fft_O2,512,1.34,,,
+fft_O2,1024,1.33,,,
+fft_O2,4096,1.3,,,
+ocean.cont,512,0.75,,,
+ocean.cont,1024,0.82,,,
+ocean.cont,4096,0.84,,,
+radix,512,0.45,,,
+radix,1024,0.45,,,
+radix,4096,0.45,,,
+,,,,,
+benchmark name,L2 size,Peak Dynamic Power of processor,,,
+fft_O2,512,101.595,,,
+fft_O2,1024,101.55,,,
+fft_O2,4096,101.162,,,
+ocean.cont,512,91.3648,,,
+ocean.cont,1024,95.0874,,,
+ocean.cont,4096,96.4746,,,
+radix,512,71.057,,,
+radix,1024,71.0703,,,
+radix,4096,71.1103,,,
+,,,,,
+benchmark name,L2 size,Peak Dynamic of L2,,,
+fft_O2,512,0.0458512,,,
+fft_O2,1024,0.06054,,,
+fft_O2,4096,0.0869907,,,
+ocean.cont,512,0.184325,,,
+ocean.cont,1024,0.267494,,,
+ocean.cont,4096,0.403569,,,
+radix,512,0.0196485,,,
+radix,1024,0.0260047,,,
+radix,4096,0.0387652,,,

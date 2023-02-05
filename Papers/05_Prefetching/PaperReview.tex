@@ -1,0 +1,130 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{Designing and Evaluation of Compiler Algorithm for Prefetching (1992):}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item 633 citations
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item Section 2 where they discuss their prefetch algorithm seems more verbose than it needed to be; however, this is coming from the perspective of someone reading their study 30 years later and having learnt about the concept of prefetching and loop unrolling already. The entire section references the same Figure 2 throughout, but it would have been better done both aggregated and broken up, where each new term and strategy they introduced was accompanied by a visual example of how the locality, loop peeling or runrolling, and/or how the prefetching predicate worked with the example. 
+            \item 633 citations; they do software prefetching which inserts instructions; papers as recently as 2022 still Mowry (1992), but more an more, this seems to be in the context of background information for their papers. This is Mowry's PhD thesis. Other similar papers in the early 90s also covered software controlled prefetching. 
+            \item The scope of the compiler algorithm was limited to affine array accesses within scientific applications. Could they have also explored other access patterns in this study (mentioned in sec 6)? If not, it makes sense becauase they did things like assumptions about prefetch accesses not being able to be interrupted, for some of the benchmarks, they manually changed the alignments of the matrices to reduce cache conflicts 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Notes}
+        \begin{itemize}
+            \item Problems in software-controlled prefetching: incurs instruction overhead, increas load on memory subsystem. 
+            \item Address: reduce prefetches (overhead) for data already in cache. 
+            \item Their algorithm: identifies memory references that are likely to be cache misses and only issues prefetch instructions for those.
+                \begin{itemize}
+                    \item Greatly improves performance
+                    \item Better than a prefetch algo that does so indiscriminitely. 
+                \end{itemize}
+            \item They assert that future microprocessors should support memory hierarchy optimizations, i.e. lock-up free caches (allow multiple outstanding misses; ie in prefetch, the software uses instructions to pre-fetch/get data before the normal fetch, which is a ``miss'' om a sense) and ISAs should have prefetch instructions. (complex hardware prefetching is not necessary).
+            \item \textbf{Locality Analysis}:
+                \begin{itemize}
+                    \item intrinsit data reuse (in a loop nest): find instances of data (array) accesses that refer to the same cache line. Temporal, spatial, and group reuses. 
+                    \item exploit set of reuses for cache of particular size
+                \end{itemize}
+            \item They demonstrate the benefits of software controlled prefetching, ie speedup in overall performance, with typically small prefetching memory overhead and sometimes the number of instrs actually decreasings due to savings through loop unrolling.
+            \item I think Fig 3, 4 is good representaation of results. 
+            \item Aspects of Prefetching alforithm:
+                \begin{itemize}
+                    \item Locality analysis - eliminate prefetching overhead by only prefetching for cache miss references (selective prefetching, rather than indiscriminate). Fig. 4 compares performance for no pf, indiscriminate pf, and selective pf. indiscriminate pf suffers from increased instr overhead and stress on memory subsystem, whilc selective pf improve performance and even resulted in gains in some benchmarks. 
+                    \item Loop splitting: selective pf w/ conditional statements vs. selective pf w/loop splitting. the latter performed better, evidence by the instr overhead per prefetch issue. 
+                    \item Software Pipelining: 
+                \end{itemize}
+        \end{itemize}
+
+\begin{thebibliography}{1}
+    \bibitem[1]{paper}Todd C. Mowry, Monica S. Lam, and Anoop Gupta. 1992. Design and evaluation of a compiler algorithm for prefetching. In Proceedings of the fifth international conference on Architectural support for programming languages and operating systems (ASPLOS V), Richard L. Wexelblat (Ed.). ACM, New York, NY, USA, 62-73. DOI=\url{http://dx.doi.org/10.1145/143365.143488}
+\end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
