@@ -301,7 +301,7 @@
         \end{center}
         \end{table}
 
-        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Each were configured with 4 cores and the same L1, L2, and L3 cache sizes (64 KB. 128 KB, and 512 KB, respectively); remaining relevant configuration values were set in the \texttt{gainestown.cfg}. Input size used for all tests was preset \texttt{large}. Figure \ref{topology} visualizes the topologies for all simulations since cache sizes remained constant. 
+        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Each were configured with 4 cores and the same L1, L2, and L3 cache sizes (64 KB. 128 KB, and 512 KB, respectively, each using 64 byte blocks); remaining relevant configuration values were set in the \texttt{gainestown.cfg}. Input size used for all tests was preset \texttt{large}. Figure \ref{topology} visualizes the topologies for all simulations since cache sizes remained constant. 
 
         Three different L3 cache associativities, three different L3 replacement policies, and three benchmarks were swept in this experiment, for a total of 27 simulations (see Table \ref{table:configurations}). L3 is the largest and slowest cached memory unit compared to L1 and L2; it is also shared across the four cores, while each core has their own L1 and L2 caches. Therefore, we picked the lowest performing cache level used by the processing unit to sweep because it is likely to have common impact on performance and energy that is observable on all four cores. The different configurations were simulated with two \texttt{splash2} benchmarks (\texttt{ocean.cont} and \texttt{radix} \cite{splash2}) and one NAS parallel benchmark (\texttt{npb}) (\texttt{is} \cite{npb}). The workloads are briefly described as follow:
 
@@ -319,7 +319,7 @@
         \end{description}
         
 
-        Simulations had either 8-, 16-, or 32-way set associativity in order to observe how power and performance changed with the number of ways. SniperSim McPAT could not output data for a 64-way set associativity and so was excluded from the experiment. 
+        Simulations had either 8-, 16-, or 32-way L3 set associativity in order to observe how power and performance changed with the number of ways. L1 and L2 caches remained 4- and 8-way set associative, respectively, and both used LRU by default. SniperSim McPAT could not output data for a 64-way set associativity for the given L3 cache size (512 KB) and block size (64 bytes) and so was excluded from the experiment. 
 
         All the simulations ran concurrently using bash script(s) and GNU \texttt{parallel} shell tool \cite{parallel}, and post processing of the data were handled with python (v2.7) and bash scripts (included separately). Simulations ran on a python virtual environment and in a detached \texttt{tmux} session, due to long duration of the experiments. Sniper provided data processing tools used were: \texttt{gen\_topology.py}, \texttt{cpi-stack.py}, and \texttt{mcpat.py}.
         
@@ -330,11 +330,7 @@
             \caption{Topology for \texttt{npb-is}, \texttt{splash2-ocean.cont}, and \texttt{splash2-radix} benchmark tests with all consistent cache sizes: 32 KB L1, 128 KS L2, and 512 KB L3. All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} configuration using the \texttt{--viz} and \texttt{--roi} options.}
             \label{topology} 
         \end{figure}
-
-        
- 
-        
-    % \clearpage
+    \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Results \& Analysis}
@@ -345,6 +341,10 @@
             \item Overall performance \emph{improvement} over benchmarks?
             \item Expect
         \end{itemize}
+
+    \subsection{Associativity and Replacement Policy did not affect IPC for ocean.cont and radix}
+
+    
 
     \subsection{Energy Results}
      % \clearpage
@@ -361,7 +361,7 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Appendix: Raw Post Processed Data}
-    \label{appendix}
+    \label{appendix:raw}
 
     \subsection{npb-is} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
@@ -1486,9 +1486,32 @@
             \caption{Specific values for each components' CPI stack fraction of time (See. Fig. \ref{appfig:cpi:radix:rr}), for \texttt{splash2-radix} benchmark with (round robin) L3 associativity of (a) 8, (b) 16, and (c) 32 way.}
             \label{appfig:cpi:radix:rr:values}
         \end{figure}
-        \clearpage
 
+    \clearpage
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+    \section{Appendix: Aggregated Results}
+    \label{appendix:aggregate}
+
+        \begin{figure}[htb!]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./allProcPeakDynamicslabeled.png}
+            \caption{L3 cache associativity and replacement policy graphed against Peak Dynamic Power of Processor for all three benchmarks. }
+            \label{fig:all:ProcPeak}
+        \end{figure}
+
+        \begin{figure}[htb!]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./allL3PeakDynamicslabeled.png}
+            \caption{L3 cache associativity and replacement policy graphed against Peak Dynamic Power of L3 for all three benchmarks. }
+            \label{fig:all:L3Peak}
+        \end{figure}
+
+        \begin{figure}[htb!]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./allIPClabeled.png}
+            \caption{L3 cache associativity and replacement policy graphed against IPC for all three benchmarks. }
+            \label{fig:all:IPC}
+        \end{figure}
 
 \end{document}
