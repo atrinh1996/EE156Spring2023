@@ -344,6 +344,52 @@
 
     \subsection{Associativity and Replacement Policy did not affect IPC for ocean.cont and radix}
 
+    \begin{figure}[htb!]
+        \begin{adjustwidth}{-2.75cm}{}\begin{tabular}{ccc}
+            \begin{subfigure}{0.42\textwidth}
+                \centering
+                \includegraphics[width=1\textwidth]{./oceanIPC.png}
+                \caption{}
+                \label{IPC:ocean}
+            \end{subfigure} &
+            \begin{subfigure}{0.42\textwidth}
+                \centering
+                \includegraphics[width=1\textwidth]{./radixIPC.png}
+                \caption{}
+                \label{IPC:radix}
+            \end{subfigure} &
+            % \begin{subfigure}{0.42\textwidth}
+            %     \centering
+            %     \includegraphics[width=1\textwidth]{./isIPC.png}
+            %     \caption{}
+            %     \label{IPC:is}
+            % \end{subfigure} 
+        \end{tabular}\end{adjustwidth}
+    \end{figure}
+
+    \subsection{Miss Rate Decreased as Associativity Increased}
+    \begin{figure}[htb!]
+        \begin{adjustwidth}{-2.75cm}{}\begin{tabular}{ccc}
+            \begin{subfigure}{0.42\textwidth}
+                \centering
+                \includegraphics[width=1\textwidth]{./oceanL3Miss.png}
+                \caption{}
+                \label{Miss:ocean}
+            \end{subfigure} &
+            \begin{subfigure}{0.42\textwidth}
+                \centering
+                \includegraphics[width=1\textwidth]{./radixL3Miss.png}
+                \caption{}
+                \label{Miss:radix}
+            \end{subfigure} &
+            \begin{subfigure}{0.42\textwidth}
+                \centering
+                \includegraphics[width=1\textwidth]{./isL3Miss.png}
+                \caption{}
+                \label{Miss:is}
+            \end{subfigure} 
+        \end{tabular}\end{adjustwidth}
+    \end{figure}
     
 
     \subsection{Energy Results}
@@ -1505,6 +1551,13 @@
             \includegraphics[width=0.8\textwidth]{./allL3PeakDynamicslabeled.png}
             \caption{L3 cache associativity and replacement policy graphed against Peak Dynamic Power of L3 for all three benchmarks. }
             \label{fig:all:L3Peak}
+        \end{figure}
+
+        \begin{figure}[htb!]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./allMisslabeled.png}
+            \caption{L3 cache associativity and replacement policy graphed against miss rate for all three benchmarks. }
+            \label{fig:all:Miss}
         \end{figure}
 
         \begin{figure}[htb!]
