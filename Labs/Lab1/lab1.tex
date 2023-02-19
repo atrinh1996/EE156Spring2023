@@ -242,17 +242,20 @@
         \bibitem[3]{splash2}S. C. Woo, M. Ohara, E. Torrie, J. P. Singh and A. Gupta, \href{https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.48.2356&rep=rep1&type=pdf}{The SPLASH-2 Programs: Characterizaion and Methodological Considerations}, Proceedings 22nd Annual International Symposium on Computer Architecture, Santa Margherita Ligure, Italy, 1995, pp. 24-36
         \bibitem[4]{npb}Bailey DH, Barszcz E, Barton JT, et al. \href{https://www.nas.nasa.gov/software/npb.html}{The Nas Parallel Benchmarks}. The International Journal of Supercomputing Applications. 1991;5(3):63-73. doi:\url{10.1177/109434209100500306}
         \bibitem[5]{book}John L. Hennessy and David A. Patterson. 2017. Computer Architecture, Sixth Edition: A Quantitative Approach (6th. ed.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA.
+        \bibitem[6]{parallelenergy}S. M. Londono and J. P. de Gyvez, "Extending Amdahl's law for energy-efficiency," 2010 International Conference on Energy Aware Computing, Cairo, Egypt, 2010, pp. 1-4, doi: 10.1109/ICEAC.2010.5702300.
+        \bibitem[7]{lab0}Bui, Amy. EE156 Lab0 Report. 2023.
     \end{thebibliography}
+    \clearpage
 
     \section{Intro}
-        Notes:
-        \begin{itemize}
-            \item Study the effects of cache associativity and replacement policy on performance and energy
-        \end{itemize}
+        % Notes:
+        % \begin{itemize}
+        %     \item Study the effects of cache associativity and replacement policy on performance and energy
+        % \end{itemize}
 
-        This experiement sweeps different test applications (benchmarks) across different configurations of L3 cache associativity and replacement policy, in order to see effects on power and performance. We analyze the affects of L3 cache associativity and replacement policy on instructions per clock cycle (IPC) and energy consumption. 
+        This experiement sweeps different test applications (benchmarks) across different configurations of L3 cache associativity and replacement policy, in order to see effects on power and performance. We analyze the affects of L3 cache associativity and replacement policy on instructions per clock cycle (IPC), energy consumption, and miss rates. It is observed that these sweeps had little effect on energy consumption, and close to none on IPC; variations were seen between the differences in the individual benchmarks when comparing their types of operations. Finally, miss rate appears to decrease with high associativity; however, parallelism does not improve it when the workload is memory intensive.  
         
-        \emph{(Note observations here (i.e. conclusions from Analysis. 1-3 sentences))}
+        % \emph{(Note observations here (i.e. conclusions from Analysis. 1-3 sentences))}
 
         % It is observed that as L2 cache size increases, total energy consumption of a test application also increases slightly, but the L2 energy consumption increases more noticeably. L2 cache size also affects performance (measured by IPC here) differently depending on how much time a process spends on certain types of instructions; L2 cache size is likely to affect IPC if a benchmark substantially relied on memory access operations. 
 
@@ -260,6 +263,7 @@
     % \clearpage
 
     \section{Experimental Setup}
+    \label{sec:setup}
         \begin{table}
         \begin{center} 
             \begin{tabular}{c||c||c}
@@ -301,7 +305,7 @@
         \end{center}
         \end{table}
 
-        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Each were configured with 4 cores and the same L1, L2, and L3 cache sizes (64 KB. 128 KB, and 512 KB, respectively, each using 64 byte blocks); remaining relevant configuration values were set in the \texttt{gainestown.cfg}. Input size used for all tests was preset \texttt{large}. Figure \ref{topology} visualizes the topologies for all simulations since cache sizes remained constant. 
+        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Each were configured with 4 cores and the same L1, L2, and L3 cache sizes (64 KB, 128 KB, and 512 KB, respectively, each using 64 byte blocks); remaining relevant configuration values were set in the \texttt{gainestown.cfg}. Input size used for all tests was preset \texttt{large}. Figure \ref{topology} visualizes the topologies for all simulations since cache sizes remained constant. 
 
         Three different L3 cache associativities, three different L3 replacement policies, and three benchmarks were swept in this experiment, for a total of 27 simulations (see Table \ref{table:configurations}). L3 is the largest and slowest cached memory unit compared to L1 and L2; it is also shared across the four cores, while each core has their own L1 and L2 caches. Therefore, we picked the lowest performing cache level used by the processing unit to sweep because it is likely to have common impact on performance and energy that is observable on all four cores. The different configurations were simulated with two \texttt{splash2} benchmarks (\texttt{ocean.cont} and \texttt{radix} \cite{splash2}) and one NAS parallel benchmark (\texttt{npb}) (\texttt{is} \cite{npb}). The workloads are briefly described as follow:
 
@@ -334,15 +338,94 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Results \& Analysis}
-        Notes:
-        \begin{itemize}
-            \item Measure Hit time and Miss rate (can either be reduces?)
-            \item Higher associativity reduce miss rate (conflict misses), but increase hit time, and power consumption. (\cite{book}, Ch 2)
-            \item Overall performance \emph{improvement} over benchmarks?
-            \item Expect
-        \end{itemize}
+        % Notes:
+        % \begin{itemize}
+        %     \item Measure Hit time and Miss rate (can either be reduces?)
+        %     \item Higher associativity reduce miss rate (conflict misses), but increase hit time, and power consumption. (\cite{book}, Ch 2)
+        %     \item Overall performance \emph{improvement} over benchmarks?
+        %     \item Expect
+        % \end{itemize}
 
-    \subsection{Associativity and Replacement Policy did not affect IPC for ocean.cont and radix}
+    \subsection{Energy Consumption}
+    \label{sec:energy}
+
+        Because only associativity and replacement policy were swept across the L3 cache, energy consumption was not expected to significantly vary across an L3 sweep within an individual benchmark. These figures are in the appendix for organization purposes, but are discussed briefly here to expand on differences observed between individual benchmarks. 
+        
+        Total energy usage across associativity and replacement policies different by hundredths to tenths of joules. The \texttt{npb-is} benchmark had total energy consumption ranging from 16.35 J - 16.87 J, and L3 energy consumption ranging 0.20 J - 0.27 J (Fig. \ref{appfig:power:is:lru} - \ref{appfig:power:is:rr}). The \texttt{splash2-ocean.cont} benchmark had total energy consumption ranging from 61.39 J - 61.91 J, and L3 energy consumption ranging 0.86 J - 1.19 J (Fig. \ref{appfig:power:ocean:lru} - \ref{appfig:power:ocean:rr}). The \texttt{splash2-radix} benchmark had total energy consumption ranging from 1.29 J - 1.31. J, and L3 energy consumption ranging 0.02 J - 0.03 J (Fig. \ref{appfig:power:radix:lru} - \ref{appfig:power:radix:rr}). 
+        
+        Energy consumption within each benchmark remained consistent, however it is clear that certain workloads used more power than others. As previously observe in \cite{lab0}, \texttt{ocean.cont} consumed about 60x more energy than \texttt{radix}; from their CPI stacks (Fig. \ref{appfig:cpi:ocean:lru} - \ref{appfig:cpi:ocean:rr} and Fig. \ref{appfig:cpi:radix:lru} - \ref{appfig:cpi:radix:rr}, respectively) as well as the workload descriptions in Sec. \ref{sec:setup}, \texttt{ocean.cont} had more memory accesses than \texttt{radix}, which itself was dominated by integer and floating point operations. Fewer memory accesses resulted in less power usage. This, likewise, applies to \texttt{radix} having less power than \texttt{npb-is}, as it also has more memory accessing operations than \texttt{radix} (Fig. \ref{appfig:cpi:is:lru} - \ref{appfig:cpi:is:rr}). \texttt{ocean.cont} is seen to consume 4x more energy than \texttt{npb-is} despite having similar fractions of time spent on memory accessing operations. This is likely due to \texttt{npb-is} being a parallel workload and parallelism can be exploited for energy savings \cite{parallelenergy}. Memory accesses consuming more energy and parallelsim contributing to saving energy is also seen in Fig. \ref{fig:all:L3Peak}, where each L3 peak dynamic power of all three benchmarks are plotted together; \texttt{ocean.cont} peaked higher than the other two. 
+
+        \begin{figure}[htb!]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./allL3PeakDynamicslabeled.png}
+            \caption{L3 cache associativity and replacement policy graphed against \textbf{Peak Dynamic Power of L3} for all three benchmarks. }
+            \label{fig:all:L3Peak}
+        \end{figure}
+        % \clearpage
+
+        In plotting the individual \emph{peak} dynamic power across the workloads, we see that in most cases, as associativity increases, so do peak dynamic power of the processor (Fig. \ref{fig:peakDynamicProcessor}) and the L3 cache (Fig. \ref{fig:peakDynamicL3}). While this matches the general observation that higher associativity increases power consumption (\cite{book}, Ch 2), the increases are only on the order of tenths or hundreths (for processor) and thousandths (for L3) of Watts. More significant differences may be observed in tests sweeping higher associativity, block sizes, or more diverse workloads (in terms of fractions of memory accesses). 
+
+        \begin{figure}[htb!]
+            \begin{adjustwidth}{-2.75cm}{}\begin{tabular}{ccc}
+                \begin{subfigure}{0.42\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./oceanPeakDynamicsProcessor.png}
+                    \caption{}
+                    \label{ProcPeak:ocean}
+                \end{subfigure} &
+                \begin{subfigure}{0.42\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./radixPeakDynamicsProcessor.png}
+                    \caption{}
+                    \label{ProcPeak:radix}
+                \end{subfigure} &
+                \begin{subfigure}{0.42\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./isPeakDynamicsProcessor.png}
+                    \caption{}
+                    \label{ProcPeak:is}
+                \end{subfigure} 
+            \end{tabular}\end{adjustwidth}
+            \caption{Peak Dynamic Power of Processor across the L3 sweep.}
+            \label{fig:peakDynamicProcessor}
+        \end{figure}
+    
+        \begin{figure}[htb!]
+            \begin{adjustwidth}{-2.75cm}{}\begin{tabular}{ccc}
+                \begin{subfigure}{0.42\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./oceanPeakDynamics.png}
+                    \caption{}
+                    \label{L3Peak:ocean}
+                \end{subfigure} &
+                \begin{subfigure}{0.42\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./radixPeakDynamics.png}
+                    \caption{}
+                    \label{L3Peak:radix}
+                \end{subfigure} &
+                \begin{subfigure}{0.42\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./isPeakDynamics.png}
+                    \caption{}
+                    \label{L3Peak:is}
+                \end{subfigure} 
+            \end{tabular}\end{adjustwidth}
+            \caption{Peak Dynamic Power of L3 cache across the L3 sweep.}
+            \label{fig:peakDynamicL3}
+        \end{figure}
+        
+        For the \texttt{npb-is} SRRIP tests, it is seen that 16-way set associativity had lower peak dynamic power for both processor and L3 (Fig. \ref{ProcPeak:is} and \ref{L3Peak:is}) then either of the 8- and 32-way. Since this was only observed for \texttt{npb-is} for an L3 using SRRIP replacement policy, this may be unique to a re-reference interval prediction replacement policy for parallel test applications, and would better be served in sweeping more replacement policies or a wider range of L3 associativities. Alternatively, similar to how higher block sizes do not improve performance but can degrade it pass a certain point (\cite{book}, App. B), these results could also imply that power consumptions does not improve at too low or too high associativities. 
+
+        A few consistent effects on energy consumption were seen by replacement policy choice. In particular, round robin, a simple policy implementation, showed lower peak dynamic power for processor and L3 (Fig. \ref{fig:peakDynamicProcessor}, \ref{fig:peakDynamicL3}). This was less conistently observed for the \texttt{npb-is} benchmark (Fig. \ref{ProcPeak:is}, \ref{fig:peakDynamicL3}). These results implies that the type of workload and cache associativity affects energy consumption more than these few policy choice.  
+
+            \clearpage
+
+    \subsection{Performance Analysis: IPC}
+
+        Fig. \ref{fig:IPC} shows that IPC is affected differently based on the test application swept. Replacement policy is not expected to affect IPC, however, Fig. \ref{IPC:ocean} and \ref{IPC:radix} also show that associativity does not affect it, either, for the \texttt{ocean.cont} and \texttt{radix} tests. Because this is not observed for \texttt{npb-is} (Fig. \ref{IPC:is}), this may again be due to the parallelism, because the mix of operations for \texttt{ocean.cont} and \texttt{radix} are sufficiently different (see CPI stacks in Fig. \ref{appfig:cpi:ocean:lru}, \ref{appfig:cpi:radix:lru}). For the parallel workload, IPC slightly improves with increased associativity; another exception is observed for the \texttt{npb-is} workload with an SRRIP L3 cache, in which the 16-way associativity has lower IPC than either the 8- or 32-ways. This aligns with the previously observed lower energy consumption for \texttt{npb-is} 16-way, SRRIP L3 cache test in Sec. \ref{sec:energy}, since fewer instructions execute per clock in this particular scenario.  
+
+        Interestingly, Fig. \ref{fig:all:IPC} shows \texttt{npb-is} had higher IPC than \texttt{radix}, which itself has higher IPC than \texttt{ocean.cont} across all sweeps. This difference is explained by the parallelism since the increased instruction count per clocks comes from more executing at the same time, compared to \texttt{ocean.cont} and \texttt{radix}, which are not tuned for parallelism. 
 
     \begin{figure}[htb!]
         \begin{adjustwidth}{-2.75cm}{}\begin{tabular}{ccc}
@@ -358,16 +441,32 @@
                 \caption{}
                 \label{IPC:radix}
             \end{subfigure} &
-            % \begin{subfigure}{0.42\textwidth}
-            %     \centering
-            %     \includegraphics[width=1\textwidth]{./isIPC.png}
-            %     \caption{}
-            %     \label{IPC:is}
-            % \end{subfigure} 
+            \begin{subfigure}{0.42\textwidth}
+                \centering
+                \includegraphics[width=1\textwidth]{./isIPC.png}
+                \caption{}
+                \label{IPC:is}
+            \end{subfigure} 
         \end{tabular}\end{adjustwidth}
+        \caption{IPC across the L3 sweep in separate benchmarks.}
+        \label{fig:IPC}
     \end{figure}
 
-    \subsection{Miss Rate Decreased as Associativity Increased}
+    \begin{figure}[htb!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{./allIPClabeled.png}
+        \caption{L3 cache associativity and replacement policy graphed against \textbf{IPC} for all three benchmarks. }
+        \label{fig:all:IPC}
+    \end{figure}
+
+    \clearpage
+
+    \subsection{Performance Analysis: Miss Rate}
+        Fig. \ref{fig:Miss} shows that miss rate improves with higher associativity. This is because with more blocks in each set, this lowers the chance of conflict misses when memory accesses index to the same set (\cite{book}, Ch 2). However, this is also at the cost of 1) hit time, as more blocks are being searched in parallel for an access, and 2) higher power consumption (Sec. \ref{sec:energy}). When compared against each other, \texttt{npb-is} shows higher miss rate than either \texttt{ocean.cont} or \texttt{radix}; \texttt{radix} had the least memory access operations, and therefore expected to have the lowest miss rate. \texttt{nbp-is} is also more memory intensive than \texttt{ocean.cont}; despite parallelism previously shown to have helped with energy saving for overall power consumption and peak dynamic power in L3, it does not help the miss rate, as seen in how significantly higher the miss rate for \texttt{npb-is} is than for \texttt{ocean.cont} (Fig. \ref{fig:all:Miss}). 
+
+        The type of workload also appears to have had miss rate affected differently by replacement policy. In particular, memory intensive \texttt{ocean.cont} and \texttt{npb-is} has lower miss rate with round robin, while \texttt{radix} has higher miss rate with round robin. This tells us that more complex replacement policies on memory intensive workloads are a detriment to performance, while simple replacement policies do not benefit the performance of applications with less memory access operations.
+
+
     \begin{figure}[htb!]
         \begin{adjustwidth}{-2.75cm}{}\begin{tabular}{ccc}
             \begin{subfigure}{0.42\textwidth}
@@ -389,20 +488,34 @@
                 \label{Miss:is}
             \end{subfigure} 
         \end{tabular}\end{adjustwidth}
+        \caption{Miss rate across the L3 sweep.}
+        \label{fig:Miss}
     \end{figure}
-    
 
-    \subsection{Energy Results}
-     % \clearpage
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-    \subsection{Performance Analysis}
-    % \clearpage
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{figure}[htb!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{./allMisslabeled.png}
+        \caption{L3 cache associativity and replacement policy graphed against \textbf{miss rate} for all three benchmarks. }
+        \label{fig:all:Miss}
+    \end{figure}
+    \clearpage
 
 
     \section{Conclusion}
+
+        Sweeping the associativity and replacement policy of a unified last level cache show interesting effects on energy consumption and performance. While there were not huge differences in energy consumption in individual benchmarks while varying associativity and replacement policy, some of the trends of increased power were consistent with increasing associativity. More evident was that miss rate did decrease with associativity increasing. Surprisingly, IPC was not impacted by either sweeps, and those seen in the pallel application was inconsistent. And while it was clear that more memory intensive workloads (\texttt{ocean.cont} and \texttt{npb-is}) costed more in terms of energy and performance, we did observe unexpected results in the memory intense parallel benchmark, which showed that parallelism had some energy saving benefits but did not improve in miss rates for more memory intensive operations. If time permitted, this experiment could be expanded upon to included a wider range of replacement policies and associativity. I would expect to see too low and too high associativity to degrade memory performance. And we would sweep aditional parallel workloads, and those with more diverse sets of operations, given variance in the data observed for \texttt{npb-is}; it would be interesting to see if other workloads yield similar deviations or reveal new trends. 
+
+
+        % Memory intense benchmarks consumed more energy, but individually, there was not a huge impact on individual work loads if we vary associativity and policy. 
+
+        % Surprisingly. IPC was not impacted by associativity or replacement policy
+
+        % Parallelism is a contributing factor that affects outcome of performance 
+
+        % Miss rate generally decreases with higher associativity, but higher energy consumption was seen 
+
+
+
     \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -421,19 +534,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/8way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.20 J; Total energy 16.79 J}
                     \label{appfig:power:is:lru:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/16way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.21 J; Total energy 16.43 J}
                     \label{appfig:power:is:lru:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/32way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.27 J; Total energy 16.40 J}
                     \label{appfig:power:is:lru:32}
                 \end{subfigure} 
             \end{tabular}
@@ -450,19 +563,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/8way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.20 J; Total energy 16.75 J}
                     \label{appfig:power:is:srrip:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/16way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.22 J; Total energy 16.82 J}
                     \label{appfig:power:is:srrip:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/32way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.27 J; Total energy 16.35 J}
                     \label{appfig:power:is:srrip:32}
                 \end{subfigure} 
             \end{tabular}
@@ -479,19 +592,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/8way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.20 J; Total energy 16.87 J}
                     \label{appfig:power:is:rr:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/16way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.21 J; Total energy 16.56 J}
                     \label{appfig:power:is:rr:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/npb-is/32way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.27 J; Total energy 16.51 J}
                     \label{appfig:power:is:rr:32}
                 \end{subfigure} 
             \end{tabular}
@@ -797,19 +910,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/8way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.86 J; Total energy 61.46 J}
                     \label{appfig:power:ocean:lru:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/16way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.92 J; Total energy 61.40 J}
                     \label{appfig:power:ocean:lru:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/32way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 1.18 J; Total energy 61.74 J}
                     \label{appfig:power:ocean:lru:32}
                 \end{subfigure} 
             \end{tabular}
@@ -826,19 +939,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/8way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.86 J; Total energy 61.39 J}
                     \label{appfig:power:ocean:srrip:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/16way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.92 J; Total energy 61.41 J}
                     \label{appfig:power:ocean:srrip:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/32way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 1.18 J; Total energy 61.72}
                     \label{appfig:power:ocean:srrip:32}
                 \end{subfigure} 
             \end{tabular}
@@ -855,19 +968,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/8way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.86 J; Total energy 61.52 J}
                     \label{appfig:power:ocean:rr:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/16way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.93 J; Total energy 61.54 J}
                     \label{appfig:power:ocean:rr:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-ocean.cont/32way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 1.19 J; Total energy 61.91 J}
                     \label{appfig:power:ocean:rr:32}
                 \end{subfigure} 
             \end{tabular}
@@ -1173,19 +1286,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/8way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.02 J; Total energy 1.30 J}
                     \label{appfig:power:radix:lru:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/16way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.02 J; Total energy 1.29 J}
                     \label{appfig:power:radix:lru:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/32way-lru/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.03 J; Total energy 1.30 J}
                     \label{appfig:power:radix:lru:32}
                 \end{subfigure} 
             \end{tabular}
@@ -1202,19 +1315,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/8way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.02 J; Total energy 1.30 J}
                     \label{appfig:power:radix:srrip:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/16way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.02 J; Total energy 1.30 J}
                     \label{appfig:power:radix:srrip:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/32way-srrip/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.03 J; Total energy 1.31 J}
                     \label{appfig:power:radix:srrip:32}
                 \end{subfigure} 
             \end{tabular}
@@ -1231,19 +1344,19 @@
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/8way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.02 J; Total energy 1.31 J}
                     \label{appfig:power:radix:rr:8}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/16way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.02 J; Total energy 1.30 J}
                     \label{appfig:power:radix:rr:16}
                 \end{subfigure} &
                 \begin{subfigure}{0.42\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{output/splash2-radix/32way-rr/power-chop.png}
-                    \caption{}
+                    \caption{L3 energy 0.03 J; Total energy 1.31 J}
                     \label{appfig:power:radix:rr:32}
                 \end{subfigure} 
             \end{tabular}
@@ -1536,35 +1649,35 @@
     \clearpage
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    \section{Appendix: Aggregated Results}
-    \label{appendix:aggregate}
+    % \section{Appendix: Aggregated Results}
+    % \label{appendix:aggregate}
 
-        \begin{figure}[htb!]
-            \centering
-            \includegraphics[width=0.8\textwidth]{./allProcPeakDynamicslabeled.png}
-            \caption{L3 cache associativity and replacement policy graphed against Peak Dynamic Power of Processor for all three benchmarks. }
-            \label{fig:all:ProcPeak}
-        \end{figure}
+        % \begin{figure}[htb!]
+        %     \centering
+        %     \includegraphics[width=0.8\textwidth]{./allProcPeakDynamicslabeled.png}
+        %     \caption{L3 cache associativity and replacement policy graphed against \textbf{Peak Dynamic Power of Processor} for all three benchmarks. }
+        %     \label{fig:all:ProcPeak}
+        % \end{figure}
 
-        \begin{figure}[htb!]
-            \centering
-            \includegraphics[width=0.8\textwidth]{./allL3PeakDynamicslabeled.png}
-            \caption{L3 cache associativity and replacement policy graphed against Peak Dynamic Power of L3 for all three benchmarks. }
-            \label{fig:all:L3Peak}
-        \end{figure}
+        % \begin{figure}[htb!]
+        %     \centering
+        %     \includegraphics[width=0.8\textwidth]{./allL3PeakDynamicslabeled.png}
+        %     \caption{L3 cache associativity and replacement policy graphed against \textbf{Peak Dynamic Power of L3} for all three benchmarks. }
+        %     \label{fig:all:L3Peak}
+        % \end{figure}
 
-        \begin{figure}[htb!]
-            \centering
-            \includegraphics[width=0.8\textwidth]{./allMisslabeled.png}
-            \caption{L3 cache associativity and replacement policy graphed against miss rate for all three benchmarks. }
-            \label{fig:all:Miss}
-        \end{figure}
+        % \begin{figure}[htb!]
+        %     \centering
+        %     \includegraphics[width=0.8\textwidth]{./allMisslabeled.png}
+        %     \caption{L3 cache associativity and replacement policy graphed against \textbf{miss rate} for all three benchmarks. }
+        %     \label{fig:all:Miss}
+        % \end{figure}
 
-        \begin{figure}[htb!]
-            \centering
-            \includegraphics[width=0.8\textwidth]{./allIPClabeled.png}
-            \caption{L3 cache associativity and replacement policy graphed against IPC for all three benchmarks. }
-            \label{fig:all:IPC}
-        \end{figure}
+        % \begin{figure}[htb!]
+        %     \centering
+        %     \includegraphics[width=0.8\textwidth]{./allIPClabeled.png}
+        %     \caption{L3 cache associativity and replacement policy graphed against \textbf{IPC} for all three benchmarks. }
+        %     \label{fig:all:IPC}
+        % \end{figure}
 
 \end{document}
