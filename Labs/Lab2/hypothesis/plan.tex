@@ -245,26 +245,47 @@
     % \end{thebibliography}
     % \clearpage
 
-    \bibliographystyle{acm}%Used BibTeX style is acm
-    \bibliography{sources}
+    
 
     \section{Hypothesis}
     \label{intro}
 
         % Chapter 3.4 (Dynamic Scheduling, Tomasulo's Algorithm) \cite{textbook,sniper,splash2,npb,parallel,ua} 
 
-        Increasing the number of reservation stations and the commit width will increase IPC. By increasing the instruction-level parallelism (ILP),  this reduces data hazards and control hazard stalls, and therefore improves performance \cite{textbook}.
+        Increasing the number of reservation stations will increase IPC because increasing the instruction-level parallelism (ILP) can reduce data hazards and control hazard stalls by queuing up more instructions, and therefore improves performance. The effects on power consumption as the number of reservation stations increase may be application dependent, as useless speculations can raise average power consumption if execution time isn't sufficiently lowered \cite{textbook} (3.9).
+
+
+        % \textsc{Notes}
+        % \begin{itemize}
+        %     \item Dynamic scheduling allows the processir to tolerate unpredictable delays (e.g. cache misses) by executing other code while it waits to resolve the misses \cite{textbook} Ch. 3 pg. 192.
+        %     \item Dynamic scheduling advantages are gained at the cost of hardware complexity. It doesn't change data flow, but avoids stalling during dependences.  \cite{textbook} Ch. 3 pg. 192.
+        %     \item Hazards in typical single, in-order execution create performance limitations. True data-dependency (RAW), antidependency (WAR), and output dependency (WAW).
+        %     \item The idea is to issue instructions in-order, execute out-of-order, and commit instructions in-order. 
+        %     \item Reservation stations provide forwarding to reduce RAW. 
+        %     \item Reservation stations fetches and buffers the operand as soon as its available. 196
+        %     \item RS provides register renaming, because register specifiers for pending operands are renamed to the names of the RS. 197 
+        %     \item 3.9 p 238 Speculation can raise power consumption, especially if speculated instructions' results aren't guaranteed, or if speculations need undoing. If pseculation lowers execution time, by more than it increases average power consumption, total energy consumption can lower. 
+        %     \item pg 264: aggressive ILP didn't always yield better performance. The limitation to exploiting ILP was memory system. They can hide 10-15 miss penalties for first level misses, but very little was done for lower level misses that had to fetch from main memory (50-100 cycle penalties). This is why we turned to multicore. Bigger caches was easier than building 20+ stage pipelines. 
+        %     \item ILP is hard to find 
+        %     \item  ILP limits \cite{ilplimits}. ILP is not unlimitedly available. Page 263 summarizes the report on what to do to exploit ILP to the most:
+        %     \begin{itemize}
+        %         \item Up to 64 instructions issues and dispatchers per clock 
+        %         \item larger issue rates come with complexity and power problems. 
+        %     \end{itemize}
+        % \end{itemize}
+
+        
 
     % \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
 
-    \section{Experiment Design}
+    \section{Experiment Plan}
     \label{sec:setup}
 
         \begin{table}[h]
         \begin{center} 
-            \begin{tabular}{c||c||c}
+            \begin{tabular}{c||c}
                 \begin{tabular}{|l|}
                     \hline
                     \textbf{Benchmark} \\ 
@@ -274,38 +295,48 @@
                     \texttt{splash2-radix}\\
                     \texttt{splash2-barnes}\\
                     \texttt{npb-is}\\
-                    \texttt{npb-ep}\\
-                    \texttt{npb-mg}\\
+                    % \texttt{npb-ep}\\
+                    % \texttt{npb-mg}\\
                     \texttt{npb-ua}\\
                     \hline 
                 \end{tabular}
-                & 
-                \begin{tabular}{|l|}
-                    \hline
-                    \textbf{ROB: commit\_width} \\ 
-                    \hline 
-                    \hline
-                    36 \\
-                    \hline 
-                \end{tabular}
+                % & 
+                % \begin{tabular}{|l|}
+                %     \hline
+                %     \textbf{ROB: commit\_width} \\ 
+                %     \hline 
+                %     \hline
+                %     4 \\
+                %     \hline 
+                % \end{tabular}
                 &
                 \begin{tabular}{|l|}
                     \hline
                     \textbf{Reservation Station Entries} \\ 
                     \hline 
                     \hline
-                    32 \\ 
-                    64 \\
+                    2 \\ 
+                    4 \\
+                    8 \\
+                    16 \\
+                    32 \\
+                    48 \\
+                    64 \\ 
+                    98 \\ 
                     128 \\
-                    512 \\
-                    1024 \\
                     \hline 
                 \end{tabular}
             \end{tabular}
-            \caption{Configuration parameters and values swept in the experiment.}
+            \caption{Configuration parameters and values swept in the experiment \cite{splash2,npb,ua}.}
             \label{table:configurations}
         \end{center}
         \end{table}
 
+    The experiment will sweep the above number of reservation stations across the benchmarks listed in Table \ref{table:configurations}. The \texttt{commit\_width} configuration value will be at a constant \href{https://groups.google.com/g/snipersim/c/LwG6uAnBcCE/m/EMLq9eyPCwAJ}{4}. Based on previous experiments, the time estimate to do the 45 simulations is about 6 hours. Since the experiment focuses on a particular ILP and not thread-level parallelism, it will run with 1 core, but may also try 2 and 4 cores if there is time to see any effects on the parallel benchmarks. No performance changes may be seen in the parallel benchmarks, unlike the single threaded benchmarks for similar reasons. A processor that aggressively exploits ILP has up to 64 issues and dispatchs per clock (\cite{ilplimits}, \cite{textbook} (3.13)), so a few values beyond 64 reservation stations are included to see if 64 is where this peaked. 
+
+    Cache associativty and block size do not affect my hypothesis with regards to exploiting the ILP; however, there may be some application dependent benefits (namely, memory access heavy benchmarks) to increasing both in L1 or L2, based on previous experiements sweeping cache sizes and associativity. Likewise, prefetching is not expected to affect the hypothesis because it is already focusing on increasing the number of instructions in flight at once. 
+
+    \bibliographystyle{acm}%Used BibTeX style is acm
+    \bibliography{sources}
 
 \end{document}
