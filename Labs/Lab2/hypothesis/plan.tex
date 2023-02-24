@@ -227,7 +227,7 @@
 % \date{\today}
 % \maketitle
 
-\doheading{2}{title}{Lab 1}
+\doheading{2}{title}{Lab 2a}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Table of Contents
@@ -332,9 +332,25 @@
         \end{center}
         \end{table}
 
-    The experiment will sweep the above number of reservation stations across the benchmarks listed in Table \ref{table:configurations}. The \texttt{commit\_width} configuration value will be at a constant \href{https://groups.google.com/g/snipersim/c/LwG6uAnBcCE/m/EMLq9eyPCwAJ}{4}. Based on previous experiments, the time estimate to do the 45 simulations is about 6 hours. Since the experiment focuses on a particular ILP and not thread-level parallelism, it will run with 1 core, but may also try 2 and 4 cores if there is time to see any effects on the parallel benchmarks. No performance changes may be seen in the parallel benchmarks, unlike the single threaded benchmarks for similar reasons. A processor that aggressively exploits ILP has up to 64 issues and dispatchs per clock (\cite{ilplimits}, \cite{textbook} (3.13)), so a few values beyond 64 reservation stations are included to see if 64 is where this peaked. 
+    The experiment will sweep the above number of reservation stations across the benchmarks listed in Table \ref{table:configurations}. The \texttt{commit\_width} configuration value will be at a constant \href{https://groups.google.com/g/snipersim/c/LwG6uAnBcCE/m/EMLq9eyPCwAJ}{4}. Based on previous experiments, the time estimate to do the 45 simulations is about 6 hours. Since the experiment focuses on a particular ILP and not thread-level parallelism, it will run with 1 core, but may also try 2 and 4 cores if there is time to see any effects on the parallel benchmarks (example designs in Fig. \ref{arch} and \ref{rob}). No performance changes may be seen in the parallel benchmarks, unlike the single threaded benchmarks for similar reasons. A processor that aggressively exploits ILP has up to 64 issues and dispatchs per clock (\cite{ilplimits}, \cite{textbook} (3.13)), so a few values beyond 64 reservation stations are included to see if 64 is where this peaked. 
 
     Cache associativty and block size do not affect my hypothesis with regards to exploiting the ILP; however, there may be some application dependent benefits (namely, memory access heavy benchmarks) to increasing both in L1 or L2, based on previous experiements sweeping cache sizes and associativity. Likewise, prefetching is not expected to affect the hypothesis because it is already focusing on increasing the number of instructions in flight at once. 
+
+
+    \begin{figure}[htb!]
+        \centering 
+        \includegraphics[width=0.7\textwidth]{cores.png}
+        \caption{Experiment plan for 1, 2, and 4 core architectures.}
+        \label{arch}
+    \end{figure}
+
+    \begin{figure}[htb!]
+        \centering 
+        \includegraphics[width=0.5\textwidth]{rob.png}
+        \caption{Experiment plan for reservation station entry sweep.}
+        \label{rob}
+    \end{figure}
+    \clearpage
 
     \bibliographystyle{acm}%Used BibTeX style is acm
     \bibliography{sources}
