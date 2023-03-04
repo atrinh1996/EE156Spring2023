@@ -1,0 +1,9 @@
+infostr = '{"intervalsize": 32000000000, "use_mcpat": false, "num_intervals": 1295, "name": "8"}';
+palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
+cpipercentagelabels = [{"color": "rgb(102,0,0)", "name": "base"}, {"color": "rgb(255,0,0)", "name": "rs_full"}, {"color": "rgb(255,153,153)", "name": "serial"}, {"color": "rgb(255,255,0)", "name": "branch"}, {"color": "rgb(0,101,0)", "name": "ifetch"}, {"color": "rgb(0,178,0)", "name": "mem-l1d"}, {"color": "rgb(0,255,0)", "name": "mem-l2"}, {"color": "rgb(76,255,76)", "name": "mem-l3"}, {"color": "rgb(153,255,153)", "name": "mem-dram"}, {"color": "rgb(0,0,102)", "name": "sync-futex"}, {"color": "rgb(0,0,255)", "name": "imbalance-start"}, {"color": "rgb(153,153,255)", "name": "imbalance-end"}];
+palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
+cpipercentagesimplifiedlabels = [{"color": "rgb(255,0,0)", "name": "compute"}, {"color": "rgb(255,255,0)", "name": "branch"}, {"color": "rgb(0,255,0)", "name": "memory"}, {"color": "rgb(0,0,255)", "name": "synchronize"}];
+palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
+cpificlabels = [{"color": "rgb(102,0,0)", "name": "base"}, {"color": "rgb(255,0,0)", "name": "rs_full"}, {"color": "rgb(255,153,153)", "name": "serial"}, {"color": "rgb(255,255,0)", "name": "branch"}, {"color": "rgb(0,101,0)", "name": "ifetch"}, {"color": "rgb(0,178,0)", "name": "mem-l1d"}, {"color": "rgb(0,255,0)", "name": "mem-l2"}, {"color": "rgb(76,255,76)", "name": "mem-l3"}, {"color": "rgb(153,255,153)", "name": "mem-dram"}, {"color": "rgb(0,0,102)", "name": "sync-futex"}, {"color": "rgb(0,0,255)", "name": "imbalance-start"}, {"color": "rgb(153,153,255)", "name": "imbalance-end"}];
+palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
+simplelabels = [{"color": "rgb(255,0,0)", "name": "compute"}, {"color": "rgb(255,255,0)", "name": "branch"}, {"color": "rgb(0,255,0)", "name": "memory"}, {"color": "rgb(0,0,255)", "name": "synchronize"}];

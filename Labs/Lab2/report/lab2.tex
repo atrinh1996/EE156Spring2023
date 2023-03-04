@@ -241,14 +241,35 @@
         \bibitem[2]{parallel}O. Tange (2011): \href{https://www.gnu.org/software/parallel/parallel_tutorial.html}{GNU Parallel}  - The Command-Line Power Tool
         \bibitem[3]{splash2}S. C. Woo, M. Ohara, E. Torrie, J. P. Singh and A. Gupta, \href{https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.48.2356&rep=rep1&type=pdf}{The SPLASH-2 Programs: Characterizaion and Methodological Considerations}, Proceedings 22nd Annual International Symposium on Computer Architecture, Santa Margherita Ligure, Italy, 1995, pp. 24-36
         \bibitem[4]{npb}Bailey DH, Barszcz E, Barton JT, et al. \href{https://www.nas.nasa.gov/software/npb.html}{The Nas Parallel Benchmarks}. The International Journal of Supercomputing Applications. 1991;5(3):63-73. doi:\url{10.1177/109434209100500306}
-        \bibitem[5]{book}John L. Hennessy and David A. Patterson. 2017. Computer Architecture, Sixth Edition: A Quantitative Approach (6th. ed.). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA.
-        \bibitem[6]{parallelenergy}S. M. Londono and J. P. de Gyvez, "Extending Amdahl's law for energy-efficiency," 2010 International Conference on Energy Aware Computing, Cairo, Egypt, 2010, pp. 1-4, doi: 10.1109/ICEAC.2010.5702300.
-        \bibitem[7]{lab0}Bui, Amy. EE156 Lab0 Report. 2023.
+        \bibitem[5]{book}John L. Hennessy and David A. Patterson. 2017. Computer Architecture, Sixth Edition: A Quantitative Approach. Morgan Kaufmann Publishers Inc., San Francisco, CA, USA.
+        \bibitem[6]{londono}S. M. Londono and J. P. de Gyvez. \href{https://ieeexplore.ieee.org/document/5702300}{Extending Amdahl's law for energy-efficiency}. 2010. International Conference on Energy Aware Computing, Cairo, Egypt, 2010, pp. 1-4, doi: 10.1109/ICEAC.2010.5702300.
+        \bibitem[7]{ilplimits} DW Wall. \href{https://dl.acm.org/doi/pdf/10.1145/106972.106991}{Limits of Instruction-Level Parallelism}. 1991. Proceedings of 4th International Conference on Architectural Support for Programming Languages and Operating Systems. 176-188.
+        \bibitem[8]{stark}Jared Stark, Paul Racunas, and Yale N. Patt. 1997. \href{https://dl.acm.org/doi/10.5555/266800.266804}{Reducing the performance impact of instruction cache misses by writing instructions into the reservation stations out-of-order}. In Proceedings of the 30th annual ACM/IEEE international symposium on Microarchitecture (MICRO 30). IEEE Computer Society, USA, 34-43.
+        % \bibitem[9]{jimenez}Liliana Margarita Espinosa Jimenez and Michael Opoku Agyeman. 2018. \href{https://dl.acm.org/doi/10.1145/3284557.3284562}{A Study of Techniques to Increase Instruction Level Parallelisms}. In Proceedings of the 2nd International Symposium on Computer Science and Intelligent Control (ISCSIC '18). Association for Computing Machinery, New York, NY, USA, Article 41, 1-5. \url{https://doi.org/10.1145/3284557.3284562}
+        \bibitem[9]{tomasulo}Tomasulo, R.M., 1967. An efficient algorithm for exploiting multiple arithmetic units. IBM
+        J. Res. Dev. 11 (1), 25-33.
     \end{thebibliography}
     \clearpage
 
     \section{Intro}
     \label{intro}
+        \begin{itemize}
+            \item Describe Tomasulo's algorithm and what is uses to work at a high level. 
+            \item mention use of reservation stations 
+            \item mention sweeping reservation stations 
+            \item briefly describe overall results. 
+        \end{itemize}
+
+        Tomasulo's algorithm is a computer hardware algorithm that allows for out-of-order (OOO) execution of instructions with the use of multiple functional/execution units. 
+
+        dynamically determining when an instruction is ready to execute and renaming registers to avoid unnecessary hazards.
+
+        register renaming is provided by reservation stations (RS), which buffers the operands of instructions that are waiting to issue and each associated with an executing funcitonal unit. An RS fetches and buffers an operand as soon as it is available, which eliminates the need to read the operands from registers. Waiting instructions designate the RS that will provide their inputs/operands. When successive writes to a register overlap in execution, only the last one updates to the register, As instructions are issued, the register specifiers for pending operands are renamed to the names of the reservation station, which provides register renaming \cite{book}.
+
+        reduces read-after-write (RAW), write-after-write (WAW), and write-after-read (WAR) hazards. RAW is avoided by waiting for inputs to be available through the common data bus (CDB) that delivers computed inputs before executing instructions, and WAW and WAR are avoided with register renaming \cite{book}
+
+        improves the parallel execution of instructions that may otherwise stall due to those hazards under other kinds of architectures. 
+
     % \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
@@ -257,7 +278,7 @@
     \label{sec:setup}
         \begin{table}
         \begin{center} 
-            \begin{tabular}{c||c||c}
+            \begin{tabular}{c||c}
                 \begin{tabular}{|l|}
                     \hline
                     \textbf{Benchmark} \\ 
@@ -265,29 +286,26 @@
                     \hline
                     \texttt{splash2-ocean.cont} \\ 
                     \texttt{splash2-radix}\\
+                    \texttt{splash2-barnes}\\
                     \texttt{npb-is}\\
+                    \texttt{npb-cg}\\
                     \hline 
                 \end{tabular}
                 & 
                 \begin{tabular}{|l|}
                     \hline
-                    \textbf{L3 Associativity} \\ 
+                    \textbf{Reservation Station Entries} \\ 
                     \hline 
                     \hline
-                    8 \\ 
+                    2 \\ 
+                    4 \\
+                    8 \\
                     16 \\
                     32 \\
-                    \hline 
-                \end{tabular}
-                &
-                \begin{tabular}{|l|}
-                    \hline
-                    \textbf{L3 Eviction Policy} \\ 
-                    \hline 
-                    \hline
-                    \texttt{LRU} \\ 
-                    \texttt{SRRIP}\\
-                    \texttt{Round Robin}\\
+                    48 \\
+                    64 \\ 
+                    98 \\ 
+                    128 \\
                     \hline 
                 \end{tabular}
             \end{tabular}
@@ -296,25 +314,33 @@
         \end{center}
         \end{table}
 
-        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Each were configured with 4 cores and the same L1, L2, and L3 cache sizes (64 KB, 128 KB, and 512 KB, respectively, each using 64 byte blocks); remaining relevant configuration values were set in the \texttt{gainestown.cfg}. Input size used for all tests was preset \texttt{large}. Figure \ref{topology} visualizes the topologies for all simulations since cache sizes remained constant. 
+        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Since this experiment looked to sweep instruction-level parallelism (ILP), each simulation was configured with 1 core to isolate the feature of multiple instructions simultaneouly in flight. The same default configurations were set in \texttt{gainestown.cfg} and \texttt{rob.cfg}. Those worth noting for purposes of this experiment are: 
+        
+        window size of 128; 
+        
+        commit width 128, default in \texttt{rob.cfg}. Reasonable width is 4, but due to simulations taking an excess of 24 hours and running, we decided the large default commit width would yield results in reasonable time for the given purpose. 
+        
+        L1, L2, and L3 cache sizes (64 KB, 256 KB, and 8192 KB, respectively, each using 64 byte blocks); 
+        
+        Figure \ref{topology} visualizes the topologies for all simulations since cache sizes remained constant. 
 
-        Three different L3 cache associativities, three different L3 replacement policies, and three benchmarks were swept in this experiment, for a total of 27 simulations (see Table \ref{table:configurations}). L3 is the largest and slowest cached memory unit compared to L1 and L2; it is also shared across the four cores, while each core has their own L1 and L2 caches. Therefore, we picked the lowest performing cache level used by the processing unit to sweep because it is likely to have common impact on performance and energy that is observable on all four cores. The different configurations were simulated with two \texttt{splash2} benchmarks (\texttt{ocean.cont} and \texttt{radix} \cite{splash2}) and one NAS parallel benchmark (\texttt{npb}) (\texttt{is} \cite{npb}). The workloads are briefly described as follow:
+
+        Nine different reservation station (RS) entries across five benchmarks were swept, for a total of 45 simulations (see Table \ref{table:configurations}). The different configurations were simulated with three \texttt{splash2} benchmarks (\texttt{barnes}, \texttt{ocean.cont} and \texttt{radix} \cite{splash2}) and two NAS parallel benchmark (\texttt{npb}) (\texttt{is} and \texttt{cg} \cite{npb})\footnote{Originally picked \texttt{ua}}. These were chose for the range of simple to complex memory access patterns. Two benchmarks from \texttt{nbp} were also included to show the effects of increasing ILP for applications that would benefit from more thread-level parallelism (TLP).
+        
+        The workloads are briefly described as follow:
 
         \begin{description}
+            \item[\textbf{splash2-barnes}]: The \texttt{barnes} application implements the Barnes-Hut method to simulate interactions of systems of N-bodies (particles, galaxies, etc.) in 3D.
             \item[\textbf{splash2-ocean.cont}]: The \texttt{ocean} suite of test studies large-scale ocean movements based on currents, and uses 4D array grids and a red-black Gauss-Seidel multigrid equation solver. 
             \item[\textbf{splash2-radix}]: The \texttt{radix} suite uses an iterative radix sort algorithm that generates histograms and has each processor permute array index keys, a process that depends on processors communicating in order to determine keys thorough writes.
             \item[\textbf{npb-is}]: The NASA Advanced Supercomputing (NAS) Parallel Benchmarks (NPB) are a set of benchmarks tuned for highly parallel workloads. The \texttt{is} kernal performs a sorting operation that is important as ``particle method'' code (ex. simulations of mechanics (solid, fluid, etc.) as discrete ``particles''), testing both integer computation speed and communication performance. This benchmark excludes floating point arithmetic. 
+            \item[\textbf{npb-cg}]: This benchmark uses a conjugate gradient method that computes the smallest eigenvalue of a large, sparse symmetric, positive definite matrix. It tests irregular, long distance communication and employs unstructured matrix vector multiplication. 
+            %  using the inverse iteration with the conjugate gradient method as a subroutine for solving systems of linear equations.
         \end{description}
 
-        Three varied replacement policies were chosen in order to observe the effects of different replacement models on power and performance. They are as follow:
-        \begin{description}
-            \item[\textbf{Least Recently Used (LRU)}]: LRU is a recency-based policy that replaces the least recently used block, which involved tracking when blocks are accessed/re-referenced.
-            \item[\textbf{Static Re-Reference Interval Prediction (SRRIP)}]: SRRIP is a policy that uses a re-reference prediction value (RRPV) to ``predict'' the how likely a block will be referenced again; this policy uses 2-bit RRPV and is likely to evict recently inserted cache blocks. 
-            \item[\textbf{Round Robin}]: Round robin is a queue-based policy that replaces the cache blocks in sequential order, evicting the oldest block in a set in a first-in-first-out (FIFO) manner.
-        \end{description}
-        
 
-        Simulations had either 8-, 16-, or 32-way L3 set associativity in order to observe how power and performance changed with the number of ways. L1 and L2 caches remained 4- and 8-way set associative, respectively, and both used LRU by default. SniperSim McPAT could not output data for a 64-way set associativity for the given L3 cache size (512 KB) and block size (64 bytes) and so was excluded from the experiment. 
+
+
 
         All the simulations ran concurrently using bash script(s) and GNU \texttt{parallel} shell tool \cite{parallel}, and post processing of the data were handled with python (v2.7) and bash scripts (included separately). Simulations ran on a python virtual environment and in a detached \texttt{tmux} session, due to long duration of the experiments. Sniper provided data processing tools used were: \texttt{gen\_topology.py}, \texttt{cpi-stack.py}, and \texttt{mcpat.py}. 
         

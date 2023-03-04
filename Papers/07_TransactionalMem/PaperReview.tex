@@ -1,0 +1,150 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{listings}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+\lstset{frame=none,
+    language=Verilog,
+    aboveskip=3mm,
+    belowskip=3mm,
+    stepnumber=0, % set to 0 if you don't like line nums
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=left,
+    numberstyle=\color{black},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    backgroundcolor=\color{light-gray},
+    breaklines=true,
+    breakatwhitespace=false,
+    tabsize=2
+}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{Transactional Memory: Architectural Support for Lock-Free Data Structures (1993):} The authors offer a multiprocessor architecture that accomodates easy-to-use lock-free synchronization, performing atomic updates without the general problems seen with locks/mutual exclusion (priority inversion, convoying, and deadlocks). This architecture is called transactional memory (TM), which is implemented as extensions to multiprocessor cache-coherence protocols. Transactional memory is shown to perform as well as, if not better than, conventional lock-based techniques for atomic updates of the time of the paper, producing higher throughput than the other hardware- and software-based lock-based mechanisms at all levels of concurrency in most cases for simple benchmarks. Since TM does not use locks, it requires fewer accesses to shared memory and therefore accomplishes work in fewer cycles. 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item The experiment compares TM to a variety of other competitive lock mechnisms, benchmarking against both hardware- and software-based mechanisms for mutual exclusion.
+            \item The paper clearly characterizes the benchmarks they created (Sec. 5), highlighting key features that their architecture hoped to target and perform well with in real applications. They discuss reasonable explanations for certain performance difference such as cost of contention with lock mechanisms, while also recognizing the limitations of their implementation and methodology, namely how small their critical sections are and them accommodating short transactions. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item The paper only measures performance outcomes with elapsed time between the different atomic updating techniques, rather than also reporting other metrics, such as IPC or power consumption. 
+            \item The experiment did not test the TM on a more varied set of applications with different kinds of memory access patterns. The paper only focuses on three simple benchmarks (counting, DLL, and producer/consumer).
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+        Herlihy and Moss' work has held up since they first published on TM in 1993, mainly in academic research. Different abstractions and/or implementations of TM have been studied and published even as recently as within the last few years. Harris, Larus and Rajwar published on the topic in the 2010 Synthesis Lectures in Computer Architecture \cite{harris}, where Herlihy's recent works at the time were still referenced. TM is found to be used in some software and hardware applications. \lstinline!gcc! offers the transactional memory library with the \lstinline!-fgnu-tm! flag \cite{gnutm}. \lstinline|GHC| offers a similar abstraction with the STM \cite{haskell}. ARM offers hardware transaction memory extension (TME) \cite{arm}. And IBM had TM implemented on certain systems, such as the Blue Gene/Q (supercomputer) and zEC12 (mainframe), but each were discontinued in 2015 and 2016, respectively. More systems are listed in the Syntesis Lecture, but it appears lack of proliferation in the market is due to difficulties in integrating existing TM mechanisms with other systems. Otherwise, TM remains an active area of research because it holds promise as a solution for parallel programming, and it is likely industries will try implementing more reliable TM for their systems. It was not necessarily simple finding out why systems with TM were few or decisively why they get discontinued by major companies, but some likely reasons may be maintainability and cost, functionality and correctness of computation, and large abort rates for larger applications, the later of which was an open problem for the paper given that TM was a new architecture at the time. Given how large software applications have grown even in more recent years, the more important problems to address in TM may be reliabilty of such systems and reducing the abort rates.
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item Shared DS is \textbf{lock-free} is operations don't require mutual exclusion. (lck-free concurrent DS)
+    %         \item Lock-free avoids the problems of locks: 
+    %             \begin{itemize}
+    %                 \item priority inversion: lower priority process is preempted while holding a lock needed by a higher priority process. 
+    %                 \item convoying (interrupts): when a pprocess holding a lock is descheduled (by using up the time slice, page faulting, or other interrupts). Which such interrupts, other processes capable of running may be unable to progress. 
+    %                 \item deadlock: processes attempting to lock the same set of objects in different order. 
+    %             \end{itemize}
+    %         \item \textbf{Transactional memory}: a new multiprocessor architecture intended to make lock-free synchronization as efficient and easy to use as conventional techniques based mutual exclusion (locking). The goal is to make it easier to perform general atomic updates of multiple independent memory words, avoiding problems of locks
+    %         \item TransMem offers new functionality, and outperforms other techniques for \textbf{atomic updates}, because it uses no explicit locks and this performs fewer shared emmory accesses. 
+    %         \item transaction: finite sequence of machine instructions exeuted by a single process. Serializable (in-order transactions) and atomic (changes to shared memory either commit (effective) for abort (discarded)).
+    %         \item Primitive Instr: load-transactional (reads), load-transactional-exclusive (read, hint at update), store-transactional (writes) ; there are transaction read sets and write sets. Nothing is visible until commits. 
+    %         \item Manipulate transaction state: commit, abort, validate
+    %         \item Programmer must define read-modify-write operations that oeprate on arbitrary regions of memory, not just single words
+    %         \item Transactions are intended to replae short critical sections
+    %     \end{itemize}
+
+\begin{thebibliography}{1}
+    \bibitem[1]{paper}Maurice Herlihy and J. Eliot B. Moss. 1993. “Transactional memory: architectural support for lock-free data structures. In Proceedings of the 20th annual international symposium on computer architecture (ISCA '93). ACM, New York, NY, USA, 289-300. \url{http://dx.doi.org/10.1145/165123.165164}  
+    \bibitem[2]{harris}Tim Harris, James Larus, and Ravi Rajwar. 2010. \href{https://link.springer.com/book/10.1007/978-3-031-01728-5}{Transactional Memory, 2nd Edition}. Synthesis Lectures on Computer Architecture. Springer Cham.
+    \bibitem[3]{gnutm}\href{https://gcc.gnu.org/onlinedocs/gcc-5.5.0/libitm.pdf}{The GNU Transactional Memory Library}. Free Software Foundation, Inc. 2015.
+    \bibitem[4]{haskell}\href{https://wiki.haskell.org/Software_transactional_memory}{Software Transactional Memory (STM)}. Haskell Wiki. 2022.
+    \bibitem[5]{arm}\href{https://developer.arm.com/documentation/102873/0100/The-Arm-Transactional-Memory-Extension}{Overview of Arm Transactional Memory Extension (TME)}. Armv9-A Documentation. 
+    \bibitem[6]{ibm}\href{https://www.ibm.com/docs/en/xffbg/121.141?topic=fortran-transactional-memory}{Transactional Memory}. IBM. 2021. 
+\end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
