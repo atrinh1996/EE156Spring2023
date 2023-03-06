@@ -1,0 +1,134 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{Efficient Virtual Memory for Big Memory Servers (2013)}: The authors propose an efficient memory mapping technique called direct-segment. As memory resources increase and the cost decreases, applications are trending towards larger memory requirements. This leads to the increase in overhead of address translation and therefore the cost of TLB misses. Big-memory workloads incur substantial performance loss in using page-based virtual memory with TLB misses, as they can waste up to 51\% of execution cycles on TLB misses and translations. In general, most of the memory usage here doesn't benefit from features of paged virtual memory and still suffers the virtual memory cost. The authors propose, in addition to default page mappings, mapping parts of the virtual address space with direct segments. A large range of contiguous virtual memory addresses maps to contiguous physical memory addresses using just a few additional registers (base, limit, and offset) per core; addresses in this particular range (called primary region) get translated without the possibility of a TLB miss, while those outside the range are page mapped and translated using TLB and the normal paging mechanisms. The authors show using an emulated direct-segment memory mapping hardware and software support for it, that direct-segment can reduce that time wasted to less than 0.5\% of execution cycles for big-memory workloads, eliminating almost all TLB performance loss for long-running, big-memory workloads. 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item The paper's characterization of big-memory workloads is in-depth and it makes reasonable explanations of why certain paging features aren't required for most of memory in these workloads with evidence. Swapping isn't useful because performance-critical applications cannot afford to wait on disk I/O, fragmentation mitigation is not required because most of memory is allocated early in execution and memory usage stays predictable, and fine-grain per-page protection is not significant because most of memory get the same read-write permissions.  
+            
+
+
+            % \item 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item Direct-segment doesn't sound necessarily new or original. The small hardware implementation for it sounds a lot like how base-and-bounds (dynamic relocation) works, but built to work alongside paging and TLBs, which both came after dynamic relocation. 
+            \item The paper focuses on addressing problems with paging in big-memory workloads and how they can benefit from direct-segment. For breadth, it would be good to include how less-memory-intensive workloads perform using direct-segment, which could further highlight the different needs (or lack thereof) of other applications in terms of virtualized memory implementations. This is only briefly discussed in Section 3.3 on the limitations of their solution.
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+    While it seems like the authors did not set out make a point about domain specific architectures (DSAs), this work still highlights the benefit and need for these application specific designs that improve on existing ones. The authors state that their goal is to address an issue in TLB performance and that they think future work in direct-segments (or similar) could become a fully general solution for TLB performance (Section 3.3). However, the paper touches on the different memory resource needs and usage patterns seen specifically in big-memory servers, which isn't fully served by how virtual memory was implemented with paging at the time. To fully understand the performance needs of big-memory applications, they analyze those particular workloads, pointing out where paging fell short and implementing a mechanism, direct-segment, to fill the gaps. Direct-segment in this paper isn't something that could fully replace paged virtual memory because it is not fully general, but the methodology to design exploits that the authors did in the paper appears especially significant for interested enterprise-scale applications that rely heavily on performance. It is fairly well understood that with the large growth and diverse range of how technology is used, that domain or application specific technology is growing in significance. Since the 60s, it seems that page-based virtual memory and TLBs are the default in terms of general memory management systems because it is versatile across many architectures. General-purpose architectures tend to perform sufficiently, but designers can still extract more performance gains by building for domain specific needs when general-purpose solutions are difficult, which this paper indirectly addresses before DSAs became a more widespread and popular topic.
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item Big Memory: databases, in-memory caches, graph analytics. Costly gor page-based VM (10\% of exec cycles for TLB misses).
+    %             \begin{itemize}
+    %                 \item memory intensive 
+    %                 \item big data 
+    %                 \item databases, key-value stores, and graph algorithms 
+    %                 \item high-performance computing (HPC)
+    %                 \item anything with large memory requiremnets. 
+    %                 \item Theese all incure hihg vmem overheadds due to TLB misses. 
+    %             \end{itemize}
+    %         \item Address TLB miss overhead: use direct segment to map part of a process' linear virtual address space, but still use page mapping for the rest of the virtual address space. 
+    %         \item Direct Segment: minimal HW (base, limit, and offset registers per core). Eliminates the possibilty of TLB misses for key DS (data-base buffer pools, in-memory key-value stores). Memory mapped by dir seg can be converted back to paging when needed. 
+    %         \item The paper prototypes direct-segment software support for linux and emulate dir-seg HW. They show that dir-segs eliminate almost all TLB misses and reduce execution time wasted on TLB misses to less than 0.5\%.
+    %         \item Paging and TLBs have remained largely unchanged from the 60s. VM usage has changed: availability  of 64-bit aggressing and the decline in memory PRICE (dram is cheap now), and servers have terabytes of pmem. 
+    %         \item Cost of paging is in indirection (translation and extra mem access to translate) and TLB lookup is non-negligible cost in energy. Vmem usage is trending towards large mem requirements and large mem footprint and lower reference locality and higher address translation overhead. 
+    %         \item Paping VM was invented to give automatic management of scarce pmem wihout programmer intervention. Swapping pages accomplishes this to provide the illusion of more memory than is available. Big-mem workloads don't swap because performance critical paps can't afford to wait for disk I/O 
+    %         \item TLB entries increasing would increase latency and energy overhead. To increase TLb reach, usually page size is increased instead. 
+    %         \item bog-mem workloads pay substantial performance loss with page-based vm in TLB misses. 
+    %     \end{itemize}
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{paper}Arkaprava Basu, Jayneel Gandhi, Jichuan Chang, Mark D. Hill, and Michael M. Swift. 2013. Efficient virtual memory for big memory servers. In Proceedings of the 40th Annual International Symposium on Computer Architecture (ISCA '13). ACM, New York, NY, USA, 237-248. DOI: \url{http://dx.doi.org/10.1145/2485922.2485943}
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
