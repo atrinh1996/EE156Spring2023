@@ -1,0 +1,133 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{Mobile CPU's rise to power: Quantifying the impact of generational mobile CPU design trends on performance, energy, and user satisfaction (2016)}: The authors quantify the performance, power, energy, and user satisfaction trends across mobile CPU designs released between 2009 and 2015, which cover 7 generations of CPU technology and 8 different architectures. Their crowdsourcing-based user study spans more than 25,000 participants using Amazon's Mechanical Turk service. They observed that user satisfaction improves with both single and multithreaded performance improvement, both still have room for improvement for next-generation applications, and that the CPU capability remains critical for high end-user satisfaction even for applications that utilize other system-on-chip components. They also examine the limits of mobile CPUs following a desktop-like CPU scaling due to very strict physical constraints not seen for desktops, asserting that mobile CPU designs should look for optimizations in fundamentally different ways than previous generations in order to keep up with future mobile compute demands. The potential result is a change of the mobile CPUs role in the system.
+
+        % Key points:
+        % \begin{itemize}
+        %     \item mobile CPUs have modeled after desktop-like scaling, adopting the high-performce mechanisms found in desktop CPUs. 
+        %     \item multicore cpus need to be levereaged more 
+        %     \item end-user satisfaction still depends on CPU performance. 
+        %     \item mobile CPU power wall: power consuption rose excessively over time. power optimization is key. 
+        % \end{itemize}
+        
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item Figures 2-5 in Section 2 are great visual representations of the discussion on generational mobile CPU trends in terms of performance, power, and energy; they make the impact of newer microarchitectures on performance and energy more evident, like how the performance improvement between A8 and A9 can be attributed to the transition to out-of-order pipelines, or how these designs are trending towards a "power wall" for mobile as energy consumption hovers around 1.5 W.
+            \item The wide range of mobile apps they included in their survey (Angry Bird, Epic Citadel, Photoshop, Facebook, Particles, etc.) is a good sweep of applications that could benefit from the different computational resources provided by microarchitectures they looked at. This helps support their conclusions that user-satisfaction correlates with latency sensitivity and improved with designs that positively impacted responsiveness, such as out-of-order pipelines and multicores. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item The study primarily focuses on Android/Samsung phones; while Android is more significantly used around the world and Samsung had a lion's share of the smartphone market in the mid-2010s, Apple/iOS phones and others (Nokia, LG, Huawei, etc.) were not insignificant. If it is feasible, it would also be interesting to see how the technology trends impacted design decisions for other manufacturers, as well, and even show the relationship between end-user experience and how ARM came to dominate the mobile computing space.
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 3} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+        The paper makes an interesting point in the need to contextualize the mobile development space in terms of mobile CPU trends and influences by end-users, especially given how ``young'' the technology is. They assert their ``first-of-its-kind'', large-scale survey takes into account user experience to inform future CPU designs; UX is usually used to gauge things like usability and marketability of particular softwares/applications running on these devices. While their data and observations are convincing, they also could have made the same conclusions about mobile CPU development without the insights from the user experience surveys. Compared to desktops, PCs, supercomputers, data center infrastructures, etc. mobile computing doesn't compare, but development to improve its performance is likely to continue, probably in a manner that the authors recommend diverge from desktop-like scaling. Based on their discussion in Section 4 about the limits of following trends for desktop (the differing thermal and energy constraints and CPU usage), information and data prior to the surveys could have been used to make arguments about the feasibility or infeasibility of the design trend of the time. 
+        
+        % It makes sense from a marketing and business perspective to improve on smartphone performance in order to sell more devices and remain competitive because that is what consumers want; afterall, this study is more informed because of new yearly device releases often having improved microarchitectures. 
+        
+        % But there is a larger question that they did not address, that is why mobile devices need as much compute power as they are being designed to have? It is certainly impressive and convenient how far mobiles come, how responsive the technology is, and the versatility beyond phone calls, and it only stands to continue improving. However, they did not touch on what necessitates this other than the implied future applications and compute demands. Compared to desktops, PCs, supercomputers, datacenter infastructures, etc. mobile computing doesn't compare. Even so, development to improve performance is likely to continue, either continuing the same trend of desktop-like scaling that is so familiar or diverging from that. Since the authors recommend the later, it  
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item Examines past, present, future mobile CPU trends. 
+    %         \item They survey users to see which CPU design techniques provide most benefits to UX. 25,000 surveys worldwide.
+    %         \item CPU is crucial for system-on-chips (SoCs)
+    %         \item mobile CPU's peak power consumption increases over time.
+    %         \item limits of tech scaling restricts desktop-like scaling to continue for mobile CPU; specialized accelerators appear to be a promising alternative that can help sustain the power, performance, and energy improvements for mobile computing.
+    %         \item The authors examine how UX, mobile apps, architectures, and mobile device form factors have impacted mobile CPU design. 
+    %         \item most CPU architecture research focuses on interactions between hardware and software, but ignores end-user experience. 
+    %     \end{itemize}
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{paper}
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
