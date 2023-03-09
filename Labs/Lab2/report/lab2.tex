@@ -347,87 +347,98 @@
         % TOPOLOGY
         % \begin{figure}[hbt!] 
         %     \centering
-        %     \includegraphics[width=0.5\textwidth]{output/npb-is/8way-lru/topo.png}
-        %     \caption{Topology for \texttt{npb-is}, \texttt{splash2-ocean.cont}, and \texttt{splash2-radix} benchmark tests with all consistent cache sizes: 32 KB L1, 128 KS L2, and 512 KB L3. All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} configuration using the \texttt{--viz} and \texttt{--roi} options.}
+        %     \includegraphics[width=0.5\textwidth]{../1core/output/splash2-radix/2/topo.png}
+        %     \caption{Topology for all five benchmark tests where only number of reservation stations were varied (all cache sizes remained consistent through every simulation). All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} and \texttt{rob} configuration using the \texttt{--viz} and \texttt{--roi} options.}
         %     \label{topology} 
         % \end{figure}
 
-    % \clearpage
+    \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Results \& Analysis}
-    % \clearpage
+
+        \begin{figure}[hbt!] 
+            \centering
+            \includegraphics[width=1\textwidth]{images/minimumrsVSipc.png}
+            \caption{}
+            \label{IPC} 
+        \end{figure}
+
+        \begin{figure}[hbt!] 
+            \centering
+            \includegraphics[width=1\textwidth]{images/minimumrsVSdyn.png}
+            \caption{}
+            \label{DYN} 
+        \end{figure}
+
+
+        % \begin{figure}[hbt!] 
+        %     \centering
+        %     \includegraphics[width=1\textwidth]{images/rsVSipc.png}
+        %     \caption{}
+        %     \label{IPCdetail} 
+        % \end{figure}
+
+        % \begin{figure}[hbt!] 
+        %     \centering
+        %     \includegraphics[width=1\textwidth]{images/rsVSdyn.png}
+        %     \caption{}
+        %     \label{DYNdetail} 
+        % \end{figure}
+
+    \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
     \section{Conclusion}
     \label{conclusion}
-    % \clearpage
+    \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Appendix: Raw Post Processed Data}
     \label{appendix:raw}
 
-    \subsection{benchmark} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        
+    \subsection{splash2-radix} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        % Power
-        % \begin{figure}[hbt!]
-        %     \centering 
-        %     \begin{adjustwidth}{-2.75cm}{}
-        %     \begin{tabular}{ccc}
-        %         \begin{subfigure}{0.42\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/8way-lru/power-chop.png}
-        %             \caption{L3 energy 0.20 J; Total energy 16.79 J}
-        %             \label{appfig:power:is:lru:8}
-        %         \end{subfigure} &
-        %         \begin{subfigure}{0.42\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/16way-lru/power-chop.png}
-        %             \caption{L3 energy 0.21 J; Total energy 16.43 J}
-        %             \label{appfig:power:is:lru:16}
-        %         \end{subfigure} &
-        %         \begin{subfigure}{0.42\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/32way-lru/power-chop.png}
-        %             \caption{L3 energy 0.27 J; Total energy 16.40 J}
-        %             \label{appfig:power:is:lru:32}
-        %         \end{subfigure} 
-        %     \end{tabular}
-        %     \end{adjustwidth}
-        %     \caption{Processor power with an (\ref{appfig:power:is:lru:8}) 8-way, (\ref{appfig:power:is:lru:16}) 16-way, and (\ref{appfig:power:is:lru:32}) 32-way L3 cache using LRU replacement policy.}
-        %     \label{appfig:power:is:lru}
-        % \end{figure}
+        %%%%%%%%%% Power GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/radix-power-1.PNG}
+            % \caption{}
+            \end{subfigure}%
 
-        % legend
-        % \begin{figure}
-        %     \centering 
-        %     \begin{adjustwidth}{-2.75cm}{}
-        %     \begin{tabular}{ccc}
-        %         & & 
-        %         \begin{subfigure}{0.33\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/8way-lru/power-legend.png}
-        %             % \caption{}
-        %             \label{appfig:power:is:legend}
-        %         \end{subfigure} 
-        %     \end{tabular}
-        % \end{adjustwidth}
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/radix-power-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/radix-power-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{Processor power for various number of reservation station entries.}
+            \label{appfig:power:radix}
+        \end{figure}
+        \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power VALUES %%%%%%%%%%
         % \begin{figure}[hbt!]
         %     \centering
         %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{output/npb-is/8way-lru/power.out}
-        %     \caption{}
+        %     \lstinputlisting{../1core/output/splash2-radix/2/power.out}
+        %     \caption{2 RS entries.}
         %     \end{subfigure}%
 
         %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{output/npb-is/16way-lru/power.out}
-        %     \caption{}
+        %     \lstinputlisting{../1core/output/splash2-radix/4/power.out}
+        %     \caption{4 RS entries.}
         %     \end{subfigure}%
         % \end{figure}
         % \clearpage
@@ -435,11 +446,53 @@
         % \begin{figure}[hbt!]\ContinuedFloat
         %     \centering
         %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{output/npb-is/32way-lru/power.out}
-        %     \caption{}
+        %     \lstinputlisting{../1core/output/splash2-radix/8/power.out}
+        %     \caption{8 RS entries.}
         %     \end{subfigure}%
-        %     \caption{Specific values for each components' power consumption (See. Fig. \ref{appfig:power:is:lru}), for \texttt{npb-is} benchmark with (LRU) L3 associativity of (a) 8, (b) 16, and (c) 32 way.}
-        %     \label{appfig:power:is:lru:values}
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/16/power.out}
+        %     \caption{16 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/32/power.out}
+        %     \caption{32 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/48/power.out}
+        %     \caption{48 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/64/power.out}
+        %     \caption{64 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/98/power.out}
+        %     \caption{98 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/128/power.out}
+        %     \caption{128 RS entries.}
+        %     \end{subfigure}%
+        %     \caption{Specific values for each components' power consumption.}
+        %     \label{appfig:power:radix:values}
         % \end{figure}
         % \clearpage
 
@@ -447,83 +500,302 @@
 
         \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        % CPI Result
-        % \begin{figure}[hbt!]
-        %     \centering 
-        %     \begin{adjustwidth}{-2.75cm}{}
-        %     \begin{tabular}{ccc}
-        %         \begin{subfigure}{0.42\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/8way-lru/cpi-stack-chop.png}
-        %             \caption{}
-        %             \label{appfig:cpi:is:lru:8}
-        %         \end{subfigure} &
-        %         \begin{subfigure}{0.42\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/16way-lru/cpi-stack-chop.png}
-        %             \caption{}
-        %             \label{appfig:cpi:is:lru:16}
-        %         \end{subfigure} &
-        %         \begin{subfigure}{0.42\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/32way-lru/cpi-stack-chop.png}
-        %             \caption{}
-        %             \label{appfig:cpi:is:lru:32}
-        %         \end{subfigure} 
-        %     \end{tabular}
-        %     \end{adjustwidth}
-        %     \caption{CPI stack with an (\ref{appfig:cpi:is:lru:8}) 8-way, (\ref{appfig:cpi:is:lru:16}) 16-way, and (\ref{appfig:cpi:is:lru:32}) 32-way L3 cache using LRU replacement policy.}
-        %     \label{appfig:cpi:is:lru}
-        % \end{figure}
+        %%%%%%%%%% CPI GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/radix-CPI-1.PNG}
+            % \caption{}
+            \end{subfigure}%
 
-        % legend
-        % \begin{figure}
-        %     \centering 
-        %     \begin{adjustwidth}{-2.75cm}{}
-        %     \begin{tabular}{ccc}
-        %         & 
-        %         \begin{subfigure}{0.33\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/32way-rr/cpi-stack-legend.png}
-        %             % \caption{}
-        %             \label{appfig:cpi:is:legend1}
-        %         \end{subfigure} 
-        %         & 
-        %         \begin{subfigure}{0.33\textwidth}
-        %             \centering
-        %             \includegraphics[width=1\textwidth]{output/npb-is/16way-srrip/cpi-stack-legend.png}
-        %             % \caption{}
-        %             \label{appfig:cpi:is:legend2}
-        %         \end{subfigure} 
-        %     \end{tabular}
-        % \end{adjustwidth}
-        % \end{figure}
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/radix-CPI-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % Output Values
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/radix-CPI-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{CPI stacks for various number of reservation station entries.}
+            \label{appfig:cpi:radix}
+        \end{figure}
+        \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI VALUES %%%%%%%%%%
         % \begin{figure}[hbt!]
         %     \centering
         %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{output/npb-is/8way-lru/cpi-stack.out}
-        %     \caption{}
+        %     \lstinputlisting{../1core/output/splash2-radix/2/cpi-stack.out}
+        %     \caption{2 RS entries.}
         %     \end{subfigure}%
 
         %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{output/npb-is/16way-lru/cpi-stack.out}
-        %     \caption{}
+        %     \lstinputlisting{../1core/output/splash2-radix/4/cpi-stack.out}
+        %     \caption{4 RS entries.}
         %     \end{subfigure}%
-        % % \end{figure}
-        % % \clearpage
-
-        % % \begin{figure}[hbt!]\ContinuedFloat
-        % %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{output/npb-is/32way-lru/cpi-stack.out}
-        %     \caption{}
-        %     \end{subfigure}%
-        %     \caption{Specific values for each components' CPI stack fraction of time (See. Fig. \ref{appfig:cpi:is:lru}), for \texttt{npb-is} benchmark with (LRU) L3 associativity of (a) 8, (b) 16, and (c) 32 way.}
-        %     \label{appfig:cpi:is:lru:values}
         % \end{figure}
-    % \clearpage
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/8/cpi-stack.out}
+        %     \caption{8 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/16/cpi-stack.out}
+        %     \caption{16 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/32/cpi-stack.out}
+        %     \caption{32 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/48/cpi-stack.out}
+        %     \caption{48 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/64/cpi-stack.out}
+        %     \caption{64 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/98/cpi-stack.out}
+        %     \caption{98 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-radix/128/cpi-stack.out}
+        %     \caption{128 RS entries.}
+        %     \end{subfigure}%
+        %     \caption{Specific values for each components' CPI stack.}
+        %     \label{appfig:cpi:radix:values}
+        % \end{figure}
+        % \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \subsection{splash2-ocean.cont}
+        \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/ocean-power-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/ocean-power-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/ocean-power-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{Processor power for various number of reservation station entries.}
+            \label{appfig:power:ocean}
+        \end{figure}
+        \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power VALUES %%%%%%%%%%
+        % \begin{figure}[hbt!]
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/2/power.out}
+        %     \caption{2 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/4/power.out}
+        %     \caption{4 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/8/power.out}
+        %     \caption{8 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/16/power.out}
+        %     \caption{16 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/32/power.out}
+        %     \caption{32 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/48/power.out}
+        %     \caption{48 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/64/power.out}
+        %     \caption{64 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/98/power.out}
+        %     \caption{98 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/128/power.out}
+        %     \caption{128 RS entries.}
+        %     \end{subfigure}%
+        %     \caption{Specific values for each components' power consumption.}
+        %     \label{appfig:power:ocean:values}
+        % \end{figure}
+        % \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/ocean-CPI-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/ocean-CPI-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/ocean-CPI-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{CPI stacks for various number of reservation station entries.}
+            \label{appfig:cpi:ocean}
+        \end{figure}
+        \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI VALUES %%%%%%%%%%
+        % \begin{figure}[hbt!]
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/2/cpi-stack.out}
+        %     \caption{2 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/4/cpi-stack.out}
+        %     \caption{4 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/8/cpi-stack.out}
+        %     \caption{8 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/16/cpi-stack.out}
+        %     \caption{16 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/32/cpi-stack.out}
+        %     \caption{32 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/48/cpi-stack.out}
+        %     \caption{48 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/64/cpi-stack.out}
+        %     \caption{64 RS entries.}
+        %     \end{subfigure}%
+
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/98/cpi-stack.out}
+        %     \caption{98 RS entries.}
+        %     \end{subfigure}%
+        % \end{figure}
+        % \clearpage
+
+        % \begin{figure}[hbt!]\ContinuedFloat
+        %     \centering
+        %     \noindent\begin{subfigure}{0.75\textwidth}
+        %     \lstinputlisting{../1core/output/splash2-ocean.cont/128/cpi-stack.out}
+        %     \caption{128 RS entries.}
+        %     \end{subfigure}%
+        %     \caption{Specific values for each components' CPI stack.}
+        %     \label{appfig:cpi:ocean:values}
+        % \end{figure}
+        % \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
