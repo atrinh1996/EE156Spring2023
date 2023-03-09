@@ -227,7 +227,7 @@
 % \date{\today}
 % \maketitle
 
-\doheading{2}{title}{Lab 1}
+\doheading{2}{title}{Lab 2 (*used 1 late token)}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Table of Contents
@@ -243,40 +243,16 @@
         \bibitem[4]{npb}Bailey DH, Barszcz E, Barton JT, et al. \href{https://www.nas.nasa.gov/software/npb.html}{The Nas Parallel Benchmarks}. The International Journal of Supercomputing Applications. 1991;5(3):63-73. doi:\url{10.1177/109434209100500306}
         \bibitem[5]{book}John L. Hennessy and David A. Patterson. 2017. Computer Architecture, Sixth Edition: A Quantitative Approach. Morgan Kaufmann Publishers Inc., San Francisco, CA, USA.
         \bibitem[6]{londono}S. M. Londono and J. P. de Gyvez. \href{https://ieeexplore.ieee.org/document/5702300}{Extending Amdahl's law for energy-efficiency}. 2010. International Conference on Energy Aware Computing, Cairo, Egypt, 2010, pp. 1-4, doi: 10.1109/ICEAC.2010.5702300.
-        \bibitem[7]{ilplimits} DW Wall. \href{https://dl.acm.org/doi/pdf/10.1145/106972.106991}{Limits of Instruction-Level Parallelism}. 1991. Proceedings of 4th International Conference on Architectural Support for Programming Languages and Operating Systems. 176-188.
+        % \bibitem[7]{ilplimits} DW Wall. \href{https://dl.acm.org/doi/pdf/10.1145/106972.106991}{Limits of Instruction-Level Parallelism}. 1991. Proceedings of 4th International Conference on Architectural Support for Programming Languages and Operating Systems. 176-188.
+        \bibitem[7]{wall}Wall, D.W., 1993. \href{https://www.hpl.hp.com/techreports/Compaq-DEC/WRL-93-6.pdf}{Limits of Instruction-Level Parallelism}, Research Rep. 93/6, Western Research Laboratory. Digital Equipment Corp., Palo Alto, CA.
         \bibitem[8]{stark}Jared Stark, Paul Racunas, and Yale N. Patt. 1997. \href{https://dl.acm.org/doi/10.5555/266800.266804}{Reducing the performance impact of instruction cache misses by writing instructions into the reservation stations out-of-order}. In Proceedings of the 30th annual ACM/IEEE international symposium on Microarchitecture (MICRO 30). IEEE Computer Society, USA, 34-43.
         % \bibitem[9]{jimenez}Liliana Margarita Espinosa Jimenez and Michael Opoku Agyeman. 2018. \href{https://dl.acm.org/doi/10.1145/3284557.3284562}{A Study of Techniques to Increase Instruction Level Parallelisms}. In Proceedings of the 2nd International Symposium on Computer Science and Intelligent Control (ISCSIC '18). Association for Computing Machinery, New York, NY, USA, Article 41, 1-5. \url{https://doi.org/10.1145/3284557.3284562}
         \bibitem[9]{tomasulo}Tomasulo, R.M., 1967. An efficient algorithm for exploiting multiple arithmetic units. IBM
         J. Res. Dev. 11 (1), 25-33.
     \end{thebibliography}
-    \clearpage
 
-    \section{Intro}
-    \label{intro}
-        \begin{itemize}
-            \item Describe Tomasulo's algorithm and what is uses to work at a high level. 
-            \item mention use of reservation stations 
-            \item mention sweeping reservation stations 
-            \item briefly describe overall results. 
-        \end{itemize}
-
-        Tomasulo's algorithm is a computer hardware algorithm that allows for out-of-order (OOO) execution of instructions with the use of multiple functional/execution units. 
-
-        dynamically determining when an instruction is ready to execute and renaming registers to avoid unnecessary hazards.
-
-        register renaming is provided by reservation stations (RS), which buffers the operands of instructions that are waiting to issue and each associated with an executing funcitonal unit. An RS fetches and buffers an operand as soon as it is available, which eliminates the need to read the operands from registers. Waiting instructions designate the RS that will provide their inputs/operands. When successive writes to a register overlap in execution, only the last one updates to the register, As instructions are issued, the register specifiers for pending operands are renamed to the names of the reservation station, which provides register renaming \cite{book}.
-
-        reduces read-after-write (RAW), write-after-write (WAW), and write-after-read (WAR) hazards. RAW is avoided by waiting for inputs to be available through the common data bus (CDB) that delivers computed inputs before executing instructions, and WAW and WAR are avoided with register renaming \cite{book}
-
-        improves the parallel execution of instructions that may otherwise stall due to those hazards under other kinds of architectures. 
-
-    % \clearpage
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-
-    \section{Experimental Setup}
-    \label{sec:setup}
-        \begin{table}
+    % SWEEP
+    \begin{table}[hbt!] 
         \begin{center} 
             \begin{tabular}{c||c}
                 \begin{tabular}{|l|}
@@ -312,7 +288,52 @@
             \caption{Configuration parameters and values swept in the experiment.}
             \label{table:configurations}
         \end{center}
-        \end{table}
+    \end{table}
+
+    % TOPOLOGY
+    \begin{figure}[hbt!] 
+        \centering
+        \includegraphics[width=0.175\textwidth]{../1core/output/splash2-radix/2/topo.png}
+        \caption{Topology for all five benchmark tests where only number of reservation stations were varied (all cache sizes remained consistent through every simulation). All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} and \texttt{rob} configuration using the \texttt{--viz} and \texttt{--roi} options.}
+        \label{topology} 
+    \end{figure}
+
+
+    \clearpage
+
+    \section{Intro}
+    \label{intro}
+        \begin{itemize}
+            \item Describe Tomasulo's algorithm and what is uses to work at a high level. 
+            \item mention use of reservation stations 
+            \item mention sweeping reservation stations 
+            \item briefly describe overall results. 
+        \end{itemize}
+
+        Tomasulo's algorithm is a computer hardware algorithm that allows for out-of-order (OOO) execution of instructions with the use of multiple functional/execution units. 
+
+        dynamically determining when an instruction is ready to execute and renaming registers to avoid unnecessary hazards.
+
+        register renaming is provided by reservation stations (RS), which buffers the operands of instructions that are waiting to issue and each associated with an executing funcitonal unit. An RS fetches and buffers an operand as soon as it is available, which eliminates the need to read the operands from registers. Waiting instructions designate the RS that will provide their inputs/operands. When successive writes to a register overlap in execution, only the last one updates to the register, As instructions are issued, the register specifiers for pending operands are renamed to the names of the reservation station, which provides register renaming \cite{book}.
+
+        reduces read-after-write (RAW), write-after-write (WAW), and write-after-read (WAR) hazards. RAW is avoided by waiting for inputs to be available through the common data bus (CDB) that delivers computed inputs before executing instructions, and WAW and WAR are avoided with register renaming \cite{book}
+
+        improves the parallel execution of instructions that may otherwise stall due to those hazards under other kinds of architectures. 
+
+        Out-of-order issuing allows processors to temporarily ignore instructions associated with cache misses; the processor attempts to fetch instructions following the set of instructions associated with the miss. They are decoded and written to reservation stations, and when the instruction cache missed has been serviced, the instructions associated with the miss are decoded and written to reservation stations. So instructions aren't written to reservation stations in program order. Performance gains of about 20\% over perfect instruciton cache. \cite{stark}
+
+        The attempts to exploit large amounts of ILP failed for several reasons, but one of the most important ones, which some designers did not initially accept, is that it is hard to find large amounts of ILP in conventionally structured programs, even with speculation. A famous study by David Wall in 1993 (see \cite{wall}) analyzed the amount of ILP available under a variety of idealistic conditions. ... Up to 64 instruction issues and dispatches per clock with no issue restric-
+        tions, or 8 times the total issue width of the widest processor in 2016 (the IBM Power8) and with up to 32 times as many loads and stores allowed per clock! As we have discussed, there are serious complexity and power problems with large issue rates. \cite{book}
+
+        \cite{wall}: 3.11 Effects of register renaming: Figure 33 shows the effect of register renaming on parallelism. Dropping from infinitely many registers to 128 CPU and 128 FPU had little effect on the parallelism of the non-numerical programs, though some of the numerical programs suffered noticeably. Even 64 of each did not do too badly. The situation with 32 of each, the actual number on the DECstation 5000 to which the code was targeted, is interesting. Adding renaming did not improve the parallelism much, and in fact degraded it in a few cases. With so few real registers, hardware dynamic renaming offers little over a reasonable static allocator.
+
+    % \clearpage
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+
+    \section{Experimental Setup}
+    \label{sec:setup}
+        
 
         Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Since this experiment looked to sweep instruction-level parallelism (ILP), each simulation was configured with 1 core to isolate the feature of multiple instructions simultaneouly in flight. The same default configurations were set in \texttt{gainestown.cfg} and \texttt{rob.cfg}. Those worth noting for purposes of this experiment are: 
         
@@ -344,13 +365,7 @@
 
         All the simulations ran concurrently using bash script(s) and GNU \texttt{parallel} shell tool \cite{parallel}, and post processing of the data were handled with python (v2.7) and bash scripts (included separately). Simulations ran on a python virtual environment and in a detached \texttt{tmux} session, due to long duration of the experiments. Sniper provided data processing tools used were: \texttt{gen\_topology.py}, \texttt{cpi-stack.py}, and \texttt{mcpat.py}. 
         
-        % TOPOLOGY
-        % \begin{figure}[hbt!] 
-        %     \centering
-        %     \includegraphics[width=0.5\textwidth]{../1core/output/splash2-radix/2/topo.png}
-        %     \caption{Topology for all five benchmark tests where only number of reservation stations were varied (all cache sizes remained consistent through every simulation). All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} and \texttt{rob} configuration using the \texttt{--viz} and \texttt{--roi} options.}
-        %     \label{topology} 
-        % \end{figure}
+        
 
     \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -360,31 +375,19 @@
         \begin{figure}[hbt!] 
             \centering
             \includegraphics[width=1\textwidth]{images/minimumrsVSipc.png}
-            \caption{}
+            \caption{See Figure \ref{IPCdetail}}
             \label{IPC} 
         \end{figure}
 
         \begin{figure}[hbt!] 
             \centering
             \includegraphics[width=1\textwidth]{images/minimumrsVSdyn.png}
-            \caption{}
+            \caption{See Figure \ref{DYNdetail}}
             \label{DYN} 
         \end{figure}
 
 
-        % \begin{figure}[hbt!] 
-        %     \centering
-        %     \includegraphics[width=1\textwidth]{images/rsVSipc.png}
-        %     \caption{}
-        %     \label{IPCdetail} 
-        % \end{figure}
-
-        % \begin{figure}[hbt!] 
-        %     \centering
-        %     \includegraphics[width=1\textwidth]{images/rsVSdyn.png}
-        %     \caption{}
-        %     \label{DYNdetail} 
-        % \end{figure}
+        
 
     \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -394,6 +397,21 @@
     \label{conclusion}
     \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \section{Appendix: Detailed Result Values}
+        \begin{figure}[hbt!] 
+            \centering
+            \includegraphics[width=1\textwidth]{images/rsVSipc.png}
+            \caption{See Figure \ref{IPC}}
+            \label{IPCdetail} 
+        \end{figure}
+
+        \begin{figure}[hbt!] 
+            \centering
+            \includegraphics[width=1\textwidth]{images/rsVSdyn.png}
+            \caption{See Figure \ref{DYN}}
+            \label{DYNdetail} 
+        \end{figure}
 
     \section{Appendix: Raw Post Processed Data}
     \label{appendix:raw}
@@ -425,76 +443,82 @@
             \caption{Processor power for various number of reservation station entries.}
             \label{appfig:power:radix}
         \end{figure}
-        \clearpage
+        % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power VALUES %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/2/power.out}
-        %     \caption{2 RS entries.}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/2/power.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/4/power.out}
-        %     \caption{4 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            % \noindent\begin{subfigure}{0.75\textwidth}
+            % \lstinputlisting{../1core/output/splash2-radix/4/power.out}
+            % \caption{4 RS entries.}
+            % \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/8/power.out}
-        %     \caption{8 RS entries.}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/4/power.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/16/power.out}
-        %     \caption{16 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/8/power.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/32/power.out}
-        %     \caption{32 RS entries.}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/16/power.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/48/power.out}
-        %     \caption{48 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/32/power.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/64/power.out}
-        %     \caption{64 RS entries.}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/48/power.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/98/power.out}
-        %     \caption{98 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/64/power.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/128/power.out}
-        %     \caption{128 RS entries.}
-        %     \end{subfigure}%
-        %     \caption{Specific values for each components' power consumption.}
-        %     \label{appfig:power:radix:values}
-        % \end{figure}
-        % \clearpage
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/98/power.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/128/power.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' power consumption.}
+            \label{appfig:power:radix:values}
+        \end{figure}
+        \clearpage
 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -524,80 +548,80 @@
             \caption{CPI stacks for various number of reservation station entries.}
             \label{appfig:cpi:radix}
         \end{figure}
-        \clearpage
+        % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI VALUES %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/2/cpi-stack.out}
-        %     \caption{2 RS entries.}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/2/cpi-stack.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/4/cpi-stack.out}
-        %     \caption{4 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/4/cpi-stack.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/8/cpi-stack.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/16/cpi-stack.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
         % \end{figure}
         % \clearpage
 
         % \begin{figure}[hbt!]\ContinuedFloat
         %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/8/cpi-stack.out}
-        %     \caption{8 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/32/cpi-stack.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/16/cpi-stack.out}
-        %     \caption{16 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/48/cpi-stack.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/64/cpi-stack.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/98/cpi-stack.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
         % \end{figure}
         % \clearpage
 
         % \begin{figure}[hbt!]\ContinuedFloat
         %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/32/cpi-stack.out}
-        %     \caption{32 RS entries.}
-        %     \end{subfigure}%
-
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/48/cpi-stack.out}
-        %     \caption{48 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
-
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/64/cpi-stack.out}
-        %     \caption{64 RS entries.}
-        %     \end{subfigure}%
-
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/98/cpi-stack.out}
-        %     \caption{98 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
-
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-radix/128/cpi-stack.out}
-        %     \caption{128 RS entries.}
-        %     \end{subfigure}%
-        %     \caption{Specific values for each components' CPI stack.}
-        %     \label{appfig:cpi:radix:values}
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-radix/128/cpi-stack.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' CPI stack.}
+            \label{appfig:cpi:radix:values}
+        \end{figure}
+        \clearpage
 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        \subsection{splash2-ocean.cont}
+    \subsection{splash2-ocean.cont}
         \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power GRAPH %%%%%%%%%%
@@ -624,77 +648,77 @@
             \caption{Processor power for various number of reservation station entries.}
             \label{appfig:power:ocean}
         \end{figure}
-        \clearpage
+        % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power VALUES %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/2/power.out}
-        %     \caption{2 RS entries.}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/2/power.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/4/power.out}
-        %     \caption{4 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/4/power.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/8/power.out}
-        %     \caption{8 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/8/power.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/16/power.out}
-        %     \caption{16 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/16/power.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/32/power.out}
-        %     \caption{32 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/32/power.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/48/power.out}
-        %     \caption{48 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/48/power.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/64/power.out}
-        %     \caption{64 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/64/power.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/98/power.out}
-        %     \caption{98 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/98/power.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/128/power.out}
-        %     \caption{128 RS entries.}
-        %     \end{subfigure}%
-        %     \caption{Specific values for each components' power consumption.}
-        %     \label{appfig:power:ocean:values}
-        % \end{figure}
-        % \clearpage
-
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/128/power.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' power consumption.}
+            \label{appfig:power:ocean:values}
+        \end{figure}
+        \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -723,75 +747,651 @@
             \caption{CPI stacks for various number of reservation station entries.}
             \label{appfig:cpi:ocean}
         \end{figure}
-        \clearpage
+        % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI VALUES %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/2/cpi-stack.out}
-        %     \caption{2 RS entries.}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/2/cpi-stack.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/4/cpi-stack.out}
-        %     \caption{4 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/4/cpi-stack.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/8/cpi-stack.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/16/cpi-stack.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
         % \end{figure}
         % \clearpage
 
         % \begin{figure}[hbt!]\ContinuedFloat
         %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/8/cpi-stack.out}
-        %     \caption{8 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/32/cpi-stack.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/16/cpi-stack.out}
-        %     \caption{16 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/48/cpi-stack.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/64/cpi-stack.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/98/cpi-stack.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
         % \end{figure}
         % \clearpage
 
         % \begin{figure}[hbt!]\ContinuedFloat
         %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/32/cpi-stack.out}
-        %     \caption{32 RS entries.}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-ocean.cont/128/cpi-stack.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' CPI stack.}
+            \label{appfig:cpi:ocean:values}
+        \end{figure}
+        \clearpage
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/48/cpi-stack.out}
-        %     \caption{48 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \subsection{splash2-barnes} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/barnes-power-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/barnes-power-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/barnes-power-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{Processor power for various number of reservation station entries.}
+            \label{appfig:power:barnes}
+        \end{figure}
         % \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/64/cpi-stack.out}
-        %     \caption{64 RS entries.}
-        %     \end{subfigure}%
+        %%%%%%%%%% Power VALUES %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/2/power.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/98/cpi-stack.out}
-        %     \caption{98 RS entries.}
-        %     \end{subfigure}%
-        % \end{figure}
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/4/power.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/8/power.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/16/power.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/32/power.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/48/power.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/64/power.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/98/power.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/128/power.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' power consumption.}
+            \label{appfig:power:barnes:values}
+        \end{figure}
+        \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/barnes-CPI-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/barnes-CPI-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/barnes-CPI-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{CPI stacks for various number of reservation station entries.}
+            \label{appfig:cpi:barnes}
+        \end{figure}
         % \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.75\textwidth}
-        %     \lstinputlisting{../1core/output/splash2-ocean.cont/128/cpi-stack.out}
-        %     \caption{128 RS entries.}
-        %     \end{subfigure}%
-        %     \caption{Specific values for each components' CPI stack.}
-        %     \label{appfig:cpi:ocean:values}
-        % \end{figure}
+        %%%%%%%%%% CPI VALUES %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/2/cpi-stack.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/4/cpi-stack.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/8/cpi-stack.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/16/cpi-stack.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
+            
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/32/cpi-stack.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/48/cpi-stack.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/64/cpi-stack.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/98/cpi-stack.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/splash2-barnes/128/cpi-stack.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' CPI stack.}
+            \label{appfig:cpi:barnes:values}
+        \end{figure}
+        \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \subsection{npb-is} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/is-power-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/is-power-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/is-power-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{Processor power for various number of reservation station entries.}
+            \label{appfig:power:is}
+        \end{figure}
+        % \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power VALUES %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/2/power.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/4/power.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/8/power.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/16/power.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/32/power.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/48/power.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/64/power.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/98/power.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/128/power.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' power consumption.}
+            \label{appfig:power:is:values}
+        \end{figure}
+        \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/is-CPI-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/is-CPI-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/is-CPI-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{CPI stacks for various number of reservation station entries.}
+            \label{appfig:cpi:is}
+        \end{figure}
+        % \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI VALUES %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/2/cpi-stack.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/4/cpi-stack.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/8/cpi-stack.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/16/cpi-stack.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
+            
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/32/cpi-stack.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/48/cpi-stack.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/64/cpi-stack.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/98/cpi-stack.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-is/128/cpi-stack.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' CPI stack.}
+            \label{appfig:cpi:is:values}
+        \end{figure}
+        \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \subsection{npb-cg}
+        \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/cg-power-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/cg-power-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/cg-power-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{Processor power for various number of reservation station entries.}
+            \label{appfig:power:cg}
+        \end{figure}
+        % \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% Power VALUES %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/2/power.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/4/power.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/8/power.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/16/power.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/32/power.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/48/power.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/64/power.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/98/power.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/128/power.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' power consumption.}
+            \label{appfig:power:cg:values}
+        \end{figure}
+        \clearpage
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI GRAPH %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/cg-CPI-1.PNG}
+            % \caption{}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/cg-CPI-2.PNG}
+            % \caption{}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \includegraphics[width=1\textwidth]{images/CPI/cg-CPI-3.PNG}
+            % \caption{}
+            \end{subfigure}%
+            \caption{CPI stacks for various number of reservation station entries.}
+            \label{appfig:cpi:cg}
+        \end{figure}
+        % \clearpage
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        %%%%%%%%%% CPI VALUES %%%%%%%%%%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/2/cpi-stack.out}
+            \caption{2 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/4/cpi-stack.out}
+            \caption{4 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/8/cpi-stack.out}
+            \caption{8 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/16/cpi-stack.out}
+            \caption{16 RS entries.}
+            \end{subfigure}%
+            
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/32/cpi-stack.out}
+            \caption{32 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/48/cpi-stack.out}
+            \caption{48 RS entries.}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
+
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/64/cpi-stack.out}
+            \caption{64 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/98/cpi-stack.out}
+            \caption{98 RS entries.}
+            \end{subfigure}%
+
+            \noindent\begin{subfigure}{0.75\textwidth}
+            \lstinputlisting{../1core/output/npb-cg/128/cpi-stack.out}
+            \caption{128 RS entries.}
+            \end{subfigure}%
+            \caption{Specific values for each components' CPI stack.}
+            \label{appfig:cpi:cg:values}
+        \end{figure}
         % \clearpage
 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
