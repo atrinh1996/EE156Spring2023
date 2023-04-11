@@ -63,31 +63,52 @@
     \section{Summary}
     \label{sec:summary}
 
-        \textbf{Paragraph}
+        \textbf{Cores that don't count (2021):} The authors give an introductory discussion on ``silent'' corrupt execution errors (CEE), errors that can appear suddenly and unpredictably within specific execution units in a core, also called ``mercurial'' cores. These kinds of defective cores are usually obscured by more obvious faults in computation, like software bugs, but are more visible now due to improvements in software development, the growing scale of industry server fleets, and ``ever-smaller feature sizes that are pushing closer to the limits of CMOS scaling and with ever-increasing complex architectural designs''. They view CEEs as a new cause of silent data corruptions (SDC), data corrupted during writing, reading, or resting that's not immediately detected and thought to happen randomly from alpha particles and cosmic rays. Since there is little documentation on corruptions like CEEs, there is no standardized or systematic methodology to test, detect, and isolate mercurial cores or make them CEE-tolerant. The authors characterize CEEs and point out significant challenges that make addressing them difficult with currently available tools. So this broad paper is the authors' ``call-to-action'' on a potentially growing issue in system designs.  
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
     \label{sec:strengths}
         \begin{itemize}
-            \item 
+            % \item While broad, I think the authors provide enough anectodal evidence backed by logical inferences (and speecific data they are unable to release) that mercurial cores are a non-negligible problem. 
+            \item Section 8 on related works touches on a variety of system failures and corruptions observed in the past and more recently, and the authors make good points on potential applicability (or lack thereof) of these errors and techniques other researchers used with regards to addressing CEEs. 
+            
+        
+            % \item It's funny in section 9 they suggest hyperscalars be able to isolate mercurial cores and make them available to researchers. 
         \end{itemize}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
     \label{sec:weaknesses}
         \begin{itemize}
-            \item 
+            \item There is no quantified data or any meaningful figures in their paper. Figure 1 only represents normalized CEE rates from ``[their] fleet'' with no information on specifications or operating conditions. The inclusion of data representing corruption trends, the scale of CEE rates, or even projected impact would help bolster their stance on the significance of CEEs. 
+            
+            \item The authors reference a ``corpus of code serving as test cases'' that they used, but did not characterized use cases or what these test cases covered. 
+            
+    
         \end{itemize}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \section{Rating: 3} %%%%%%%%%%%%%%%%%%%%%% 
     \label{sec:rating}
-    % \pagebreak
+    \pagebreak
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
     \label{sec:comments}
+
+    % This paper largely reads as anecdotal. 
+    
+    The authors often allude to problems they observed in analyzing defects in their large server fleets and referencing other works relating to SDCs, applicability to CEEs, and the only other paper that discusses similar findings to theirs (Dixit \emph{et al} on SDCs at Facebook/Meta). This is likely due to the constraints on what they were allowed to publish in this paper, where even ``for business reasons, [they] are unable to reveal exact CEE rates''. With a lack of data available, it makes it difficult to recognize CEEs as a non-negligible problem and an interesting, accessible avenue of research. However, the lack of specificity may mean that the authors anticipate working on a more detailed follow-up paper on the topic of CEEs with more of their findings. The authors already do a lot of work trying to characterize different problems (symptoms) of CEEs and the difficulties that come with root-causing CEEs. It is still clear though that the various, potential ways to detect, isolate, or mitigate CEEs are not very well-defined in the way they fleetingly touch on techniques or solutions that may or may not work to scale; this itself reveals the significance of researching and standardizing practices of addressing CEEs, rather than simply relying on dubious reports and miscellaneous tools and libraries. The paper's goals are better served by including things like corruption trends, the impact of utilized techniques, or simply any of the metrics discussed in Section 4, rather than reading as very anecdotal.
+    
+    % being less anectodal and 
+    
+    % Certain field-specific events or architectures are also loosely referenced with citation numbers all over the paper, each with little to no expansion; this makes it difficult for less experienced readers to understand the analogies or references the authors are making before the discussion shifts to another broad but ill-defined topic. However, the lack of specificity may mean that the authors anticipate working on a a more detailed follow-up paper on the topic of CEEs with their specific findings and observations. 
+    
+    
+    
+    
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
         
@@ -96,11 +117,94 @@
 
     \section{Notes}
         \begin{itemize}
+            \item The paper provides:
+                \begin{itemize}
+                    \item Context of the ``silent'' corrupt execution errors (CEE)
+                    \item scale of these CEEs. 
+                    \item risks due to CEE challenges 
+                    \item suggestions to how to rapidly detect and quarantine mercurial cores, and how to create more resiliance to tolerate CEE. 
+                \end{itemize}
+            \item Processors are normally considered fail-stops. Sophisticated manufacturing tests (validation methods) detect defects, and any defects that escape or manifest with aging will trigger machine checks or give wrong answers to many kinds of instructions. 
+            \item Silent failures (silent data corruptions (SDC), silent \textbf{corrupt execution errors} (CEE)) are usually obscured by software bugs; but now mercurial cores are being seen because of a variety of factors:
+                \begin{itemize}
+                    \item ever-smaller feature sizes that push closer to limits of CMOS (Complementary metal-oxide-semiconductor) scaling, coupled with the every increasing complexity in architectural designs. 
+                    \item larger server fleets 
+                    \item increased attention to overall reliability 
+                    \item reduction in rate of software bugs due to improvements in software development
+                \end{itemize}
+            \item CEE problem gets harder as the limits of silicon is pushed. They can no longer be ignore as unreliable hardware increasingly fail silently rather than fail-stop. 
+            \item These vulnerable chips need to be addressed in a way that doesn't become costly with replacing these chips or waiting for more resilient hardware to release. 
+            \item A high-rate of CEEs is considered by the authors to be another cause of SDC (i.e. data storage corrupted during reading/writing/rest without being immediately being detected). SDCs were previously thought to be caused by random things like alpha particles and cosmic rays and intentional practices like overclocking.
+            \item \textbf{Sec. 2: Impact (symptoms) of Mercurial Cores:}
+                \begin{itemize}
+                    \item Symptoms:
+                        \begin{itemize}
+                            \item Wrong answers, detected near immediately through self-checking, exceptions, seg faults. Can allow automated retries.
+                            \item machine checks (more disruptive)
+                            \item wrong answers, detected too late to retry computation
+                            \item wrong answers, never detected
+                        \end{itemize}
+
+                    \item Wrong answers not detected right away can propagate. 
+                    \item Inferring root cause of mercurial cores is hard due to limited knowledge of underlying hardware. And wrong computation is not always detected. ``CEEs are harder to root-cause than software bugs, which can be reproduced and debugged on another machine.''
+                    \item Identify mercurial core is usually just: code miscomputed/crash on xyz core; we can control which code runs on which cores and partial control of operating conditions (frequency, voltage, temp)
+                    \item Failures mostly appear non-deterministically and at variable rates. 
+                    \item Faulty cores typically fail repeatedly and intermittently and get worse with time (also aging plays a role). In multicore sys, usually 1 core fails consistently. 
+                    \item Corruptin rate varies, depending on workload, f, V, and Temp. Difficult to tell if data patterns is contributing to corruption 
+                    % \item 
+                    % \item 
+                \end{itemize}
+            \item \textbf{Sec. 3: Are Mercurial Cores a New problem:}
+                \begin{itemize}
+                    \item storage and network problems are easier than computational errors because there is ``right results'' and simpler checks. CEEs require: automatic correction is triple work, and ost computational failures cannot be addressed with code-based approaches. S\&N better tolerate low-level errors because they usually work n large chunks of data (disk blocks, network packets), so corruption check costs are amortized, which is harder to do at a per-instr scale. 
+                    \item 
+                \end{itemize}
+
+            \item \textbf{Sec. 4: The right metrics:}
+                \begin{itemize}
+                    \item potential metrics for CEE and challenges:
+                        \begin{itemize}
+                            \item Fraction of cores/machines that exhibit CEEs. Challenges: Depends on test coverage, how many cycles devoted to testing, and ongoing arrival of new CPU parts to population.
+                            \item   Age until onset: Challenge: how long you can wait to actually start seeing CEE (frequent replacements/upgrades?), and requires continual screening over machine's lifetime. 
+                            \item rate and nature of application-visible corruptions (how often does CEE result of real world workloads?), and if corruptions are ``sticky''/propagate through subsequent computations to create multiple application errors. Challenge: more of a property of applications than of CEEs. 
+                        \end{itemize}
+                \item quantifying metrics as they relate to CEEs is difficult and expensive (requires running tests on many machines for VERY long time for high-confidence results without even knowing what that time is, needs a concise set of tests that represent the complexity of real applications but we have a poor understanding of what triggers CEEs so we don't know how to create a small set of tests that will reliably measure these rates)
+                \item inaccuracies of measurements vs. cost of measurements. 
+                \item risk assessment of CEE for a large fleet with various CPU types and various ages. 
+            \end{itemize}
+            \item \textbf{Sec. 5: Causes of Mercurial cores:}
+                \begin{itemize}
+                    \item come mercurial core CEE rates vary with what they are impacted by (f, T, V).
+                    \item 
+                \end{itemize}
+            \item \textbf{Sec. 6: Detecting Mercurial cores:}
+            \begin{itemize}
+                \item detecting mercurial cores mean we can isolate them and prevent further damage and to support deeper analysis. 
+                \item Mercurial-core detection is challenging because it inherently involves a tradeoff between false negatives or delayed positives (leading to failures and data corruption), false positives (leading to wasted cores that are inappropriately isolated), and the non-trivial costs of the detection processes themselves.
+                \item Detection Processes:
+                    \begin{enumerate}
+                        \item \textbf{automated vs. human screening}: automation in large fleet is ideal, but complexity-related causes of MCs suggest occassional new manifestations of CEEs, 
+                        \item \textbf{pre-deployment vs post-deployment screening:} chip manufacturers have a lot of auto testing before chips ship, but it could be better because manufactuers don't have easy access to diverse large-scale workloads to learn about shortcomings in their tests, so cmanufacturer testing doesn't reflect real-world or they are not broad enough despite being very comprehensive already. Also, cores can become defective after considerable time has passed, and new tests can be developed in response to newly discovered defects after deployment. 
+                        \item \textbf{offline vs. online screening:} online screening is free (except for power cost) but cannot always provide complete coverage of al lcores or all symptoms. Offline screening can involve exposing CPU to operating conditions of f, V, and T outside normal rande but it can be expensive. 
+                        \item \textbf{infastructure-level vs. application -level screening:} CEE detection can be done by infra (OS and daemon processes) or by some applications themselves (i.e. online). Infra can be more pervasive and dtect bugs in privileged execution, but application can be more focused and more easily fine-tuned and can enable app-level mitigations. 
+                    \end{enumerate}
+                \item existing sched mechanisms can remove a machine from a resource pool, but isolatingn specific cores is more challenging because it undermines a scheduler assumption that all machines of a specific type have identical resources. 
+                \item Hypothsized that a specific set of tasks that can run safely on defective core can be identified. but its not clear if this is reliable. 
+            \end{itemize}
+            \item \textbf{Sec. 7: Mitigating (tolerating) CEEs}
+                    \begin{itemize}
+                        \item check correctness at application endpoints rather than in lower-level infra 
+                        \item system support for checkpointing to recover from failed computation by restarting on different core. 
+                        \item cost-effective application specific detection methods, to decide whether or not to continue past a checkpoint or retry 
+                        \item run computation on 2+ cores and see if they disagree (redundancy or results with most yields is most reliable)
+                        \item These methods all have resource cost for duplicate computation and/or storage.
+                        \item  Hardware mitigations add costs but are more efficient than repllicating computations in software. 
+                    \end{itemize}
             \item 
         \end{itemize}
 
 % \begin{thebibliography}{1}
-%     \bibitem[1]{paper}
+%     \bibitem[1]{paper}Hochschild, P.H., Turner, P., Mogul, J.C., Govindaraju, R., Ranganathan, P., Culler, D.E. and Vahdat, A., 2021, June. Cores that don't count. In Proceedings of the Workshop on Hot Topics in Operating Systems (pp. 9-16).
 % \end{thebibliography}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

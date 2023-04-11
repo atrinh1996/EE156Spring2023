@@ -1,0 +1,117 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{Dynamic Branch Prediction with Perceptrons (2001):} The authors propose as a way to improve the accuracy of branch prediction to replace traditional pattern history table (PHT) with a neural network, perceptrons, as the branch prediction mechanism. Perceptrons are chosen because of their simplicity and lower cost compared to most other complex neural networks. They compare their method to dynamic global predictors, gshare and bi-mode, which are generally limited int he lengths of the history register, as well as a hybrid gshare/perceptron predictor. The perceptron predictor can accomodate longer histories. The authors find that their perceptron predictor performed particularly well for linearly separable branches (which the authors classify as a pattern where inputs map to either true or false outputs) and branches requiring longer history lengths, and has more accurate results than other existing branching global branch predictors for the SPEC 2000 integer benchmarks (misprediction improved by 10.1\%).
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item Section 3 is very thorough in explaining the new concepts and mechanisms the authors introduce. 
+            \item Explanation of methodology is detailed in how they tune the simulation, which leads to an interesting conclusion on the linear relationship between history length and threshold.
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item The authors only benchmarked using the SPEC 2000 integer benchmarks. Their breadth of experiments does not nearly encompass the types or variety of workloads seen in real application. 
+            \item Some of the justifications for using perceptrons is that they are easier to implement and less expensive compared to other neural networks, and use cost less in terms of computation hardware compared to the table sizes with the other branch prediction mechanisms, gshare and bi-mode; however, the authors did not discuss if perceptrons are overall more cost-effective compared to gshare and bi-mode, and whether or not if the improved misprediction was worth and that cost differences. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+
+    The authors identified an unexploited area in the dynamic branch predictors of the time of the paper and found an approach to extract more performance gains where those mechanisms fell short. Techniques with complementary strengths outperforming older dynamic branch predictions and the perceptrons alone also supported their hypothesis that prediction mechanisms could be more accurate if they also accommodated longer history lengths. Their implementation also showed it was feasible to incorporate a machine learning based techniques in hardware and was computationally feasible despite how prohibitively complex neural networks were known to be in that area. Their work was not only successful in inspiring future research in the area of perceptron prediction, but also actually implemented in a few commercial architectures, like \href{https://en.wikipedia.org/wiki/Piledriver_(microarchitecture)}{piledriver}, \href{https://en.wikipedia.org/wiki/Ryzen}{ryzen}. It is likely that in the future when hardware and training costs are less expensive, hybrid prediction mechanisms such as the one the paper implements are going to be more ubiquitous given the better performance. 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item Abstract: Use simple neural network (perceptrons as the basic prediction mechanism) as a new method of branch prediction. It gets more accuracy using long branch histories without exponential resources. Their predictor improves misprediction over the \texttt{gshare} predictor by 10.1\%. 
+    %         \item Conclusion: perceptrons are more computational complex compared to 2-bit counters, but perceptrons can be implemented efficiently with respect to area and delay. Perceptrons cannot learn linearly inseparable functions, but can still perform well and achieve a lower misprediction rate than two well known global predictors on the SPEC 2000 integer benchmark. They argue that there are benefits to being able to use longer branch history tables to predict (``additional performance gains can be found for branch history lengths of up to 62''). The perceptron predictor performs particularly well on two classes of branches (linearly separable branches, and branches requireing long history lengths) that represent a large number of dynamic branches. Their perceptron predictor is open to future works and improvements, such as techniques in other predictor designs (either incorporating the other designs or being incorporated into other designs, or perceptron-counter hybrid predictors). 
+    %         \item Linear separable vs. inseparable branches, branches that require long vs. short history lengths. 
+    %         \item 
+    %     \end{itemize}
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{paper}Daniel A. Jiménez and Calvin Lin. 2001. Dynamic Branch Prediction with Perceptrons. In Proceedings of the 7th International Symposium on High-Performance Computer Architecture (HPCA '01). IEEE Computer Society, Washington, DC, USA, 197-.
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

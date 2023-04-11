@@ -1,0 +1,117 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{Meltdown (2018):} The authors detail a software-based side-channel attack called Meltdown that allows an unprivileged user program or adversary to read memory locations belonging to other processes. Meltdown exploits the side effects from OOO execution to read these memories. In general, Meltdown makes the processor execute a transient instruction sequence (those instructions that wouldn't appear on the executed path) that leverages a ``secret value'' that an adversary wants to leak. Transient instructions commonly occur because techniques that minimize latency tend to also execute instructions (and cache memory accesses), but only commit them after preceding instructions have retired. Then, by leveraging side-channel attacks, such as Flush+Reload transferring cache state into architectural state, Meltdown can access the cache line in order to read the ``leaked secret value'' and eventually dump the entire physical memory. Their study draws attention to this critical vulnerability in the hardware, and that until it is fixed, this necessitates that all operating systems have countermeasures, such as KAISER, which can impede Meltdown, until a permanent fix is found. 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item Section 2 background explanation best illustrates the  foundation of OOO execution vulnerabilities. And Section 3 is a good if not brief, walkthrough of how the exploit may work. The toy example helps to clarify specific aspects of Meltdown discussed in Sections 4 and 5. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item No figures or quantitative data were provided in their evaluation of different operating systems with Meltdown, such as how consistent were the bandwidth across platforms, or what \% of the target kernel memory was successfully leaked.
+            \item In section 6.2, the Meltdown Proof-of-Concept performance was only done with one processor, the Intel Core i7-6700K. They did not mention which ARM or AMD CPUs they failed to reproduce the Meltdown bug with.
+            % \item They don't mention real world Meltdown attacks
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 5} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+    The paper details an exploitable hardware vulnerability that comes from OOO execution or transient execution, which is a feature that enhances performance in modern processors. For the most part, the authors have demonstrated convincingly that Meltdown is a security issue that affects all operating systems. It has been more than 5 years since this paper was published, more than a decade since chip companies were aware of this vulnerability, and several months since the authors' original \href{https://github.com/IAIK/meltdown}{Meltdown Proof-of-Concept} on GitHub had been archived; therefore, there should be a follow-up paper that discusses Meltdown in this same depth here that also includes research on the topic that have been published since 2018, as well as address some of the weaker areas of the paper mentioned above. For example, their evaluation of Linux and Windows lacked specificity, they only measured Meltdown performance on one processor (Intel Core i7-6700K) when Table 1 lists several, this paper at the time only speculated that ARM and AMD chips could be affected by Meltdown, and the paper did not reference any real-world Meltdown attacks or lack thereof. While they did not find that AMD CPUs were affected by their Meltdown implementation, two more recent paper describe Meltdown-like side-channel leakages that could be exploited on AMD CPUs in 2021 \cite{2021} and 2022 \cite{2022}. Despite available patches for Spectre/Meltdown, research appears to still thrive for this topic, and will likely continue to thrive because these or similar hardware exploits inform how hardware optimizations are designed with respect to security vulnerabilities.
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item 
+    %     \end{itemize}
+
+\begin{thebibliography}{1}
+    \bibitem[1]{paper}Moritz Lipp, Michael Schwarz, Daniel Gruss, Thomas Prescher, Werner Haas, Stefan Mangard, Paul Kocher, Daniel Genkin, Yuval Yarom, Mike Hamburg. \href{https://arxiv.org/abs/1801.01207}{Meltdown}. Jan 2018.
+    \bibitem[2]{2021}Saidgani Musaev and Christof Fetzer. \href{https://arxiv.org/abs/2108.10771}{Transient Execution of Non-Canonical Accesses}. 2021.
+    \bibitem[3]{2022}Moritz Lipp, Daniel Gruss, Michael Schwarz  (2022) \href{https://publications.cispa.saarland/3507/}{AMD Prefetch Attacks through Power and Time}. 31st USENIX Security Symposium. USENIX-Security Usenix Security Symposium. Aug 2022.
+    \bibitem[4]{arm}ARM. \href{https://developer.arm.com/documentation/102824/latest}{Software implications for Spectre/Meltdown on Arm cores}. June 2018.
+\end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
