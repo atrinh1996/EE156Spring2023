@@ -227,7 +227,7 @@
 % \date{\today}
 % \maketitle
 
-\doheading{2}{title}{Lab 2 (*used 1 late token)}
+\doheading{2}{title}{Lab 3 (*used 3 late tokens)}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Table of Contents
@@ -341,26 +341,33 @@
         \subsection{Performance Analysis} %%%%%%%%%%%%%
         \label{sec:performance}
 
-            % \begin{figure}[hbt!] 
-            %     \centering
-            %     \includegraphics[width=0.7\textwidth]{images/minimumrsVSipc.png}
-            %     \caption{IPC across RS entry sweep for five benchmarks. IPC plateaus starting around 48 entries for all benchmarks, except for \texttt{splash2-radix}, where IPC remained largely consistent across the sweep. (\emph{See Figure \ref{IPCdetail} for detailed data value table.})}
-            %     \label{IPC} 
-            % \end{figure}
+            \begin{figure}[hbt!] 
+                \centering 
+                \includegraphics[width=0.8\textwidth]{images/PHTvsIPC.png}
+                \caption{}
+                \label{fig:IPC} 
+            \end{figure}
 
             % \textbf{No ILP benefits from OOO:} For workloads likely to not have many dependencies and implemented with little to no parallelism, they see little to no benefits in increasing the number of RS'. 
-            \clearpage
+            % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
         \subsection{Energy Consumption} %%%%%%%%%%%%%
-            % \begin{figure}[hbt!] 
-            %     \centering
-            %     \includegraphics[width=0.7\textwidth]{images/minimumrsVSdyn.png}
-            %     \caption{Peak dynamic processor power across RS entry sweep for five benchmarks. Peak dynamic power plateaus around 32 and 48 entries for most benchmarks, except for \texttt{splash2-radix}, where it remained consistent across the sweep. (\emph{See Figure \ref{DYNdetail} for detailed data value table.})}
-            %     \label{DYN} 
-            % \end{figure}
+            \begin{figure}[hbt!] 
+                \centering
+                \includegraphics[width=0.8\textwidth]{images/PHTvsPower.png}
+                \caption{}
+                \label{fig:peak-dynamic-power} 
+            \end{figure} 
+
+            \begin{figure}[hbt!] 
+                \centering
+                \includegraphics[width=0.8\textwidth]{images/PHTvsnEDP.png}
+                \caption{}
+                \label{fig:normalized-EDP} 
+            \end{figure}
 
             % Much like how the IPC is seen to level-off  
     % \clearpage
@@ -374,22 +381,6 @@
 
     \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-    \section{Appendix: Detailed Result Values}
-        % \begin{figure}[hbt!] 
-        %     \centering
-        %     \includegraphics[width=0.7\textwidth]{images/rsVSipc.png}
-        %     \caption{IPC across RS entry sweep for five benchmarks that includes specific value at each sweep. See Figure \ref{IPC} for discussion.}
-        %     \label{IPCdetail} 
-        % \end{figure}
-
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \includegraphics[width=0.7\textwidth]{images/rsVSdyn.png}
-        %     \caption{Peak dynamic processor power across RS entry sweep for five benchmarks that includes specific value at each sweep. See Figure \ref{DYN} for discussion.}
-        %     \label{DYNdetail} 
-        % \end{figure}
-        % \clearpage
 
     \section{Appendix: Raw Post Processed Data}
     \label{appendix:raw}
@@ -398,29 +389,16 @@
         \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/cholesky.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{1\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/cholesky.PNG}
+            % \caption{}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-2.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
-
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-3.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        %     \caption{Processor power for various number of reservation station entries.}
-        %     \label{appfig:power:cholesky}
-        % \end{figure}
+            \caption{Processor power for various PHT sizes.}
+            \label{appfig:power:cholesky}
+        \end{figure}
         % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -460,36 +438,36 @@
         \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/cholesky-0.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/cholesky/0/cpi-stack.png}
+            \caption{default}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/cholesky-4.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/cholesky/0/cpi-stack.png}
+            \caption{$2^{4}$ PHT size}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/cholesky-8.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/cholesky/8/cpi-stack.png}
+            \caption{$2^{8}$ PHT size}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/cholesky-16.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/cholesky/16/cpi-stack.png}
+            \caption{$2^{16}$ PHT size}
+            \end{subfigure}%
 
-        %     \caption{CPI stacks for various PHT sizes.}
-        %     \label{appfig:cpi:cholesky}
-        % \end{figure}
-        % % \clearpage
+            \caption{CPI stacks for various PHT sizes.}
+            \label{appfig:cpi:cholesky}
+        \end{figure}
+        \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI VALUES %%%%%%%%%%
@@ -530,29 +508,16 @@
         \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/fmm.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{1\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/fmm.PNG}
+            % \caption{}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-2.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
-
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-3.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        %     \caption{Processor power for various number of reservation station entries.}
-        %     \label{appfig:power:fmm}
-        % \end{figure}
+            \caption{Processor power for various PHT sizes.}
+            \label{appfig:power:fmm}
+        \end{figure}
         % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -592,36 +557,36 @@
         \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/fmm-0.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/fmm/0/cpi-stack.png}
+            \caption{default}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/fmm-4.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/fmm/0/cpi-stack.png}
+            \caption{$2^{4}$ PHT size}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/fmm-8.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/fmm/8/cpi-stack.png}
+            \caption{$2^{8}$ PHT size}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/fmm-16.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/fmm/16/cpi-stack.png}
+            \caption{$2^{16}$ PHT size}
+            \end{subfigure}%
 
-        %     \caption{CPI stacks for various PHT sizes.}
-        %     \label{appfig:cpi:fmm}
-        % \end{figure}
-        % % \clearpage
+            \caption{CPI stacks for various PHT sizes.}
+            \label{appfig:cpi:fmm}
+        \end{figure}
+        \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI VALUES %%%%%%%%%%
@@ -661,29 +626,16 @@
         \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/lu.cont.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{1\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/lu.cont.PNG}
+            % \caption{}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-2.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
-
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-3.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        %     \caption{Processor power for various number of reservation station entries.}
-        %     \label{appfig:power:lu.cont}
-        % \end{figure}
+            \caption{Processor power for various PHT sizes.}
+            \label{appfig:power:lu.cont}
+        \end{figure}
         % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -723,36 +675,36 @@
         \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/lu.cont-0.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/lu.cont/0/cpi-stack.png}
+            \caption{default}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/lu.cont-4.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/lu.cont/0/cpi-stack.png}
+            \caption{$2^{4}$ PHT size}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/lu.cont-8.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/lu.cont/8/cpi-stack.png}
+            \caption{$2^{8}$ PHT size}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/lu.cont-16.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/lu.cont/16/cpi-stack.png}
+            \caption{$2^{16}$ PHT size}
+            \end{subfigure}%
 
-        %     \caption{CPI stacks for various PHT sizes.}
-        %     \label{appfig:cpi:lu.cont}
-        % \end{figure}
-        % % \clearpage
+            \caption{CPI stacks for various PHT sizes.}
+            \label{appfig:cpi:lu.cont}
+        \end{figure}
+        \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI VALUES %%%%%%%%%%
@@ -792,29 +744,16 @@
         \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radiosity.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{1\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/radiosity.PNG}
+            % \caption{}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-2.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
-
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-3.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        %     \caption{Processor power for various number of reservation station entries.}
-        %     \label{appfig:power:radiosity}
-        % \end{figure}
+            \caption{Processor power for various PHT sizes.}
+            \label{appfig:power:radiosity}
+        \end{figure}
         % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -854,36 +793,36 @@
         \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/radiosity-0.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/radiosity/0/cpi-stack.png}
+            \caption{default}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/radiosity-4.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/radiosity/0/cpi-stack.png}
+            \caption{$2^{4}$ PHT size}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/radiosity-8.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/radiosity/8/cpi-stack.png}
+            \caption{$2^{8}$ PHT size}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/radiosity-16.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/radiosity/16/cpi-stack.png}
+            \caption{$2^{16}$ PHT size}
+            \end{subfigure}%
 
-        %     \caption{CPI stacks for various PHT sizes.}
-        %     \label{appfig:cpi:radiosity}
-        % \end{figure}
-        % % \clearpage
+            \caption{CPI stacks for various PHT sizes.}
+            \label{appfig:cpi:radiosity}
+        \end{figure}
+        \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI VALUES %%%%%%%%%%
@@ -923,29 +862,16 @@
         \subsubsection{Power Results} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% Power GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/raytrace.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{1\textwidth}
+            \includegraphics[width=1\textwidth]{images/Power/raytrace.PNG}
+            % \caption{}
+            \end{subfigure}% 
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-2.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
-
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/Power/radix-power-3.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        %     \caption{Processor power for various number of reservation station entries.}
-        %     \label{appfig:power:raytrace}
-        % \end{figure}
+            \caption{Processor power for various PHT sizes.}
+            \label{appfig:power:raytrace}
+        \end{figure}
         % \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -985,36 +911,36 @@
         \subsubsection{CPI Stacks} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI GRAPH %%%%%%%%%%
-        % \begin{figure}[hbt!]
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/raytrace-0.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/raytrace/0/cpi-stack.png}
+            \caption{default}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/raytrace-4.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
-        % \end{figure}
-        % \clearpage
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/raytrace/0/cpi-stack.png}
+            \caption{$2^{4}$ PHT size}
+            \end{subfigure}%
+        \end{figure}
+        \clearpage
 
-        % \begin{figure}[hbt!]\ContinuedFloat
-        %     \centering
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/raytrace-8.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+        \begin{figure}[hbt!]\ContinuedFloat
+            \centering
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/raytrace/8/cpi-stack.png}
+            \caption{$2^{8}$ PHT size}
+            \end{subfigure}%
 
-        %     \noindent\begin{subfigure}{0.8\textwidth}
-        %     \includegraphics[width=1\textwidth]{images/CPI/raytrace-16.PNG}
-        %     % \caption{}
-        %     \end{subfigure}%
+            \noindent\begin{subfigure}{0.8\textwidth}
+            \includegraphics[width=1\textwidth]{../output/raytrace/16/cpi-stack.png}
+            \caption{$2^{16}$ PHT size}
+            \end{subfigure}%
 
-        %     \caption{CPI stacks for various PHT sizes.}
-        %     \label{appfig:cpi:raytrace}
-        % \end{figure}
-        % % \clearpage
+            \caption{CPI stacks for various PHT sizes.}
+            \label{appfig:cpi:raytrace}
+        \end{figure}
+        \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         %%%%%%%%%% CPI VALUES %%%%%%%%%%
