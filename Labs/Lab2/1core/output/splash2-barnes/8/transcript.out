@@ -1,0 +1,47 @@
+[SPLASH] Benchmarks to run: barnes
+
+[SPLASH] [========== Running benchmark barnes ==========]
+[SPLASH] Setting up run directory: /tmp/tmpdvtIyD
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 1 -m 'localhost' -d '/data/abui02/lab2c/splash2-barnes/8' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/rob.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab2c/rsentries/8.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab2c  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/apps/barnes/BARNES < input':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /data/abui02/lab2c/splash2-barnes/8/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] WARNING: No SIFT connections made yet. Waiting...
+
+		Hack code: Plummer model
+
+     nbody     dtime       eps       tol     dtout     tstop    fcells     NPROC
+     16384   0.02500    0.0500      1.00     0.250     0.075      2.00         1
+
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 24110.66 seconds
+[SNIPER] Simulated 1642.1M instructions, 2540.3M cycles, 0.65 IPC
+[SNIPER] Simulation speed 68.1 KIPS (68.1 KIPS / target core - 14682.5ns/instr)
+[SNIPER] Sampling: executed 98.27% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+COMPUTESTART  =   2450575491
+[HOOKS] Leaving ROI
+COMPUTEEND    =   2451513961
+COMPUTETIME   =       938470
+TRACKTIME     =       468602
+PARTITIONTIME =         1062	 0.00
+TREEBUILDTIME =         8052	 0.02
+FORCECALCTIME =       458233	 0.98
+RESTTIME      =         1255	 0.00
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 249999.03 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

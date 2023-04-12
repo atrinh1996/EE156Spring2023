@@ -1,0 +1,37 @@
+[SPLASH] Benchmarks to run: radiosity
+
+[SPLASH] [========== Running benchmark radiosity ==========]
+[SPLASH] Setting up run directory: /tmp/tmpsY1xZO
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 4 -m 'localhost' -d '/h/abui02/sniper-container/lab3/output/radiosity/8' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/lab3.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/predictor/8.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab3  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/apps/radiosity/RADIOSITY -p 4 -room -ae 5000 -en 0.05 -bf 0.10 -batch':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /h/abui02/sniper-container/lab3/output/radiosity/8/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[TRACE:2] -- DONE --
+[TRACE:3] -- DONE --
+[TRACE:1] -- DONE --
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 2132.98 seconds
+[SNIPER] Simulated 1075.3M instructions, 486.1M cycles, 2.21 IPC
+[SNIPER] Simulation speed 504.1 KIPS (126.0 KIPS / target core - 7934.7ns/instr)
+[SNIPER] Sampling: executed 77.03% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+[SIFT_RECORDER] emulation.cc:114: ADDRINT emuGettimeofday(LEVEL_VM::THREADID, timeval*, timezone*): Assertion `emulated' failed.
+Pin app terminated abnormally due to signal 6.
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 2188.04 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

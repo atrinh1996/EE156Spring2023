@@ -1,0 +1,8 @@
+                        CPI       Time
+  base                 0.30     52.44%
+  mem-l1d              0.03      5.69%
+  mem-l3               0.06      9.79%
+  mem-dram             0.18     31.71%
+  other                0.00      0.37%
+
+  total                0.57    100.00%

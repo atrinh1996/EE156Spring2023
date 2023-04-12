@@ -1,0 +1,52 @@
+[SPLASH] Benchmarks to run: fmm
+
+[SPLASH] [========== Running benchmark fmm ==========]
+[SPLASH] Setting up run directory: /tmp/tmp0fYh37
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 4 -m 'localhost' -d '/h/abui02/sniper-container/lab3/output/fmm/0' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/lab3.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/predictor/0.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab3  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/apps/fmm/FMM < input':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /h/abui02/sniper-container/lab3/output/fmm/0/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+Creating a two cluster, non uniform distribution for 16384 particles
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+Starting FMM with 4 processors
+[TRACE:2] -- DONE --
+[TRACE:1] -- DONE --
+[TRACE:3] -- DONE --
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 2572.52 seconds
+[SNIPER] Simulated 2778.3M instructions, 442.8M cycles, 6.27 IPC
+[SNIPER] Simulation speed 1080.0 KIPS (270.0 KIPS / target core - 3703.8ns/instr)
+[SNIPER] Sampling: executed 88.46% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+Finished FMM
+                                   PROCESS STATISTICS
+             Track        Tree        List        Part        Pass       Inter        Bar        Intra       Other
+ Proc        Time         Time        Time        Time        Time       Time         Time       Time        Time
+    0        82696         860        2867         271        7401       70660          39         332         264
+
+                                   TIMING INFORMATION
+Start time                        :      -1844407983
+Initialization finish time        :      -1844324565
+Overall finish time               :      -1844241869
+Total time with initialization    :           166114
+Total time without initialization :            82720
+
+Total time for steps 3 to 5 :        82720
+
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 2600.10 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

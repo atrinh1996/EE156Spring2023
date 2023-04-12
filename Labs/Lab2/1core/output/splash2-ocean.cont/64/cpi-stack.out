@@ -1,0 +1,8 @@
+                        CPI       Time
+  base                 0.58     64.03%
+  rs_full              0.02      2.72%
+  mem-l3               0.01      1.61%
+  mem-dram             0.27     29.89%
+  other                0.02      1.75%
+
+  total                0.90    100.00%

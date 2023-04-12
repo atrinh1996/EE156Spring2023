@@ -1,0 +1,53 @@
+[SPLASH] Benchmarks to run: radix
+
+[SPLASH] [========== Running benchmark radix ==========]
+[SPLASH] Setting up run directory: /tmp/tmpIVG8zL
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 1 -m 'localhost' -d '/data/abui02/lab2c/splash2-radix/2' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/rob.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab2c/rsentries/2.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab2c  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/kernels/radix/RADIX -n262144 -p1':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /data/abui02/lab2c/splash2-radix/2/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] WARNING: No SIFT connections made yet. Waiting...
+
+Integer Radix Sort
+     262144 Keys
+     1 Processors
+     Radix = 1024
+     Max key = 524288
+
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 6922.29 seconds
+[SNIPER] Simulated 46.7M instructions, 129.1M cycles, 0.36 IPC
+[SNIPER] Simulation speed 6.7 KIPS (6.7 KIPS / target core - 148163.6ns/instr)
+[SNIPER] Sampling: executed 98.96% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+
+                 PROCESS STATISTICS
+               Total            Rank            Sort
+ Proc          Time             Time            Time
+    0           7298            3362            3934
+
+                 TIMING INFORMATION
+Start time                        :      -1844407977
+Initialization finish time        :      -1844367099
+Overall finish time               :      -1844359801
+Total time with initialization    :            48176
+Total time without initialization :             7298
+
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 7193.97 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

@@ -1,0 +1,55 @@
+[SPLASH] Benchmarks to run: ocean.cont
+
+[SPLASH] [========== Running benchmark ocean.cont ==========]
+[SPLASH] Setting up run directory: /tmp/tmpLLGOXu
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 1 -m 'localhost' -d '/data/abui02/lab2c/splash2-ocean.cont/32' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/rob.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab2c/rsentries/32.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab2c  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/apps/ocean/contiguous_partitions/OCEAN -n258 -p1':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /data/abui02/lab2c/splash2-ocean.cont/32/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] WARNING: No SIFT connections made yet. Waiting...
+
+Ocean simulation with W-cycle multigrid solver
+    Processors                         : 1
+    Grid size                          : 258 x 258
+    Grid resolution (meters)           : 20000.00
+    Time between relaxations (seconds) : 28800
+    Error tolerance                    : 1e-07
+
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 18446688256.00 seconds
+[SNIPER] Simulated 300.5M instructions, 277.3M cycles, 1.08 IPC
+[SNIPER] Simulation speed 0.0 KIPS (0.0 KIPS / target core - 61392160968.2ns/instr)
+[SNIPER] Sampling: executed 99.37% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+
+                       PROCESS STATISTICS
+                  Total          Multigrid         Multigrid
+ Proc             Time             Time            Fraction
+    0             62101              22843             0.368
+
+                       TIMING INFORMATION
+Start time                        :      -1844407975
+Initialization finish time        :      -1844366162
+Overall finish time               :      -1844304061
+Total time with initialization    :           103914
+Total time without initialization :            62101
+    (excludes first timestep)
+
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 56692.97 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

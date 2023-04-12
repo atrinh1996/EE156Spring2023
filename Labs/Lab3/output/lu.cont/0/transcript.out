@@ -1,0 +1,54 @@
+[SPLASH] Benchmarks to run: lu.cont
+
+[SPLASH] [========== Running benchmark lu.cont ==========]
+[SPLASH] Setting up run directory: /tmp/tmpugxTl3
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 4 -m 'localhost' -d '/h/abui02/sniper-container/lab3/output/lu.cont/0' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/lab3.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/predictor/0.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab3  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/kernels/lu/contiguous_blocks/LU -n512 -p4':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /h/abui02/sniper-container/lab3/output/lu.cont/0/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+
+Blocked Dense LU Factorization
+     512 by 512 Matrix
+     4 Processors
+     16 by 16 Element Blocks
+
+
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[TRACE:1] -- DONE --
+[TRACE:3] -- DONE --
+[TRACE:2] -- DONE --
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 776.24 seconds
+[SNIPER] Simulated 337.6M instructions, 161.0M cycles, 2.10 IPC
+[SNIPER] Simulation speed 434.9 KIPS (108.7 KIPS / target core - 9198.2ns/instr)
+[SNIPER] Sampling: executed 48.83% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+                            PROCESS STATISTICS
+              Total      Diagonal     Perimeter      Interior       Barrier
+ Proc         Time         Time         Time           Time          Time
+    0         30483           111          1649         24350          4372
+
+                            TIMING INFORMATION
+Start time                        :      -1844407970
+Initialization finish time        :      -1844378289
+Overall finish time               :      -1844347804
+Total time with initialization    :            60166
+Total time without initialization :            30485
+
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 810.73 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

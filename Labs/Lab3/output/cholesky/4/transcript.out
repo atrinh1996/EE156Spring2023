@@ -1,0 +1,75 @@
+[SPLASH] Benchmarks to run: cholesky
+
+[SPLASH] [========== Running benchmark cholesky ==========]
+[SPLASH] Setting up run directory: /tmp/tmpuT5ZrY
+[SPLASH] Extracting output: gunzip < /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/kernels/cholesky/inputs/tk25.O.Z > /tmp/tmpuT5ZrY/tk25.O
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 4 -m 'localhost' -d '/h/abui02/sniper-container/lab3/output/cholesky/4' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/lab3.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/predictor/4.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab3  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/kernels/cholesky/CHOLESKY -p4 tk25.O':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /h/abui02/sniper-container/lab3/output/cholesky/4/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+
+Sparse Cholesky Factorization
+     Problem:         
+     4 Processors
+     Postpass partition size: 32
+     16384 byte cache
+
+
+true partitions
+Fan-out, no block copy-across
+LB domain, embedded distribution
+No ordering
+7288 supers, 2.12 nodes/super, 179 max super
+7288/3401 supers before/after
+283747754/302038559 (1.06) ops before/after amalgamation
+before partition
+Divide for 4 P, 177 domains, 0.35 of work static, 0.89 eff, (inf overall)
+561844 total domain updates
+2221 max height, 302038559 ops, 45330.72 conc, 106.46 bl for 4 P
+Target partition size 0, postpass size 32
+Processor array is 2 by 2
+No redistribution
+Supers: 39: 1  48: 1  51: 1  57: 1  61: 1  63: 1  65: 1  69: 2  77: 1  78: 1  79: 1  80: 1  84: 1  85: 2  86: 1  87: 1  96: 1  102: 1  104: 2  114: 1  123: 1  127: 1  128: 1  130: 1  331: 1  
+Blocks: 24: 2  25: 1  26: 7  27: 3  28: 11  29: 10  30: 2  31: 6  32: 14  33: 12  34: 8  35: 6  38: 1  39: 2  
+85 partitions
+85 partitions, 1601 blocks
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[TRACE:2] -- DONE --
+[TRACE:3] -- DONE --
+[TRACE:1] -- DONE --
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 1758.21 seconds
+[SNIPER] Simulated 714.2M instructions, 528.8M cycles, 1.35 IPC
+[SNIPER] Simulation speed 406.2 KIPS (101.6 KIPS / target core - 9847.1ns/instr)
+[SNIPER] Sampling: executed 20.20% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+302038559 operations for factorization
+
+                            PROCESS STATISTICS
+              Total
+ Proc         Time 
+    0         38229
+                            TIMING INFORMATION
+Start time                        :      -1844407982
+Initialization finish time        :      -1844247829
+Overall finish time               :      -1844209600
+Total time with initialization    :           198382
+Total time without initialization :            38229
+
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 1872.47 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

@@ -1,0 +1,29 @@
+[NPB] [========== Running benchmark cg ==========]
+[NPB] Running 'ulimit -s 1048576; export OMP_NUM_THREADS=1; export OMP_THREAD_LIMIT=1; export OMP_WAIT_POLICY=passive; LD_PRELOAD=/h/abui02/sniper-container/sniper-7.3/benchmarks/npb/../tools/hooks/libhooks_base_pre.so SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 1 -m 'localhost' -d '/data/abui02/lab2c/npb-cg/98' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/rob.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab2c/rsentries/98.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab2c  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/npb/NPB3.3.1/NPB3.3-OMP/bin/cg.W.x ':
+[NPB] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /data/abui02/lab2c/npb-cg/98/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 18446741504.00 seconds
+[SNIPER] Simulated 1522.7M instructions, 1812.3M cycles, 0.84 IPC
+[SNIPER] Simulation speed 0.0 KIPS (0.0 KIPS / target core - 12114109104.9ns/instr)
+[SNIPER] Sampling: executed 42.31% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 233461.27 seconds
+[SNIPER] Generating visualization in viz/
+[NPB] [----------    End of output    ----------]
+[NPB] Done.

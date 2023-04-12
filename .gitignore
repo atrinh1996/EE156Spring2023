@@ -10,7 +10,7 @@ quantum
 *.log
 *.lot
 *.fls
-*.out
+# *.out
 *.toc
 *.fmt
 *.fot

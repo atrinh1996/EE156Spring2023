@@ -1,0 +1,63 @@
+[SPLASH] Benchmarks to run: raytrace
+
+[SPLASH] [========== Running benchmark raytrace ==========]
+[SPLASH] Setting up run directory: /tmp/tmpYIKQjc
+[SPLASH] Extracting output: mkdir /tmp/tmpYIKQjc/inputs; gunzip < /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/apps/raytrace/inputs/car.env.Z > /tmp/tmpYIKQjc/inputs/car.env; gunzip < /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/apps/raytrace/inputs/car.geo.Z > /tmp/tmpYIKQjc/inputs/car.geo
+[SPLASH] Running 'SNIPER_APP_LD_PRELOAD=$LD_PRELOAD; unset LD_PRELOAD; /h/abui02/sniper-container/sniper-7.3/run-sniper -n 4 -m 'localhost' -d '/h/abui02/sniper-container/lab3/output/raytrace/8' -c /h/abui02/sniper-container/sniper-7.3/config/gainestown.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/lab3.cfg -c /h/abui02/sniper-container/sniper-7.3/config/lab3/predictor/8.cfg --viz --roi --curdir=/h/abui02/sniper-container/lab3  --  /h/abui02/sniper-container/sniper-7.3/benchmarks/splash2/splash2/codes/apps/raytrace/RAYTRACE -p4 -m64 inputs/car.env':
+[SPLASH] [---------- Beginning of output ----------]
+[SNIPER] Warning: Unable to use physical addresses for shared memory simulation.
+[SNIPER] Start
+Executing Python script /h/abui02/sniper-container/lab3/output/raytrace/8/sim.scripts.py
+[SNIPER] --------------------------------------------------------------------------------
+[SNIPER] Sniper using SIFT/trace-driven frontend
+[SNIPER] Running pre-ROI region in  CACHE_ONLY mode
+[SNIPER] Running application ROI in DETAILED mode
+[SNIPER] Running post-ROI region in FAST_FORWARD mode
+[SNIPER] --------------------------------------------------------------------------------
+
+Number of processors:     	4
+Global shared memory size:	64 MB
+Samples per pixel:        	1
+
+Number of primitive objects: 	7629
+Number of primitive elements:	46423
+Uniform Hierarchy built.
+[HOOKS] Entering ROI
+[SNIPER] Enabling performance models
+[SNIPER] Setting instrumentation mode to DETAILED
+[TRACE:3] -- DONE --
+[TRACE:1] -- DONE --
+[SNIPER] Disabling performance models
+[SNIPER] Leaving ROI after 3091.82 seconds
+[SNIPER] Simulated 483.2M instructions, 2140.6M cycles, 0.23 IPC
+[SNIPER] Simulation speed 156.3 KIPS (39.1 KIPS / target core - 25596.5ns/instr)
+[SNIPER] Sampling: executed 8.72% of simulated time in detailed mode
+[SNIPER] Setting instrumentation mode to FAST_FORWARD
+[TRACE:2] -- STOP --
+[TRACE:0] -- DONE --
+[HOOKS] Leaving ROI
+
+****** Hierarchial uniform grid memory allocation summary ******* 
+
+     < struct >:            < current >   < maximum >    < sizeof > 
+     <  bytes >:             <  bytes >   <   bytes >    <  bytes > 
+
+     grid:                      59760         59760           144 
+     hashtable entries:        678968        678968             8 
+     emptycell entries:          6632          6632             8 
+     voxel:                   1251480       1251480            40 
+     bintree_node:           12370320      12370320           120 
+
+     Totals:                 14367160      14367160      
+
+TIMING STATISTICS MEASURED BY MAIN PROCESS:
+        Overall start time         1337000000734122
+        Overall end time       1337000000804729
+        Total time with initialization                 70607
+        Total time without initialization                 70596
+[RECORD-TRACE] Using the Pin frontend (sift/recorder)
+[SNIPER] End
+[SNIPER] Elapsed time: 3512.87 seconds
+[SNIPER] Generating visualization in viz/
+[SPLASH] [----------    End of output    ----------]
+[SPLASH] Done.

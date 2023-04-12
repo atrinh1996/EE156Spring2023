@@ -1,0 +1,7 @@
+                        CPI       Time
+  base                 0.07      2.95%
+  rs_full              2.11     94.97%
+  mem-l3               0.03      1.31%
+  other                0.02      0.77%
+
+  total                2.22    100.00%
