@@ -238,17 +238,14 @@
 
     \begin{thebibliography}{1}
         \bibitem[1]{sniper}\href{https://snipersim.org/w/The_Sniper_Multi-Core_Simulator}{The Sniper Multi-Core Simulator}
+
         \bibitem[2]{parallel}O. Tange (2011): \href{https://www.gnu.org/software/parallel/parallel_tutorial.html}{GNU Parallel}  - The Command-Line Power Tool
-        \bibitem[3]{splash2}S. C. Woo, M. Ohara, E. Torrie, J. P. Singh and A. Gupta, \href{https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.48.2356&rep=rep1&type=pdf}{The SPLASH-2 Programs: Characterization and Methodological Considerations}, Proceedings 22nd Annual International Symposium on Computer Architecture, Santa Margherita Ligure, Italy, 1995, pp. 24-36
-        \bibitem[4]{npb}Bailey DH, Barszcz E, Barton JT, et al. \href{https://www.nas.nasa.gov/software/npb.html}{The Nas Parallel Benchmarks}. The International Journal of Supercomputing Applications. 1991;5(3):63-73. doi:\url{10.1177/109434209100500306}
-        \bibitem[5]{book}John L. Hennessy and David A. Patterson. 2017. Computer Architecture, Sixth Edition: A Quantitative Approach. Morgan Kaufmann Publishers Inc., San Francisco, CA, USA.
-        \bibitem[6]{londono}S. M. Londono and J. P. de Gyvez. \href{https://ieeexplore.ieee.org/document/5702300}{Extending Amdahl's law for energy-efficiency}. 2010. International Conference on Energy Aware Computing, Cairo, Egypt, 2010, pp. 1-4, doi: 10.1109/ICEAC.2010.5702300.
-        % \bibitem[7]{ilplimits} DW Wall. \href{https://dl.acm.org/doi/pdf/10.1145/106972.106991}{Limits of Instruction-Level Parallelism}. 1991. Proceedings of 4th International Conference on Architectural Support for Programming Languages and Operating Systems. 176-188.
-        \bibitem[7]{wall}Wall, D.W., 1993. \href{https://www.hpl.hp.com/techreports/Compaq-DEC/WRL-93-6.pdf}{Limits of Instruction-Level Parallelism}, Research Rep. 93/6, Western Research Laboratory. Digital Equipment Corp., Palo Alto, CA.
-        \bibitem[8]{stark}Jared Stark, Paul Racunas, and Yale N. Patt. 1997. \href{https://dl.acm.org/doi/10.5555/266800.266804}{Reducing the performance impact of instruction cache misses by writing instructions into the reservation stations out-of-order}. In Proceedings of the 30th annual ACM/IEEE international symposium on Microarchitecture (MICRO 30). IEEE Computer Society, USA, 34-43.
-        % \bibitem[9]{jimenez}Liliana Margarita Espinosa Jimenez and Michael Opoku Agyeman. 2018. \href{https://dl.acm.org/doi/10.1145/3284557.3284562}{A Study of Techniques to Increase Instruction Level Parallelisms}. In Proceedings of the 2nd International Symposium on Computer Science and Intelligent Control (ISCSIC '18). Association for Computing Machinery, New York, NY, USA, Article 41, 1-5. \url{https://doi.org/10.1145/3284557.3284562}
-        \bibitem[9]{tomasulo}Tomasulo, R.M., 1967. An efficient algorithm for exploiting multiple arithmetic units. IBM
-        J. Res. Dev. 11 (1), 25-33.
+
+        \bibitem[3]{splash2}S. C. Woo, M. Ohara, E. Torrie, J. P. Singh and A. Gupta, \href{https://ieeexplore-ieee-org.ezproxy.library.tufts.edu/stamp/stamp.jsp?tp=&arnumber=524546}{The SPLASH-2 Programs: Characterization and Methodological Considerations}, Proceedings 22nd Annual International Symposium on Computer Architecture, Santa Margherita Ligure, Italy, 1995, pp. 24-36
+
+        \bibitem[4]{book}John L. Hennessy and David A. Patterson. 2017. Computer Architecture, Sixth Edition: A Quantitative Approach. Morgan Kaufmann Publishers Inc., San Francisco, CA, USA.
+
+        \bibitem[5]{mcfarling}McFarling, Scott, 1993. \href{https://www.hpl.hp.com/techreports/Compaq-DEC/WRL-TN-36.pdf}{Combining Branch Predictors}, Technical Note TN-36, Western Research Laboratory. Digital Equipment Corp., Palo Alto, CA.
     \end{thebibliography}
 
     % SWEEP
@@ -271,27 +268,28 @@
                 & 
                 \begin{tabular}{|l|}
                     \hline
-                    \textbf{PHT index bits} \\ 
+                    \textbf{PHT index bits (gshare)} \\ 
                     \hline 
                     \hline
+                    0 (default branch predictor) \\
                     4 \\ 
                     8 \\ 
                     16 \\
                     \hline 
                 \end{tabular}
             \end{tabular}
-            \caption{Configuration parameters and values swept in the experiment.}
+            \caption{Configuration parameters and values for PHT index bits for the gshare branch predictor swept in the experiment. The default branch predictor is pentium.}
             \label{table:configurations}
         \end{center}
     \end{table}
 
     % TOPOLOGY
-    % \begin{figure}[hbt!] 
-    %     \centering
-    %     \includegraphics[width=0.125\textwidth]{../1core/output/splash2-radix/2/topo.png}
-    %     \caption{Topology for all five benchmark tests where only the number of reservation stations was varied (all cache sizes remained consistent through every simulation). All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} and \texttt{rob} configuration using the \texttt{--viz} and \texttt{--roi} options.}
-    %     \label{topology} 
-    % \end{figure}
+    \begin{figure}[hbt!] 
+        \centering
+        \includegraphics[width=0.7\textwidth]{./images/topo.png}
+        \caption{Topology for all five benchmark tests where only the number of PHT index bits were varied (all cache sizes remained consistent through every simulation). All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} configuration using the \texttt{--viz} and \texttt{--roi} options.}
+        \label{topology} 
+    \end{figure}
 
 
     \clearpage
@@ -300,28 +298,38 @@
     \label{intro}
         % Tomasulo's algorithm 
 
+        pattern history table (PHT)
+
     % \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
 
     \section{Experimental Setup}
     \label{sec:setup}
-        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Since this experiment looked to sweep instruction-level parallelism (ILP) thorugh reservation station (RS) entries, each simulation was configured with 1 core to isolate the feature of multiple instructions simultaneouly in-flight. The same default configurations were set in \texttt{gainestown.cfg} and \texttt{rob.cfg}. Those worth noting for purposes of this experiment are a window size of 128, and L1, L2 and L3 cache sizes of 64 KB, 256 KB, and 8192 KB, respectively, each using 64 byte blocks.Figure \ref{topology} visualizes the topologies for all simulations since cache sizes remained constant.  Due to time constraints, commit width was set to 128 (default in \texttt{rob.cfg}). With a normal width of 4, simulations took several days and did not complete, and the large default commit width would yield results in reasonable time for the given purpose. 
+        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Since this experiment looked to sweep the \texttt{gshare} branch predictor performance through PHT sizes, each simulation was configured the same topology (Figure \ref{topology}). The same default configurations were set in \texttt{gainestown.cfg}. 
 
-
-        Nine different reservation station (RS) entries across five benchmarks were swept, for a total of 45 simulations (see Table \ref{table:configurations}). The different configurations were simulated with three \texttt{splash2} benchmarks (\texttt{barnes}, \texttt{ocean.cont} and \texttt{radix} \cite{splash2}) and two NAS parallel benchmark (\texttt{npb}) (\texttt{is} and \texttt{cg} \cite{npb})\footnote{These are additional changes from the original experiment design due to time constraints of running \texttt{npb-ua} and sweeping number of cores.}. These were chosen for the range of simple to complex memory access patterns and parallel implementation. Two benchmarks from \texttt{nbp} were also included to show the effects of increasing ILP for applications that would benefit from more thread-level parallelism (TLP).
-        \clearpage
+        Three PHT sizes were swept for simulations using the \texttt{gshare} branch predictor, $2^4, 2^8, 2^{16}$. The sweep for ``size'' $2^0$ represents simulations that ran the default branch predictor, \texttt{pentium}. \texttt{gshare} was implemented separately according to technical specifications \cite{mcfarling} in C++, and integrated into \texttt{Sniper-7.3} with \texttt{gcc-7.4.0}. There was a total of 26 simulations (see Table \ref{table:configurations}). The different branch predictor configurations were simulated with five \texttt{splash2} benchmarks not previously used: \texttt{cholesky}, \texttt{lu.cont}, \texttt{radiosity}, \texttt{raytrace}, and \texttt{fmm} \cite{splash2}. 
+        % \clearpage
 
 
         The workloads are briefly described as follows:
 
         \begin{description}
-            \item[\textbf{splash2-barnes}]: The \texttt{barnes} application implements the Barnes-Hut method to simulate interactions of systems of N-bodies (particles, galaxies, etc.) in 3D.
-            \item[\textbf{splash2-ocean.cont}]: The \texttt{ocean} suite of test studies large-scale ocean movements based on currents, and uses 4D array grids and a red-black Gauss-Seidel multigrid equation solver. 
-            \item[\textbf{splash2-radix}]: The \texttt{radix} suite uses an iterative radix sort algorithm that generates histograms and has each processor permute array index keys, a process that depends on processors communicating in order to determine keys through writes.
-            \item[\textbf{npb-is}]: The NASA Advanced Supercomputing (NAS) Parallel Benchmarks (NPB) are a set of benchmarks tuned for highly parallel workloads. The \texttt{is} kernal performs a sorting operation that is important as ``particle method'' code (ex. simulations of mechanics (solid, fluid, etc.) as discrete ``particles''), testing both integer computation speed and communication performance. This benchmark excludes floating point arithmetic. 
-            \item[\textbf{npb-cg}]: This benchmark uses a conjugate gradient method that computes the smallest eigenvalue of a large, sparse symmetric, positive definite matrix. It tests irregular, long distance communication and employs unstructured matrix vector multiplication. 
-            %  using the inverse iteration with the conjugate gradient method as a subroutine for solving systems of linear equations.
+            \item[\textbf{cholesky}]: The \texttt{cholesky} factors a sparse matrix into the product of a lower triangular matrix and its transpose without globally synchronizing between steps. 
+            
+            
+            
+            \item[\textbf{fmm}]: The \texttt{fmm} application implements the adaptive Fast Multipole Method to simulate interactions of systems of N-bodies (particles, galaxies, etc.) in 2D with unstructured communication patterns.
+            
+            suite of test studies large-scale ocean movements based on currents, and uses 4D array grids and a red-black Gauss-Seidel multigrid equation solver. 
+            
+            \item[\textbf{lu.cont}]: The \texttt{lu.cont} factors a dense matrix into the product of a lower and upper triangular matrix, exploiting temporal locality on submatrix elements. Blocks are allocated sequentially and locally to processors that own them in order to improve the spatial locality. 
+            
+            suite uses an iterative radix sort algorithm that generates histograms and has each processor permute array index keys, a process that depends on processors communicating in order to determine keys through writes.
+            
+            \item[\textbf{radiosity}]: The \texttt{radiosity} application computes the equilibrium distribution of light in a scene using the iterative hierarchical diffuse radiosity method using the light transport interactions and subdivisions in polygons. This application has highly irregular computation structure and data structure accesses.  
+            
+            \item[\textbf{raytrace}]: The \texttt{raytrace} renders a 3D scene using ray tracing through each pixel in the image plane, reflecting them off objects in unpredictable and multiple ways; therefore, data structure access patterns are also unpredictable.
         \end{description}
 
 
