@@ -1,0 +1,125 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+\htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{A Dynamic Compilation Framework for Controlling Microprocessor Energy and Performance (2005):} Dynamic voltage frequency scaling (DVFS) is a microprocessor energy and performance control technique. The authors of the paper present a dynamic compilation framework of a runtime DVFS optimizer (RDO) system and implemented it in a live, physical environment as opposed to a simulation. During an optimization period, the RDO inserts testing and decision code in the candidate code region, collects the runtime information, and then decides the appropriate DVFS setting for the candidate code region. This is meant to work during program execution, and, at the time of the paper, the first work to develop dynamic compiler techniques for voltage and frequency control. Their analysis of RDO shows an EDP improvement over static voltage scaling (3X - 5X) and a static DVFS compilation scheme (2X); in other words, their design shows they were able to improve energy savings with minimal performance loss. 
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item The energy and performance results were visually appealing when displayed the way they were in Fig. 9 and 10. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item They did not implement their own static compiler DVFS scheme in order to compare their results as a control, but referenced the results of one (Hsu and Kremer, 2003). The reasoning was not clear when the authors mentioned they could not replicate this 2003 experiment.  
+            \item Power and performance were reported to have been averaged from three separate runs, but it was not clarified why repeated runs were done or if there was an problem to consider that required averaging their results.   
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+    The authors' dynamic compiler DVFS framework was novel for the time of the paper. They discussed other existing DVFS techniques, but their results were mainly compared against static voltage scaling and static compilation DVFS. Something they may have wanted to include in their analysis were the energy and performance results of RDO on workloads for which those other techniques (hardware, OS time-interrupt, static compiler based DVFS) were known to improve optimally or were the best at the time. This is because the authors assert that RDO would be a more generally applicable scheme in terms of energy and performance control, and they only showed that to be mostly true agains static voltage scaling. This would be an interesting and compelling metric in terms of the competing methods. 
+
+    % One improvedment would be to also include DVFS schemes on workloads where particular ones are specifically meant to benefit, and compare those results against their RDO which they say is more generally applicable. 
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item DVFS is a technique for controlling microprocessor energy and performance. The authors use DVFS through dynamic compiling. 
+    %         \item Experiemntal results shows siignificant energy savings and little performance degredation.
+    %         \item dynamic compiler is a runtime software system that compiles, modiefies, and optimizes a proogram's instruction sequance as it runs. 
+    %         \item dynamic compiler can be used to insert DVFS mode set instructions into app binary code at runtime, so if there is CPU slack/idle time, these instrs will scale down the CPU voltage and frequency to save energy with no or littl eimpact to performance.
+    %         \item dynamic compiler driven DVFS is more fine-grain and code-awawre than HW or OS interrupt based schemes. 
+    %         \item The paper is a design framework of the ruuntime DVFS opeimizer (RDO) in a dynamic compilation environment. They integrate a prototyp into an industrial strenght dynamic optimization system (variant of Intel PIN). 
+    %         \item Improved EDP over static voltage scaling by 3-5X. 
+    %         \item and 2X better than a static compilation DVFS scheme. 
+    %         \item 
+    %         \item   
+    %     \end{itemize}
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{paper}
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

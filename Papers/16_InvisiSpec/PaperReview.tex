@@ -1,0 +1,115 @@
+\documentclass [12pt]{article}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{amsmath}
+% \usepackage[color, leftbars]{changebar}
+% \usepackage{fontawesome} 
+% \usepackage{caption}
+% \usepackage{subcaption}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5in}
+
+\setlength{\parindent}{0pt}
+
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{claim}[theorem]{Claim}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proof}[theorem]{Proof}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % was previously black
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Template}
+}
+\urlstyle{same}
+
+
+\def\subjnum{EE 156}
+\def\subjname{Adv. Comp. Arch.}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Amy Bui}%
+    \hbox to\textwidth{{\bf} Tufts University, Spring 2023 \hfil#3\strut}%
+    \hrule}}
+
+\newcommand{\htitle}[1]{\vspace*{3.25ex plus 1ex minus .2ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\doheading{2}{title}{Paper Review} 
+% \htitle{Paper Info}
+% \bigskip 
+% \bigskip 
+%%%%%%%%%% begin text after this line %%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Summary}
+    \label{sec:summary}
+
+        \textbf{InvisiSpec: Making Speculative Execution Invisible in the Cache Hierarchy (2018):}  The authors detail InvisiSpec, their strategy for  defending against hardware speculation attacks in multiprocessors, including Spectre-like attacks and possible future speculative attacks. InvisiSpec works by making the unsafe speculative loads ``invisible'' in the data cache hierarchy, which is done by reading speculative load data into a new speculative buffer (as opposed to the local caches), waiting until it is safe (or not), then reissuing the safe load to the memory system and loads data into the cache (``make it visible''). Compared to fences, a different Spectre defense, InvisiSpec performs better with less overhead, only slowing down execution by 21\% when defending against Spectre, and 72\% when defending against futuristic speculative attacks.
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Strengths} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:strengths}
+        \begin{itemize}
+            \item The authors do a broad case analysis of what their micro-architecture does in different situations in regard to the load queues and speculative buffers (Sec. 6A2).
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Weaknesses} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:weaknesses}
+        \begin{itemize}
+            \item It is not clear why validation or exposure transactions are allowed to overlap when designed for Spectre attacks, but exposure transactions cannot overlap when designed for Futuristic attacks (Sec. 5B/D).
+            
+            % but, when designed for Futuristic attacks, transactions cannot overlap when a validation transaction is issued but may overlap when an exposure transaction is issued, and that squashing is a consideration for this design choice 
+            \item Details regarding the ``Futuristic'' speculative attacks were vague and they were obscure in explaining how they tested InvisiSpec against Futuristic attacks. 
+        \end{itemize}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Rating: 4} %%%%%%%%%%%%%%%%%%%%%% 
+    \label{sec:rating}
+    % \pagebreak
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{Comments} %%%%%%%%%%%%%%%%%%%%%%
+    \label{sec:comments}
+
+    The authors were very thorough in explaining the mechanisms of InvisiSpec and the characterizing the situations in which it would be applicable. In their approach, they not only demonstrated that InvisiSpec would work against Spectre even better than using fences, but they also considered its utility against other speculative execution not yet well characterized. However, in their evaluation, there are tradeoff considerations in implementing InvisiSpec between performance and better security guarantees against \emph{only} Spectre and Spectre-like attacks. The effects of increased execution times and network traffic over their control are likely some of the first limiting factors to using newer strategies against these covert and side-channel attacks, and the broader array of security risks in general. But the authors make it evident here that their architectures are increasingly minimizing that gap so the actual hardware may not be so far off. 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+        
+    % \pagebreak
+    % END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \section{Notes}
+    %     \begin{itemize}
+    %         \item 
+    %     \end{itemize}
+
+% \begin{thebibliography}{1}
+%     \bibitem[1]{paper}
+%     \bibitem[2]{github}\url{https://github.com/mjyan0720/InvisiSpec-1.0}
+% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -227,7 +227,7 @@
 % \date{\today}
 % \maketitle
 
-\doheading{2}{title}{Lab 3 (*used 3 late tokens)}
+\doheading{2}{title}{Lab 3 (*use: all the late tokens)}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Table of Contents
@@ -247,6 +247,7 @@
 
         \bibitem[5]{mcfarling}McFarling, Scott, 1993. \href{https://www.hpl.hp.com/techreports/Compaq-DEC/WRL-TN-36.pdf}{Combining Branch Predictors}, Technical Note TN-36, Western Research Laboratory. Digital Equipment Corp., Palo Alto, CA.
     \end{thebibliography}
+    % \clearpage
 
     % SWEEP
     
@@ -278,35 +279,51 @@
                     \hline 
                 \end{tabular}
             \end{tabular}
-            \caption{Configuration parameters and values for PHT index bits for the gshare branch predictor swept in the experiment. The default branch predictor is pentium.}
+            \caption{Configuration parameters and values for PHT index bits for the \texttt{gshare} branch predictor swept in the experiment. The ``default'' branch predictor is \texttt{pentium}.}
             \label{table:configurations}
         \end{center}
     \end{table}
 
-    % TOPOLOGY
-    \begin{figure}[hbt!] 
-        \centering
-        \includegraphics[width=0.7\textwidth]{./images/topo.png}
-        \caption{Topology for all five benchmark tests where only the number of PHT index bits were varied (all cache sizes remained consistent through every simulation). All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} configuration using the \texttt{--viz} and \texttt{--roi} options.}
-        \label{topology} 
-    \end{figure}
+    
 
 
-    \clearpage
+    % \clearpage
 
     \section{Intro}
     \label{intro}
-        % Tomasulo's algorithm 
 
-        pattern history table (PHT)
+        Control hazards due to branch misprediction can cause significant performance loss. Techniques that address branching and these penalties include always predicting taken/not-taken, flushing the pipeline, static branch prediction, and dynamic branch prediction. Simple dynamic branch predictors typically keep a branch history table (BHT) that ``tracks'' previous branch behaviors (taken/not-take) and use that information to inform predictions of the same branch \cite{book}.
+        
+        Correlating branch predictors also take into account branch outcomes of \emph{other} branches to inform the branch being predicted, i.e. a global predictor scheme. In general, such a ($m,n$)-predictor uses the last $m$ branches (a global history) to choose from $2^m$ $n$-bit branch predictors. One such predictor is \texttt{gshare} (see Figure \ref{gshareDiagram}); it uses a pattern history table (PHT), a separate BHT for each global pattern. In \texttt{gshare}, the index into the PHT is formed by XOR-ing the branch address and recent branch history \cite{book,mcfarling}.
 
-    % \clearpage
+        This experiment examines the performance of \texttt{gshare} as size of the PHT increases, comparing against a default predictor in \texttt{Sniper}, which is a \texttt{pentium M} style, global branch predictor \cite{sniper}. Performance and energy consumption improves with increasing PHT size, minimizing the calculated energy-delay product (EDP), which informs how a feature impacts the performance/energy efficient relationship, for the given range of sizes swept.  
+
+        \begin{figure}
+            \begin{tabular}{ll}
+                \begin{subfigure}{0.5\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./images/gshareDiagram.png}
+                    \caption{\texttt{gshare} predictor taken from \emph{McFarling} \cite{mcfarling}}
+                    \label{gshareDiagram} 
+                \end{subfigure} & 
+                \begin{subfigure}{0.5\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{./images/topo.png}
+                    \caption{Topology for all five benchmark tests where only the number of PHT index bits was varied (all cache sizes remained consistent through every simulation). All benchmarks were run in \texttt{Sniper-7.3} with the \texttt{gainestown} configuration using the \texttt{--viz} and \texttt{--roi} options.}
+                    \label{topology} 
+                \end{subfigure}
+            \end{tabular}
+            \caption{}
+            \label{intro-figures}
+        \end{figure}
+
+    \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
 
     \section{Experimental Setup}
     \label{sec:setup}
-        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Since this experiment looked to sweep the \texttt{gshare} branch predictor performance through PHT sizes, each simulation was configured the same topology (Figure \ref{topology}). The same default configurations were set in \texttt{gainestown.cfg}. 
+        Simulations ran for an x86 architecture simulator, Sniper 7.3 \cite{sniper}. Since this experiment looked to sweep the \texttt{gshare} branch predictor performance through PHT sizes, each simulation is configured with the same topology (Figure \ref{topology}). The same default configurations were set in \texttt{gainestown.cfg}. 
 
         Three PHT sizes were swept for simulations using the \texttt{gshare} branch predictor, $2^4, 2^8, 2^{16}$. The sweep for ``size'' $2^0$ represents simulations that ran the default branch predictor, \texttt{pentium}. \texttt{gshare} was implemented separately according to technical specifications \cite{mcfarling} in C++, and integrated into \texttt{Sniper-7.3} with \texttt{gcc-7.4.0}. There was a total of 26 simulations (see Table \ref{table:configurations}). The different branch predictor configurations were simulated with five \texttt{splash2} benchmarks not previously used: \texttt{cholesky}, \texttt{lu.cont}, \texttt{radiosity}, \texttt{raytrace}, and \texttt{fmm} \cite{splash2}. 
         % \clearpage
@@ -321,11 +338,9 @@
             
             \item[\textbf{fmm}]: The \texttt{fmm} application implements the adaptive Fast Multipole Method to simulate interactions of systems of N-bodies (particles, galaxies, etc.) in 2D with unstructured communication patterns.
             
-            suite of test studies large-scale ocean movements based on currents, and uses 4D array grids and a red-black Gauss-Seidel multigrid equation solver. 
             
             \item[\textbf{lu.cont}]: The \texttt{lu.cont} factors a dense matrix into the product of a lower and upper triangular matrix, exploiting temporal locality on submatrix elements. Blocks are allocated sequentially and locally to processors that own them in order to improve the spatial locality. 
             
-            suite uses an iterative radix sort algorithm that generates histograms and has each processor permute array index keys, a process that depends on processors communicating in order to determine keys through writes.
             
             \item[\textbf{radiosity}]: The \texttt{radiosity} application computes the equilibrium distribution of light in a scene using the iterative hierarchical diffuse radiosity method using the light transport interactions and subdivisions in polygons. This application has highly irregular computation structure and data structure accesses.  
             
@@ -333,12 +348,7 @@
         \end{description}
 
 
-
-
-
-        All the simulations ran concurrently using bash script(s) and GNU \texttt{parallel} shell tool \cite{parallel}, and post processing of the data were handled with python (v2.7) and bash scripts (included separately). Simulations ran on a python virtual environment and in a detached \texttt{tmux} session, due to long duration of the experiments. Sniper provided data processing tools used were: \texttt{gen\_topology.py}, \texttt{cpi-stack.py}, and \texttt{mcpat.py}. 
-        
-        
+        All the simulations ran concurrently using bash script(s) and GNU \texttt{parallel} shell tool \cite{parallel}, and post-processing of the data were handled with python (v2.7) and bash scripts (included separately). Simulations ran on a python virtual environment and in a detached \texttt{tmux} session, due to long duration of the experiments. Sniper provided data processing tools used were: \texttt{gen\_topology.py}, \texttt{cpi-stack.py}, and \texttt{mcpat.py}. 
 
     \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -349,43 +359,71 @@
         \subsection{Performance Analysis} %%%%%%%%%%%%%
         \label{sec:performance}
 
-            \begin{figure}[hbt!] 
-                \centering 
-                \includegraphics[width=0.8\textwidth]{images/PHTvsIPC.png}
-                \caption{}
-                \label{fig:IPC} 
-            \end{figure}
+        \begin{figure}[hbt!] 
+            \centering 
+            \includegraphics[width=0.8\textwidth]{images/PHTvsBranch.png}
+            \caption{CPI Stack Result - Fraction of time spent on branches. As time decreases, less time is spent handling branches, including mispredictions. (See Figures \ref{appfig:cpi:cholesky}, \ref{appfig:cpi:fmm}, \ref{appfig:cpi:lu.cont}, \ref{appfig:cpi:radiosity}, and \ref{appfig:cpi:raytrace} for correlating CPI stacks.)}
+            \label{fig:BRANCH}  
+        \end{figure}
+
+        For most workloads, as size of the PHT table increased, time spent on branch instructions noticeably decreases (Figure \ref{fig:BRANCH}). \texttt{fmm} and \texttt{cholesky} have less noticeable reductions because those implementations introduced less control hazards. \texttt{radiosity} and \texttt{raytrace} see more noticeable reduction due to their irregular and unpredictable access patterns more affected by branches; while \texttt{lu.cont} has less control hazards to begin with, it even sees about 96\% less time spent on branches at the highest PHT size swept compared to the default. The reduced fraction of time spent on branches indicates less time incurring cost of misprediction penalties, likely as branching information became more refined with more branch histories to inform branch decisions. 
+
+        Reducing time on branching correlates with performance gains seen through increased IPC (Figure \ref{fig:IPC}) and reduced execution time (Figure \ref{fig:time}). With less branch misses, more correctly speculated instructions are put on the execution path, leading to more instruction executed and retired in a cycle. Without time spent recovering from control hazards, it also makes sense that the applications also run faster. These suggest that misprediction penalties contribute to a significant portion of performance loss across the five workloads, but are positively impacted by \texttt{gshare} with more global history. 
+
+
+        
+
+        \clearpage
+
+        \begin{figure}[hbt!] 
+            \centering 
+            \includegraphics[width=0.8\textwidth]{images/PHTvsIPC.png}
+            \caption{IPC across PHT size sweep for five benchmars. IPC increases for four sweeps and plateaus around 16 PHT index bits for \texttt{lu.cont}. (\emph{See attached all.csv file for specific data values.})}
+            \label{fig:IPC} 
+        \end{figure}
+
+        \begin{figure}[hbt!]   
+            \centering
+            \includegraphics[width=0.8\textwidth]{images/PHTvsTime.png}
+            \caption{Execution time across PHT size sweep for five benchmarks.}
+            \label{fig:time} 
+        \end{figure}
+
+            
 
             % \textbf{No ILP benefits from OOO:} For workloads likely to not have many dependencies and implemented with little to no parallelism, they see little to no benefits in increasing the number of RS'. 
-            % \clearpage
+        \clearpage
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
         \subsection{Energy Consumption} %%%%%%%%%%%%%
+
+            Peak dynamic processor power increases for the sweep across all benchmarks (Figure \ref{fig:peak-dynamic-power}). This is likely due not only to the complexity of the individual applications, but also the implementation of the integrated \texttt{gshare}, as well as the total increasing bits in a PHT. However, overall power consumption typically decreases with increasing PHT size across the five workloads (Figures \ref{appfig:power:cholesky}, \ref{appfig:power:fmm}, \ref{appfig:power:lu.cont}, \ref{appfig:power:radiosity}, and \ref{appfig:power:raytrace}). Along with faster execution time across all sweeps (Figure \ref{fig:time}), this gives a decreasing trend of EDP with the sweep, as evident by the results plotted in Figure \ref{fig:normalized-EDP}. The lower EDPs show a positive relationship between the performance and energy efficiency tradeoffs due to refining branch histories in \texttt{gshare}. Once again, this indicates the significant impact of branch penalties on a system. 
+
             \begin{figure}[hbt!] 
                 \centering
                 \includegraphics[width=0.8\textwidth]{images/PHTvsPower.png}
-                \caption{}
+                \caption{Peak dynamic processor power across PHT size sweep for five benchmarks. Peak dynamic power continues to increase for \texttt{radiosity} and \texttt{raytrace} at the max for this work, it only slowly increases for \texttt{cholesky} and \texttt{fmm}, and plateaus for \texttt{lu.cont} around 8 to 16 PHT index bits.}
                 \label{fig:peak-dynamic-power} 
             \end{figure} 
 
-            \begin{figure}[hbt!] 
+            \clearpage
+
+            \begin{figure}[hbt!]   
                 \centering
                 \includegraphics[width=0.8\textwidth]{images/PHTvsnEDP.png}
-                \caption{}
+                \caption{Normalized energy-delay-product (EDP) across PHT size sweep for five benchmarks. EDP is given by the energy consumption (in Joules) times the execution time of the application (in nanoseconds). (See Figures \ref{appfig:power:cholesky}, \ref{appfig:power:fmm}, \ref{appfig:power:lu.cont}, \ref{appfig:power:radiosity}, and \ref{appfig:power:raytrace} for correlating Power Results.)}
                 \label{fig:normalized-EDP} 
             \end{figure}
-
-            % Much like how the IPC is seen to level-off  
-    % \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
     \section{Conclusion}
     \label{conclusion}
 
-    % Sweeping RS entries show consistent results with what is known in the literature. For most of the workloads, the benefits of ILP
+        
+    The integrated \texttt{gshare} predictor performed better than the default, \texttt{pentium}; with increasing PHT sizes, \texttt{gshare} reduces time spent on branching, which increases overal IPC and execution time. Not only that, but incurring less misprediction penalty leads to improved energy consumption, with an overall lowering of EDP. This shows the importance of branch predictor choice and design in overall performance. These results also suggest several obvious direction to expand this work. Only three sizes are swept for \texttt{gshare}, which shows a trend for improved performance and energy consumption; more sizes should be swept to see if the trend continues or if an optimal range for PHT size exists, after which point performance and/or energy degrades. Along with PHT size, other elements that could be examined are the number of bits in the global history register and the counter bits, as those could also refine \texttt{gshare} performance to a point. In addition, other factors of interest include comparing \texttt{gshare} against other correlating predictors, dynamic predictors, and static ones because \texttt{gshare} is already known to work well and is used as a baseline for other predictors \cite{book}, but not necessarily the optimal predictor for all types of workloads. 
 
     \clearpage
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
